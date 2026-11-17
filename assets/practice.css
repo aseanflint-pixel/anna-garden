@@ -73,6 +73,20 @@
 .practice-empty{
   padding:28px 8px 12px;text-align:center;font-weight:700;color:#6b4e00;
 }
+.self-check{margin-top:12px}
+.self-check p{font-weight:800;color:#35582a;margin:0 0 8px}
+.self-check-row{display:flex;gap:8px}
+.self-check-row button{
+  flex:1;min-height:48px;border-radius:16px;font-weight:800;font-size:1rem;
+  background:#fff;color:#1f6f5a;border:2px solid #1f6f5a;
+}
+.self-check-row button[aria-pressed="true"][data-mark="right"]{
+  background:#1f6f5a;color:#fff;
+}
+.self-check-row button[aria-pressed="true"][data-mark="wrong"]{
+  background:#9a3b00;color:#fff;border-color:#9a3b00;
+}
+.self-check-note{margin:8px 0 0 !important;font-size:.9rem}
 @media (max-width:860px){
   .modal-card.practice-mode{margin:2vh auto 0;padding:16px 12px 14px;width:calc(100% - 16px);max-height:96vh;border-radius:22px}
   .q-frame{max-height:46vh;padding:6px}

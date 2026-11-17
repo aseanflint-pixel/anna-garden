@@ -19,18 +19,51 @@ html,body{
 }
 body{display:flex;flex-direction:column;min-height:100vh;}
 .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}
-.demo-banner{
-  display:flex;align-items:center;justify-content:center;gap:8px;
-  padding:6px 16px 6px 16px;font-size:12px;font-weight:700;
-  background:#35582a;color:#e8f6c9;position:relative;z-index:5;min-height:34px;
+.save-bar{
+  display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:8px;
+  padding:8px 12px;background:#35582a;color:#e8f6c9;position:relative;z-index:5;
 }
-.demo-banner a{color:#e8f6c9;text-decoration:none;font-weight:800;padding:4px 10px;border-radius:999px;background:rgba(255,255,255,.1);white-space:nowrap}
-.demo-banner a:hover{background:rgba(255,255,255,.2)}
-@media (max-width:860px){
-  .demo-banner{padding:6px 10px 8px;flex-wrap:wrap;justify-content:flex-start;font-size:11px;line-height:1.35}
-  .demo-banner a{position:static}
-  .demo-banner span{flex:1 1 100%;text-align:center}
+.save-bar button{
+  min-height:44px;padding:8px 14px;border-radius:999px;font-weight:800;font-size:.88rem;
+  background:rgba(255,255,255,.14);color:#fffef6;
 }
+.save-bar button:hover{background:rgba(255,255,255,.24)}
+.save-bar button.primary{background:#f0c43a;color:#3d2a04}
+.save-bar button.primary:hover{filter:brightness(1.05)}
+.save-bar button.danger{background:transparent;box-shadow:inset 0 0 0 2px rgba(255,255,255,.4)}
+.save-bar .last-saved{font-size:12px;font-weight:800}
+.topic-meter{font-weight:800;margin:0 0 12px;color:#35582a;line-height:1.45}
+.btn-master{
+  display:block;width:100%;margin-top:10px;padding:12px 16px;border-radius:16px;
+  background:#f0c43a;color:#3d2a04;font-weight:800;font-size:1rem;
+  box-shadow:0 5px 0 #c49216;
+}
+.btn-master:hover{filter:brightness(1.05)}
+.btn-master:active{transform:translateY(2px);box-shadow:0 3px 0 #c49216}
+.btn-master.is-on{background:#e9f6e0;color:#1d3d18;box-shadow:0 5px 0 #b7d9a6}
+.toast{
+  position:fixed;left:50%;bottom:22px;transform:translateX(-50%);
+  max-width:min(440px, calc(100% - 24px));
+  background:#35582a;color:#fffef6;padding:12px 18px;border-radius:999px;
+  font-weight:800;z-index:95;box-shadow:0 10px 24px rgba(0,0,0,.22);text-align:center;
+}
+.toast[hidden]{display:none !important}
+.confirm{position:fixed;inset:0;z-index:110}
+.confirm[hidden]{display:none !important}
+.confirm-backdrop{position:absolute;inset:0;background:rgba(20,16,30,.45)}
+.confirm-card{
+  position:relative;z-index:1;margin:22vh auto 0;width:min(420px, calc(100% - 32px));
+  background:#fffef6;border-radius:24px;padding:22px 20px 18px;
+  box-shadow:0 24px 50px rgba(0,0,0,.25);
+}
+.confirm-card h2{font-size:1.25rem;margin-bottom:8px}
+.confirm-card p{font-weight:700;line-height:1.45;margin-bottom:16px}
+.confirm-actions{display:flex;gap:8px}
+.confirm-actions button{
+  flex:1;min-height:48px;border-radius:14px;font-weight:800;
+  background:#eef6e0;color:#35582a;
+}
+.confirm-actions button.danger{background:#9a3b00;color:#fff}
 
 .app-header{padding:12px 20px 8px;width:min(1180px,100%);margin:0 auto}
 .header-row{display:flex;align-items:flex-end;gap:16px;flex-wrap:wrap}
@@ -116,9 +149,9 @@ body{display:flex;flex-direction:column;min-height:100vh;}
 .modal-backdrop{position:absolute;inset:0;background:rgba(20,16,30,.45);backdrop-filter:blur(4px)}
 .modal-card{position:relative;z-index:1;margin:8vh auto 0;width:min(520px,calc(100% - 32px));max-height:min(84vh,720px);overflow:auto;padding:28px 26px 24px;border-radius:28px;background:#fff;box-shadow:0 30px 60px rgba(0,0,0,.22);animation:pop .28s ease}
 @keyframes pop{from{transform:translateY(16px) scale(.97);opacity:0}to{transform:none;opacity:1}}
-.modal-x{position:absolute;top:12px;right:12px;width:40px;height:40px;border-radius:50%;font-size:26px;line-height:1;background:#f3f1ee;color:#444}
-.modal-kicker{font-size:12px;letter-spacing:.08em;text-transform:uppercase;opacity:.6;font-weight:700;margin-bottom:8px}
-.modal-card h2{font-size:1.55rem;line-height:1.25;margin-bottom:4px}
+.modal-x{position:absolute;top:12px;right:12px;z-index:3;width:40px;height:40px;border-radius:50%;font-size:26px;line-height:1;background:#f3f1ee;color:#444}
+.modal-kicker{font-size:12px;letter-spacing:.08em;text-transform:uppercase;opacity:.6;font-weight:700;margin-bottom:8px;padding-right:36px}
+.modal-card h2{font-size:1.55rem;line-height:1.25;margin-bottom:4px;padding-right:36px}
 .modal-en{opacity:.65;margin-bottom:12px;font-size:.95rem}
 .modal-status{display:flex;align-items:center;gap:10px;margin-bottom:16px}
 .pill{display:inline-flex;align-items:center;padding:4px 10px;border-radius:999px;font-size:12px;font-weight:700}
@@ -152,6 +185,10 @@ body.modal-open{overflow:hidden}
   .subject-tabs{margin-left:0;width:100%}
   .label-en{display:none}
   .hint{font-size:12px}
+  .save-bar{gap:6px;padding:8px 8px 10px}
+  .save-bar button{font-size:.8rem;padding:8px 10px}
+  .save-bar .last-saved{flex:1 1 100%;text-align:center}
+  .confirm-card{margin:18vh auto 0}
 }
 .load-error{margin:40px auto;width:min(520px,90%);background:#fffef6;padding:24px;border-radius:20px;text-align:center}
 </style>
@@ -160,9 +197,13 @@ body.modal-open{overflow:hidden}
 <!-- garden-practice-css:end -->
 </head>
 <body>
-  <div class="demo-banner">
-    <a href="../parent/index.html">家长页面</a>
-    <span id="banner-text">⚠ 示例数据</span>
+  <div class="save-bar" id="save-bar">
+    <button type="button" class="primary" id="btn-save">保存进度</button>
+    <button type="button" id="btn-export">导出进度</button>
+    <button type="button" id="btn-import">导入进度</button>
+    <input id="import-file" class="sr-only" type="file" accept="application/json,.json" aria-label="选择进度文件">
+    <button type="button" class="danger" id="btn-reset">重置进度</button>
+    <span class="last-saved" id="last-saved">上次保存：还没有</span>
   </div>
   <header class="app-header">
     <div class="header-row">
@@ -180,19 +221,31 @@ body.modal-open{overflow:hidden}
   </main>
   <footer class="page-foot">
     <span>知识点名称来自新加坡小学数学、科学大纲。</span>
-    <a href="../parent/index.html">打开家长查看页 →</a>
+    <span>进度保存在这台设备的浏览器里。</span>
   </footer>
   <div id="modal" hidden></div>
+  <div id="toast" class="toast" hidden role="status" aria-live="polite"></div>
+  <div id="confirm" class="confirm" hidden>
+    <div class="confirm-backdrop" data-confirm="no"></div>
+    <div class="confirm-card" role="alertdialog" aria-modal="true" aria-labelledby="confirm-title">
+      <h2 id="confirm-title">要把进度清零吗？</h2>
+      <p>所有花朵都会变回种子。想留一份备份的话，先点「导出进度」。</p>
+      <div class="confirm-actions">
+        <button type="button" data-confirm="no">再想想</button>
+        <button type="button" class="danger" data-confirm="yes">确定清零</button>
+      </div>
+    </div>
+  </div>
 <script>
-/* Auto-generated from demo_student.json. JSON is the source of truth. */
-window.DEMO_DATA = {
+/* Syllabus embedded for GitHub Pages. Progress is stored in the browser, not in this file. */
+window.GARDEN_DATA = {
   "meta": {
     "schema_version": 2,
-    "is_demo": true,
-    "disclaimer": "示例数据 · 掌握进度、历史记录和学习计划仅供预览，不是安安的真实记录。2026 年小四评估日期来自学校信函，已经考完；2027 年小五考试日尚未公布。",
+    "is_demo": false,
+    "disclaimer": "",
     "timezone": "Asia/Singapore",
     "as_of": "2026-11-16",
-    "as_of_note": "页面上的「今天」按 as_of 计算，方便示例数据保持稳定。换成真实数据后可改为当天。",
+    "as_of_note": "进度保存在这台设备的浏览器里，也可以导出备份。",
     "kb_source": "kb/topics.csv",
     "assessment_source": "kb/school_assessment_2026_P4.md",
     "assessment_source_pdf": "sources/school/P4_Assessment_Plan_2026_Sem2.pdf"
@@ -250,9 +303,9 @@ window.DEMO_DATA = {
       "short": "十万以内",
       "group": "整数",
       "flower": "sunflower",
-      "status": "conquered",
-      "stars": 3,
-      "strength": "strong",
+      "status": "todo",
+      "stars": 0,
+      "strength": null,
       "learning_outcomes": [
         {
           "topic_id": "P4-MA-01",
@@ -301,9 +354,9 @@ window.DEMO_DATA = {
       "short": "因数倍数",
       "group": "整数",
       "flower": "clover",
-      "status": "conquered",
-      "stars": 3,
-      "strength": "strong",
+      "status": "todo",
+      "stars": 0,
+      "strength": null,
       "learning_outcomes": [
         {
           "topic_id": "P4-MA-07",
@@ -347,9 +400,9 @@ window.DEMO_DATA = {
       "short": "四则运算",
       "group": "整数",
       "flower": "tulip",
-      "status": "conquered",
-      "stars": 2,
-      "strength": "ok",
+      "status": "todo",
+      "stars": 0,
+      "strength": null,
       "learning_outcomes": [
         {
           "topic_id": "P4-MA-12",
@@ -378,9 +431,9 @@ window.DEMO_DATA = {
       "short": "带分数",
       "group": "分数",
       "flower": "rose",
-      "status": "conquered",
-      "stars": 3,
-      "strength": "strong",
+      "status": "todo",
+      "stars": 0,
+      "strength": null,
       "learning_outcomes": [
         {
           "topic_id": "P4-MA-14",
@@ -404,9 +457,9 @@ window.DEMO_DATA = {
       "short": "一组的几分之几",
       "group": "分数",
       "flower": "rose",
-      "status": "conquered",
-      "stars": 2,
-      "strength": "ok",
+      "status": "todo",
+      "stars": 0,
+      "strength": null,
       "learning_outcomes": [
         {
           "topic_id": "P4-MA-15",
@@ -430,9 +483,9 @@ window.DEMO_DATA = {
       "short": "分数加减",
       "group": "分数",
       "flower": "rose",
-      "status": "progress",
-      "stars": 1,
-      "strength": "weak",
+      "status": "todo",
+      "stars": 0,
+      "strength": null,
       "learning_outcomes": [
         {
           "topic_id": "P4-MA-16",
@@ -456,9 +509,9 @@ window.DEMO_DATA = {
       "short": "三位小数",
       "group": "小数",
       "flower": "daisy",
-      "status": "progress",
-      "stars": 1,
-      "strength": "ok",
+      "status": "todo",
+      "stars": 0,
+      "strength": null,
       "learning_outcomes": [
         {
           "topic_id": "P4-MA-17",
@@ -528,7 +581,7 @@ window.DEMO_DATA = {
       "short": "小数乘除",
       "group": "小数",
       "flower": "daisy",
-      "status": "locked",
+      "status": "todo",
       "stars": 0,
       "strength": null,
       "learning_outcomes": [
@@ -564,7 +617,7 @@ window.DEMO_DATA = {
       "short": "面积周长",
       "group": "面积与体积",
       "flower": "fern",
-      "status": "locked",
+      "status": "todo",
       "stars": 0,
       "strength": null,
       "learning_outcomes": [
@@ -600,7 +653,7 @@ window.DEMO_DATA = {
       "short": "角",
       "group": "几何",
       "flower": "lily",
-      "status": "locked",
+      "status": "todo",
       "stars": 0,
       "strength": null,
       "learning_outcomes": [
@@ -636,7 +689,7 @@ window.DEMO_DATA = {
       "short": "长方形正方形",
       "group": "几何",
       "flower": "lily",
-      "status": "locked",
+      "status": "todo",
       "stars": 0,
       "strength": null,
       "learning_outcomes": [
@@ -667,7 +720,7 @@ window.DEMO_DATA = {
       "short": "直线对称",
       "group": "几何",
       "flower": "lily",
-      "status": "locked",
+      "status": "todo",
       "stars": 0,
       "strength": null,
       "learning_outcomes": [
@@ -703,7 +756,7 @@ window.DEMO_DATA = {
       "short": "展开图",
       "group": "几何",
       "flower": "fern",
-      "status": "locked",
+      "status": "todo",
       "stars": 0,
       "strength": null,
       "learning_outcomes": [
@@ -744,7 +797,7 @@ window.DEMO_DATA = {
       "short": "统计图表",
       "group": "数据",
       "flower": "lavender",
-      "status": "locked",
+      "status": "todo",
       "stars": 0,
       "strength": null,
       "learning_outcomes": [
@@ -775,9 +828,9 @@ window.DEMO_DATA = {
       "short": "物质",
       "group": "循环",
       "flower": "water",
-      "status": "conquered",
-      "stars": 3,
-      "strength": "strong",
+      "status": "todo",
+      "stars": 0,
+      "strength": null,
       "learning_outcomes": [
         {
           "topic_id": "P4-SC-01",
@@ -811,9 +864,9 @@ window.DEMO_DATA = {
       "short": "消化系统",
       "group": "系统",
       "flower": "tulip",
-      "status": "conquered",
-      "stars": 2,
-      "strength": "ok",
+      "status": "todo",
+      "stars": 0,
+      "strength": null,
       "learning_outcomes": [
         {
           "topic_id": "P4-SC-04",
@@ -842,9 +895,9 @@ window.DEMO_DATA = {
       "short": "植物部分",
       "group": "系统",
       "flower": "tree",
-      "status": "progress",
-      "stars": 1,
-      "strength": "ok",
+      "status": "todo",
+      "stars": 0,
+      "strength": null,
       "learning_outcomes": [
         {
           "topic_id": "P4-SC-06",
@@ -909,7 +962,7 @@ window.DEMO_DATA = {
       "short": "热",
       "group": "能量",
       "flower": "marigold",
-      "status": "locked",
+      "status": "todo",
       "stars": 0,
       "strength": null,
       "learning_outcomes": [
@@ -965,183 +1018,8 @@ window.DEMO_DATA = {
       }
     }
   ],
-  "mastery_events": [
-    {
-      "event_id": "ev-001",
-      "topic_id": "P4-MA-01",
-      "type": "conquered",
-      "at": "2026-08-20T16:20:00+08:00",
-      "stars": 3,
-      "note": "示例：攻克十万以内的数"
-    },
-    {
-      "event_id": "ev-002",
-      "topic_id": "P4-MA-07",
-      "type": "conquered",
-      "at": "2026-09-04T17:05:00+08:00",
-      "stars": 3,
-      "note": "示例：攻克因数与倍数"
-    },
-    {
-      "event_id": "ev-003",
-      "topic_id": "P4-SC-01",
-      "type": "conquered",
-      "at": "2026-09-11T16:40:00+08:00",
-      "stars": 3,
-      "note": "示例：攻克物质"
-    },
-    {
-      "event_id": "ev-004",
-      "topic_id": "P4-MA-12",
-      "type": "conquered",
-      "at": "2026-09-18T15:50:00+08:00",
-      "stars": 2,
-      "note": "示例：攻克四则运算"
-    },
-    {
-      "event_id": "ev-005",
-      "topic_id": "P4-MA-14",
-      "type": "conquered",
-      "at": "2026-10-20T16:10:00+08:00",
-      "stars": 3,
-      "note": "示例：攻克带分数与假分数"
-    },
-    {
-      "event_id": "ev-006",
-      "topic_id": "P4-SC-04",
-      "type": "conquered",
-      "at": "2026-10-23T17:15:00+08:00",
-      "stars": 2,
-      "note": "示例：攻克消化系统"
-    },
-    {
-      "event_id": "ev-007",
-      "topic_id": "P4-MA-16",
-      "type": "started",
-      "at": "2026-10-27T16:00:00+08:00",
-      "stars": 0,
-      "note": "示例：开始学分数加减"
-    },
-    {
-      "event_id": "ev-008",
-      "topic_id": "P4-MA-17",
-      "type": "started",
-      "at": "2026-11-03T16:20:00+08:00",
-      "stars": 0,
-      "note": "示例：开始学三位小数"
-    },
-    {
-      "event_id": "ev-009",
-      "topic_id": "P4-SC-06",
-      "type": "started",
-      "at": "2026-11-05T16:35:00+08:00",
-      "stars": 0,
-      "note": "示例：开始学植物的部分"
-    },
-    {
-      "event_id": "ev-010",
-      "topic_id": "P4-MA-15",
-      "type": "conquered",
-      "at": "2026-11-11T16:45:00+08:00",
-      "stars": 2,
-      "note": "示例：攻克一组中的几分之几"
-    },
-    {
-      "event_id": "ev-011",
-      "topic_id": "P4-MA-16",
-      "type": "progressed",
-      "at": "2026-11-12T17:00:00+08:00",
-      "stars": 1,
-      "note": "示例：分数加减仍需加强"
-    },
-    {
-      "event_id": "ev-012",
-      "topic_id": "P4-MA-17",
-      "type": "progressed",
-      "at": "2026-11-14T16:25:00+08:00",
-      "stars": 1,
-      "note": "示例：三位小数练习中"
-    }
-  ],
-  "plan_items": [
-    {
-      "plan_id": "pl-01",
-      "topic_id": "P4-MA-16",
-      "target_date": "2026-11-19",
-      "goal": "攻克",
-      "note": "把分数加减练熟，这是目前比较薄弱的一关"
-    },
-    {
-      "plan_id": "pl-02",
-      "topic_id": "P4-MA-17",
-      "target_date": "2026-11-21",
-      "goal": "继续练习",
-      "note": "把三位小数的数位和四舍五入做扎实"
-    },
-    {
-      "plan_id": "pl-03",
-      "topic_id": "P4-SC-06",
-      "target_date": "2026-11-22",
-      "goal": "攻克",
-      "note": "辨认叶、茎、根的功能"
-    },
-    {
-      "plan_id": "pl-04",
-      "topic_id": "P4-MA-22",
-      "target_date": "2026-11-23",
-      "goal": "开始并尽量攻克",
-      "note": "小数的加法与减法"
-    },
-    {
-      "plan_id": "pl-05",
-      "topic_id": "P4-MA-23",
-      "target_date": "2026-11-27",
-      "goal": "开始学习",
-      "note": "小数的乘法与除法"
-    },
-    {
-      "plan_id": "pl-06",
-      "topic_id": "P4-SC-08",
-      "target_date": "2026-11-29",
-      "goal": "攻克",
-      "note": "光与影子"
-    },
-    {
-      "plan_id": "pl-07",
-      "topic_id": "P4-MA-26",
-      "target_date": "2026-12-02",
-      "goal": "开始学习",
-      "note": "面积与周长"
-    },
-    {
-      "plan_id": "pl-08",
-      "topic_id": "P4-SC-11",
-      "target_date": "2026-12-06",
-      "goal": "开始学习",
-      "note": "热"
-    },
-    {
-      "plan_id": "pl-09",
-      "topic_id": "P4-MA-29",
-      "target_date": "2026-12-08",
-      "goal": "开始学习",
-      "note": "角"
-    },
-    {
-      "plan_id": "pl-10",
-      "topic_id": "P4-MA-32",
-      "target_date": "2026-12-11",
-      "goal": "开始学习",
-      "note": "长方形与正方形"
-    },
-    {
-      "plan_id": "pl-11",
-      "topic_id": "P4-MA-34",
-      "target_date": "2026-12-14",
-      "goal": "开始学习",
-      "note": "直线对称"
-    }
-  ],
+  "mastery_events": [],
+  "plan_items": [],
   "countdown": {
     "target_year": 2027,
     "target_grade": "P5",
@@ -1725,7 +1603,6 @@ window.DEMO_DATA = {
     }
   ]
 };
-
 </script>
 <script>
 const STATUS = {
@@ -1738,9 +1615,10 @@ function $(sel, root=document){ return root.querySelector(sel); }
 function starsHTML(n){
   return [1,2,3].map(i => `<span class="star ${i<=n?"on":""}" aria-hidden="true">★</span>`).join("");
 }
-function flowerSVG(kind, status){
-  const grown = status==="conquered";
-  const seed = status==="todo" || status==="locked";
+function flowerSVG(kind, status, pct){
+  const p = typeof pct === "number" ? pct : (status==="conquered" ? 100 : (status==="progress" ? 40 : 0));
+  const grown = p >= 100;
+  const seed = p <= 0;
   const grey = status==="locked" ? 'style="filter:grayscale(.7);opacity:.7"' : "";
   if(seed){
     const seedColor = status==="locked" ? "#9a9084" : "#6b4223";
@@ -1750,7 +1628,7 @@ function flowerSVG(kind, status){
       ${status==="todo" ? '<path d="M55 82c0-10 8-16 8-16" stroke="#6aaa4a" stroke-width="2" fill="none"/>' : ""}
     </svg>`;
   }
-  const stemH = grown ? 70 : 48;
+  const stemH = grown ? 70 : Math.round(38 + (p / 100) * 26);
   const stem = `<path d="M55 104 C55 ${104-stemH*.3}, 55 ${104-stemH*.6}, 55 ${104-stemH}" stroke="#2f7a3c" stroke-width="4" fill="none" stroke-linecap="round"/>`;
   const leafs = `<path d="M55 ${104-stemH*.45} C40 ${104-stemH*.55}, 32 ${104-stemH*.3}, 38 ${104-stemH*.2}" fill="#57a34a"/>
                  <path d="M55 ${104-stemH*.6} C70 ${104-stemH*.7}, 78 ${104-stemH*.45}, 72 ${104-stemH*.35}" fill="#3f8f4b"/>`;
@@ -1803,23 +1681,214 @@ function treeSVG(pct){
   </svg>`;
 }
 
-function topicsOf(data, sid){ return data.topics.filter(t => t.subject_id === sid); }
-function statsOf(data, sid){
-  const ts = topicsOf(data, sid);
-  const done = ts.filter(t => t.status==="conquered").length;
-  const total = ts.length;
-  const donePct = total ? Math.round(done/total*100) : 0;
-  return { done, total, donePct, remainPct: total? 100-donePct : 0, unfinished: ts.filter(t => t.status!=="conquered") };
-}
-
+/* Progress: 5 different questions marked 做对了 bloom a topic (fewer if the bank is smaller).
+   我学会了 forces 100%. 做错了 on a question that was right lowers it again.
+   Overall 学会了 is the average of topic percents. 还没开花 counts topics under 100%. */
+const PROGRESS_KEY = "anna-garden.progress.v1";
+const MASTER_GOAL = 5;
 let DATA = null;
 let current = "math";
+let store = { version:1, savedAt:null, topics:{} };
+let toastTimer = null;
+let confirmResolver = null;
+
+function emptyStore(){ return { version:1, savedAt:null, topics:{} }; }
+function knownTopic(id){
+  return !!(DATA && DATA.topics && DATA.topics.some(t => t.topic_id === id));
+}
+function sanitizeStore(obj){
+  if(!obj || typeof obj !== "object" || Array.isArray(obj)) throw new Error("bad");
+  if(obj.version !== 1) throw new Error("version");
+  if(!obj.topics || typeof obj.topics !== "object" || Array.isArray(obj.topics)) throw new Error("topics");
+  const topics = {};
+  Object.keys(obj.topics).forEach(id => {
+    if(id === "__proto__" || id === "constructor" || id === "prototype") return;
+    if(!knownTopic(id)) return;
+    const rec = obj.topics[id];
+    if(!rec || typeof rec !== "object" || Array.isArray(rec)) return;
+    const marks = {};
+    const src = rec.marks && typeof rec.marks === "object" && !Array.isArray(rec.marks) ? rec.marks : {};
+    Object.keys(src).forEach(qid => {
+      if(qid === "__proto__" || qid === "constructor" || qid === "prototype") return;
+      if(src[qid] === "right" || src[qid] === "wrong") marks[qid] = src[qid];
+    });
+    topics[id] = { marks, mastered: rec.mastered === true };
+  });
+  let savedAt = null;
+  if(typeof obj.savedAt === "string" && !Number.isNaN(Date.parse(obj.savedAt))){
+    savedAt = new Date(obj.savedAt).toISOString();
+  }
+  return { version:1, savedAt, topics };
+}
+function readStore(){
+  try{
+    const raw = localStorage.getItem(PROGRESS_KEY);
+    if(!raw) return emptyStore();
+    return sanitizeStore(JSON.parse(raw));
+  }catch(e){
+    return emptyStore();
+  }
+}
+function stampParts(iso){
+  const parts = new Intl.DateTimeFormat("en-GB", {
+    timeZone:"Asia/Singapore", month:"numeric", day:"numeric",
+    hour:"2-digit", minute:"2-digit", hourCycle:"h23"
+  }).formatToParts(new Date(iso));
+  const get = (type) => (parts.find(p => p.type === type) || {}).value || "";
+  return { month:get("month"), day:get("day"), hour:get("hour"), minute:get("minute") };
+}
+function formatSaved(iso){
+  if(!iso) return "还没有";
+  const p = stampParts(iso);
+  return p.month + "月" + p.day + "日 " + p.hour + ":" + p.minute;
+}
+function formatClock(iso){
+  const p = stampParts(iso);
+  return p.hour + ":" + p.minute;
+}
+function updateSavedLabel(){
+  const el = $("#last-saved");
+  if(el) el.textContent = "上次保存：" + formatSaved(store.savedAt);
+}
+function toast(message){
+  const el = $("#toast");
+  if(!el) return;
+  el.textContent = message;
+  el.hidden = false;
+  if(toastTimer) clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => { el.hidden = true; }, 2600);
+}
+function writeStore(opts){
+  opts = opts || {};
+  store.version = 1;
+  if(!opts.keepSavedAt || !store.savedAt) store.savedAt = new Date().toISOString();
+  try{
+    localStorage.setItem(PROGRESS_KEY, JSON.stringify(store));
+  }catch(e){
+    updateSavedLabel();
+    toast("这台设备暂时存不住进度");
+    return false;
+  }
+  updateSavedLabel();
+  if(opts.toast) toast("已经保存啦 · " + formatClock(store.savedAt));
+  return true;
+}
+function ensureRec(topicId){
+  if(!store.topics[topicId]) store.topics[topicId] = { marks:{}, mastered:false };
+  if(!store.topics[topicId].marks) store.topics[topicId].marks = {};
+  return store.topics[topicId];
+}
+function questionCountFor(topicId){
+  const t = DATA && DATA.topics ? DATA.topics.find(x => x.topic_id === topicId) : null;
+  const b = window.PRACTICE_BANK;
+  if(!t || !b || !b.questions) return 0;
+  const ids = [t.topic_id].concat((t.learning_outcomes || []).map(lo => lo.topic_id));
+  const seen = {};
+  let n = 0;
+  ids.forEach(id => {
+    const idxs = (b.byTopic && b.byTopic[id]) || [];
+    idxs.forEach(i => {
+      if(seen[i]) return;
+      seen[i] = true;
+      if(b.questions[i]) n += 1;
+    });
+  });
+  return n;
+}
+function goalFor(topicId){
+  const n = questionCountFor(topicId);
+  if(n <= 0) return 0;
+  return Math.min(MASTER_GOAL, n);
+}
+function rightCount(topicId){
+  const rec = store.topics[topicId];
+  if(!rec || !rec.marks) return 0;
+  return Object.keys(rec.marks).reduce((n, id) => n + (rec.marks[id] === "right" ? 1 : 0), 0);
+}
+function percentFor(topicId){
+  const rec = store.topics[topicId];
+  if(rec && rec.mastered) return 100;
+  const goal = goalFor(topicId);
+  if(goal <= 0) return 0;
+  const right = Math.min(goal, rightCount(topicId));
+  return Math.max(0, Math.min(100, Math.round(100 * right / goal)));
+}
+function isMastered(topicId){
+  return !!(store.topics[topicId] && store.topics[topicId].mastered);
+}
+function getMark(topicId, qid){
+  const rec = store.topics[topicId];
+  if(!rec || !rec.marks) return null;
+  return rec.marks[qid] || null;
+}
+function statusFor(pct){
+  if(pct >= 100) return "conquered";
+  if(pct > 0) return "progress";
+  return "todo";
+}
+function starsFor(pct){
+  if(pct >= 100) return 3;
+  if(pct >= 60) return 2;
+  if(pct >= 20) return 1;
+  return 0;
+}
+function statusText(t){
+  if(t.percent >= 100) return "已攻克";
+  if(t.percent > 0) return "进行中 " + t.percent + "%";
+  return "未开始";
+}
+function decorate(t){
+  const percent = percentFor(t.topic_id);
+  return Object.assign({}, t, { percent, status: statusFor(percent), stars: starsFor(percent) });
+}
+function markQuestion(topicId, qid, result){
+  if((result !== "right" && result !== "wrong") || !qid || !knownTopic(topicId)) return percentFor(topicId);
+  const rec = ensureRec(topicId);
+  rec.marks[String(qid)] = result;
+  if(result === "wrong") rec.mastered = false;
+  writeStore();
+  render();
+  return percentFor(topicId);
+}
+function setMastered(topicId, yes){
+  if(!knownTopic(topicId)) return;
+  const rec = ensureRec(topicId);
+  rec.mastered = !!yes;
+  writeStore();
+  const practicing = !!document.querySelector(".modal-card.practice-mode");
+  render();
+  if(!practicing && !$("#modal").hidden) openModal(topicId);
+}
+function topicsOf(data, sid){
+  return data.topics.filter(t => t.subject_id === sid).map(decorate);
+}
+function statsOf(data, sid){
+  const ts = topicsOf(data, sid);
+  const total = ts.length;
+  const done = ts.filter(t => t.percent >= 100).length;
+  const sum = ts.reduce((a, t) => a + (t.percent || 0), 0);
+  const donePct = total ? Math.round(sum / total) : 0;
+  return {
+    done, total, donePct,
+    remainPct: total ? Math.max(0, 100 - donePct) : 0,
+    unfinished: ts.filter(t => t.percent < 100)
+  };
+}
 
 function openModal(id){
-  const t = DATA.topics.find(x => x.topic_id === id);
-  if(!t) return;
-  const st = STATUS[t.status];
+  const raw = DATA.topics.find(x => x.topic_id === id);
+  if(!raw) return;
+  const t = decorate(raw);
   const canPractice = t.status !== "locked";
+  const flagged = isMastered(t.topic_id);
+  const goal = goalFor(t.topic_id);
+  let help = "做对 " + goal + " 道不同的题，花就会开。也可以直接点「我学会了」。";
+  if(flagged) help = "这是你点的「我学会了」。想再练练，就点下面。";
+  else if(t.percent >= 100) help = "做对的题已经够了，这朵花开啦。";
+  else if(goal <= 0) help = "这里还没有题目，学会了可以点下面的按钮。";
+  const masterBtn = flagged
+    ? `<button class="btn-master is-on" type="button" id="btn-master">还要再练练</button>`
+    : (t.percent >= 100 ? "" : `<button class="btn-master" type="button" id="btn-master">我学会了</button>`);
   const box = $("#modal");
   box.innerHTML = `
     <div class="modal-backdrop" data-close="1"></div>
@@ -1829,15 +1898,17 @@ function openModal(id){
       <h2 id="md-title">${t.name_zh}</h2>
       <p class="modal-en">${t.name_en}</p>
       <div class="modal-status status-${t.status}">
-        <span class="pill">${st.label}</span>
+        <span class="pill">${statusText(t)}</span>
         <span class="stars" aria-label="${t.stars} 颗星">${starsHTML(t.stars)}</span>
       </div>
+      <p class="topic-meter">这朵花现在 <b>${t.percent}%</b>。${help}</p>
       <p class="modal-lead">这一关你会：</p>
       <ul class="modal-los">${t.learning_outcomes.map(x=>`<li>${x.text_zh}</li>`).join("")}</ul>
       <button class="btn-practice" type="button" id="btn-practice" ${canPractice?"":"disabled"}>
         ${canPractice? "练习真题": "先通关前面的知识点"}
       </button>
       <p class="practice-note" hidden>题库正在整理中，稍后就能在这里练习对应的真题啦。</p>
+      ${masterBtn}
     </div>`;
   box.hidden = false;
   document.body.classList.add("modal-open");
@@ -1845,14 +1916,27 @@ function openModal(id){
   if(prac && canPractice){
     prac.addEventListener("click", () => { box.querySelector(".practice-note").hidden = false; });
   }
-  box.addEventListener("click", (e) => { if(e.target.dataset.close) closeModal(); });
+  const master = $("#btn-master");
+  if(master){
+    master.addEventListener("click", () => setMastered(t.topic_id, !isMastered(t.topic_id)));
+  }
+  box.onclick = (e) => { if(e.target.dataset.close) closeModal(); };
 }
 function closeModal(){
   const box = $("#modal");
   box.hidden = true; box.innerHTML = "";
   document.body.classList.remove("modal-open");
 }
-document.addEventListener("keydown", (e) => { if(e.key==="Escape") closeModal(); });
+document.addEventListener("keydown", (e) => {
+  if(e.key !== "Escape") return;
+  const confirmBox = $("#confirm");
+  if(confirmBox && !confirmBox.hidden){
+    confirmBox.hidden = true;
+    if(confirmResolver){ const done = confirmResolver; confirmResolver = null; done(false); }
+    return;
+  }
+  closeModal();
+});
 
 function renderTabs(){
   const tabs = $("#tabs");
@@ -1879,9 +1963,9 @@ function renderVitals(s){
   $("#vitals").innerHTML = `
     <div class="tree-wrap">${treeSVG(st.donePct)}</div>
     <div class="stats-col">
-      <div class="stat done"><div class="k">已开花</div><div class="v">${st.donePct}%</div><div class="unit">（${st.done}/${st.total}）</div></div>
-      <div class="stat remain"><div class="k">还剩</div><div class="v">${st.remainPct}%</div></div>
-      <div class="stat todo"><div class="k">还没开花</div><div class="v">${st.unfinished.length}</div><div class="unit">株</div></div>
+      <div class="stat done" data-stat="done"><div class="k">学会了</div><div class="v">${st.donePct}%</div><div class="unit">开花 ${st.done}/${st.total}</div></div>
+      <div class="stat remain" data-stat="remain"><div class="k">还剩</div><div class="v">${st.remainPct}%</div></div>
+      <div class="stat todo" data-stat="todo"><div class="k">还没开花</div><div class="v">${st.unfinished.length}</div><div class="unit">株</div></div>
       <div class="bar-wrap" aria-hidden="true"><span style="--p:${st.donePct}%"></span></div>
       <p class="hint">${hint}</p>
     </div>`;
@@ -1892,12 +1976,12 @@ function renderGarden(sid){
   const showBf = statsOf(DATA, sid).donePct >= 30;
   const plots = topics.map(t => {
     const kind = t.flower || "daisy";
-    return `<button class="plot ${t.status}" type="button" data-id="${t.topic_id}" aria-label="${t.name_zh}，${STATUS[t.status].label}">
-      <div class="plant">${flowerSVG(kind, t.status)}</div>
+    return `<button class="plot ${t.status}" type="button" data-id="${t.topic_id}" data-percent="${t.percent}" data-status="${t.status}" aria-label="${t.name_zh}，${statusText(t)}">
+      <div class="plant">${flowerSVG(kind, t.status, t.percent)}</div>
       <div class="pot"><span class="soil"></span></div>
       <div class="label-zh">${t.name_zh}</div>
       <div class="label-en">${t.name_en}</div>
-      <span class="tag">${STATUS[t.status].label}</span>
+      <span class="tag">${statusText(t)}</span>
     </button>`;
   }).join("");
   $("#garden").innerHTML = `
@@ -1917,13 +2001,12 @@ function renderSide(sid){
       <button class="seed-item" type="button" data-id="${t.topic_id}">
         <span class="ico">${ico[t.status]}</span>
         <span><span class="zh">${t.name_zh}</span><span class="en">${t.name_en}</span></span>
-        <span class="st">${STATUS[t.status].label}</span>
+        <span class="st">${statusText(t)}</span>
       </button>`).join("")}
     <div class="legend">
       <span>🌼 已攻克（开花）</span>
-      <span>🌿 进行中（嫩芽）</span>
+      <span>🌿 进行中（嫩芽会长高）</span>
       <span>🌱 未开始（种子）</span>
-      <span>🌰 未解锁</span>
     </div>`;
   $("#side").onclick = (e) => { const b=e.target.closest("[data-id]"); if(b) openModal(b.dataset.id); };
 }
@@ -1947,27 +2030,100 @@ function render(){
   renderSide(current);
 }
 
-async function loadDemoData(){
-  try{
-    const r = await fetch("../data/demo_student.json", {cache:"no-store"});
-    if(r.ok) return await r.json();
-  }catch(e){}
-  if(window.DEMO_DATA) return window.DEMO_DATA;
-  throw new Error("无法加载示例数据");
+function askReset(){
+  const box = $("#confirm");
+  box.hidden = false;
+  return new Promise(resolve => {
+    confirmResolver = resolve;
+    box.onclick = (e) => {
+      const b = e.target.closest("[data-confirm]");
+      if(!b) return;
+      box.hidden = true;
+      const done = confirmResolver;
+      confirmResolver = null;
+      if(done) done(b.dataset.confirm === "yes");
+    };
+  });
 }
-
-loadDemoData().then(data => {
-  DATA = data;
-  $("#banner-text").textContent = "⚠ " + (data.meta.disclaimer || "示例数据");
-  current = (data.subjects.find(s => !s.coming_soon) || data.subjects[0]).subject_id;
+function resetProgress(){
+  store = emptyStore();
+  writeStore({ toast:false });
+  closeModal();
   render();
-}).catch(err => {
-  document.querySelector("main").innerHTML = `<div class="load-error"><p>数据没有加载出来。</p><p>${err.message}</p></div>`;
-});
+  toast("进度已经清零 · " + formatClock(store.savedAt));
+}
+function exportProgress(){
+  writeStore({ toast:false });
+  const payload = {
+    version:1,
+    app:"anna-garden",
+    savedAt: store.savedAt,
+    topics: store.topics
+  };
+  const blob = new Blob([JSON.stringify(payload, null, 2)], { type:"application/json" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "anan-garden-progress.json";
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 1500);
+  toast("进度文件已经下载 · " + formatClock(store.savedAt));
+}
+function importProgress(file){
+  const reader = new FileReader();
+  reader.onload = () => {
+    try{
+      const data = JSON.parse(String(reader.result || ""));
+      store = sanitizeStore(data);
+      if(!store.savedAt) store.savedAt = new Date().toISOString();
+      writeStore({ toast:false, keepSavedAt:true });
+      closeModal();
+      render();
+      toast("进度已经导入 · " + formatClock(store.savedAt));
+    }catch(e){
+      toast("这个文件读不出来，花园没有改。");
+    }
+  };
+  reader.onerror = () => toast("这个文件读不出来，花园没有改。");
+  reader.readAsText(file);
+}
+function bindSaveBar(){
+  $("#btn-save").addEventListener("click", () => writeStore({ toast:true }));
+  $("#btn-export").addEventListener("click", exportProgress);
+  $("#btn-import").addEventListener("click", () => $("#import-file").click());
+  $("#import-file").addEventListener("change", (e) => {
+    const file = e.target.files && e.target.files[0];
+    e.target.value = "";
+    if(file) importProgress(file);
+  });
+  $("#btn-reset").addEventListener("click", async () => {
+    const yes = await askReset();
+    if(yes) resetProgress();
+  });
+}
+function bootGarden(){
+  try{
+    DATA = window.GARDEN_DATA;
+    if(!DATA || !DATA.topics) throw new Error("知识点没有加载出来");
+    store = readStore();
+    current = (DATA.subjects.find(s => !s.coming_soon) || DATA.subjects[0]).subject_id;
+    bindSaveBar();
+    updateSavedLabel();
+    render();
+  }catch(err){
+    const main = document.querySelector("main");
+    if(main) main.innerHTML = `<div class="load-error"><p>数据没有加载出来。</p><p>${err.message}</p></div>`;
+  }
+}
+window.AnnaProgress = { markQuestion, getMark, percentFor, setMastered, goalFor };
+window.bootGarden = bootGarden;
 </script>
 <!-- garden-practice-js:start -->
   <script src="assets/practice-bank.js"></script>
   <script src="assets/practice.js"></script>
+  <script>bootGarden();</script>
 <!-- garden-practice-js:end -->
 </body>
 </html>

@@ -1,5 +1,5 @@
 /* Practice-view logic for 安安's knowledge garden.
-   Wraps the existing openModal so the garden layout and demo progress stay the same.
+   Wraps openModal and lets her mark 做对了 / 做错了 after the answer is shown.
 */
 (function () {
   "use strict";
@@ -166,7 +166,8 @@
           "<div class=\"k\">核对通过的答案</div>" +
           "<div class=\"v\">" + esc(q.answer || "（没有写下答案）") + "</div>" +
           (q.explanation ? "<div class=\"exp\">" + esc(q.explanation) + "</div>" : "") +
-        "</div>"
+        "</div>" +
+        selfCheckHTML(t, q)
       : "";
 
     box.innerHTML =
@@ -197,6 +198,23 @@
     bindPractice(t, filterId, safeIndex, revealed);
   }
 
+  function selfCheckHTML(t, q){
+    const api = window.AnnaProgress;
+    const mark = api ? api.getMark(t.topic_id, q.id) : null;
+    const pct = api ? api.percentFor(t.topic_id) : 0;
+    let note = "对一下答案，再告诉花园这道题做得怎么样。";
+    if(mark === "right") note = "做对了，这朵花现在 " + pct + "%。";
+    else if(mark === "wrong") note = "做错了也没关系，这朵花现在 " + pct + "%。再试一题吧。";
+    return "<div class=\"self-check\">" +
+      "<p>你做对了吗？</p>" +
+      "<div class=\"self-check-row\" role=\"group\" aria-label=\"这道题做得怎么样\">" +
+        "<button type=\"button\" data-mark=\"right\" aria-pressed=\"" + (mark === "right" ? "true" : "false") + "\">做对了</button>" +
+        "<button type=\"button\" data-mark=\"wrong\" aria-pressed=\"" + (mark === "wrong" ? "true" : "false") + "\">做错了</button>" +
+      "</div>" +
+      "<p class=\"self-check-note\">" + esc(note) + "</p>" +
+    "</div>";
+  }
+
   let practiceKeyHandler = null;
 
   function bindPractice(t, filterId, index, revealed) {
@@ -225,6 +243,16 @@
         renderPractice(t, fid, 0, false);
         return;
       }
+      const markBtn = e.target.closest("[data-mark]");
+      if (markBtn && markBtn.closest(".self-check")) {
+        const list = questionsFor(t, filterId);
+        const currentQ = list[index];
+        if (currentQ && window.AnnaProgress) {
+          window.AnnaProgress.markQuestion(t.topic_id, currentQ.id, markBtn.dataset.mark);
+        }
+        renderPractice(t, filterId, index, true);
+        return;
+      }
       if (e.target.closest("[data-reveal]")) {
         renderPractice(t, filterId, index, !revealed);
       }
@@ -244,6 +272,8 @@
         e.preventDefault();
         if (index > 0) renderPractice(t, filterId, index - 1, false);
       } else if (e.key === "Escape") {
+        const confirmBox = document.querySelector("#confirm");
+        if (confirmBox && !confirmBox.hidden) return;
         e.preventDefault();
         e.stopImmediatePropagation();
         openModal(t.topic_id);
