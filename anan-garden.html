@@ -1,0 +1,1973 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>安安的知识花园</title>
+<style>
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;padding:0}
+button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
+h1,h2,h3,p{margin:0}
+ul{margin:0;padding:0;list-style:none}
+:root{--ink:#2c3a2e;--soil:#8a5a32;--leaf:#3f8f4b;--paper:#fbf6ea;--wood:#6b4423;}
+html,body{
+  min-height:100%;
+  color:var(--ink);
+  font-family:"Nunito","Quicksand","Noto Sans CJK SC","Noto Sans SC","PingFang SC",sans-serif;
+  background:linear-gradient(180deg,#b9e4f8 0%,#e8f6c9 38%,#cfe8a0 70%,#b4d67a 100%);
+}
+body{display:flex;flex-direction:column;min-height:100vh;}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}
+.demo-banner{
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  padding:6px 16px 6px 16px;font-size:12px;font-weight:700;
+  background:#35582a;color:#e8f6c9;position:relative;z-index:5;min-height:34px;
+}
+.demo-banner a{color:#e8f6c9;text-decoration:none;font-weight:800;padding:4px 10px;border-radius:999px;background:rgba(255,255,255,.1);white-space:nowrap}
+.demo-banner a:hover{background:rgba(255,255,255,.2)}
+@media (max-width:860px){
+  .demo-banner{padding:6px 10px 8px;flex-wrap:wrap;justify-content:flex-start;font-size:11px;line-height:1.35}
+  .demo-banner a{position:static}
+  .demo-banner span{flex:1 1 100%;text-align:center}
+}
+
+.app-header{padding:12px 20px 8px;width:min(1180px,100%);margin:0 auto}
+.header-row{display:flex;align-items:flex-end;gap:16px;flex-wrap:wrap}
+.sign{
+  background:linear-gradient(180deg,#c9853a,#8c5520);color:#fff8e6;
+  border-radius:8px 8px 14px 14px;padding:12px 18px 14px;
+  box-shadow:0 8px 0 #5c3814,inset 0 2px 0 rgba(255,255,255,.25);
+  position:relative;min-width:240px;
+}
+.sign::before,.sign::after{content:"";position:absolute;top:-16px;width:10px;height:22px;background:#6b4423;border-radius:3px;box-shadow:inset 0 0 0 2px #5a3918}
+.sign::before{left:22px}.sign::after{right:22px}
+.sign .eyebrow{font-size:11px;letter-spacing:.12em;font-weight:800;opacity:.8}
+.sign h1{font-size:1.4rem;font-weight:800;letter-spacing:.02em}
+.subject-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-left:auto;padding-bottom:6px}
+.subject-tabs button{padding:8px 14px;border-radius:999px;font-weight:800;font-size:.92rem;background:#fffef6;border:2px solid #c9dc9a;color:#35582a}
+.subject-tabs button[aria-selected="true"]{background:#35582a;color:#fffef6;border-color:#35582a}
+.subject-tabs button.is-soon{opacity:.7}
+.subject-tabs button.is-soon small{display:block;font-size:9px}
+
+.vitals{
+  display:grid;grid-template-columns:180px 1fr;gap:16px;align-items:center;
+  margin:10px 0 0;background:rgba(255,254,246,.75);border-radius:24px;
+  padding:12px 16px;border:1px solid rgba(53,88,42,.08);
+}
+.tree-wrap{display:grid;place-items:center}
+.tree-wrap svg{width:150px;height:150px}
+.stats-col{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.stat{text-align:center;padding:6px 4px;overflow:visible}
+.stat .k{font-size:11px;font-weight:800;opacity:.6;letter-spacing:.04em}
+.stat .v{font-size:1.5rem;font-weight:800;line-height:1.25;overflow:visible}
+.stat .unit{display:block;margin-top:2px;font-size:12px;font-weight:800;font-family:"Noto Sans CJK SC","Noto Sans SC",sans-serif}
+.stat.done .v{color:#1d7a3a}
+.stat.remain .v{color:#b8610a}
+.stat.todo .v{color:#1d4e89}
+.bar-wrap{grid-column:1/-1;height:12px;background:#e4efd4;border-radius:999px;overflow:hidden}
+.bar-wrap span{display:block;height:100%;width:var(--p);background:linear-gradient(90deg,#3f8f4b,#f0c43a);border-radius:999px}
+.hint{grid-column:1/-1;font-size:13px;font-weight:700;color:#35582a;text-align:center;margin-top:2px}
+
+.layout{flex:1;width:min(1180px,100%);margin:0 auto;padding:8px 16px 28px;display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:16px;align-items:start}
+.garden{
+  background:linear-gradient(180deg,rgba(255,255,255,.25),rgba(255,255,255,.08));
+  border-radius:32px;padding:20px 16px 28px;border:1px solid rgba(255,255,255,.5);
+  box-shadow:0 16px 30px rgba(53,88,42,.1);position:relative;overflow:hidden;
+}
+.butterflies{position:absolute;inset:0;pointer-events:none}
+.bf{position:absolute;font-size:18px;animation:flit 7s ease-in-out infinite}
+.bf.b1{top:12%;left:10%;animation-delay:-1s}
+.bf.b2{top:22%;right:16%;animation-delay:-3s;font-size:14px}
+.bf.b3{top:6%;left:78%;animation-delay:-5s;font-size:16px}
+@keyframes flit{0%,100%{transform:translate(0,0) rotate(-8deg)}50%{transform:translate(18px,-12px) rotate(10deg)}}
+.plots{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:18px 14px;position:relative;z-index:1}
+.plot{background:transparent;text-align:center;padding:6px 4px 8px;border-radius:18px}
+.plot:hover .pot,.plot:focus-visible .pot{transform:translateY(-4px)}
+.plant{height:118px;display:grid;place-items:end center;position:relative}
+.plant svg{width:110px;height:118px;overflow:visible}
+.pot{width:78px;height:28px;margin:0 auto;background:linear-gradient(180deg,#d9a066,#b36b38);border-radius:0 0 18px 18px;box-shadow:0 6px 0 #8a4e24,inset 0 4px 0 #e8bc86;position:relative;z-index:1;transition:transform .15s ease}
+.pot::before{content:"";position:absolute;left:-6px;right:-6px;top:-8px;height:12px;background:#c9844a;border-radius:6px;box-shadow:inset 0 2px 0 rgba(255,255,255,.25)}
+.soil{position:absolute;left:10px;right:10px;top:-2px;height:8px;background:#6b4223;border-radius:8px;z-index:2}
+.plot.locked .pot{filter:grayscale(.6) brightness(.95)}
+.label-zh{font-weight:800;font-size:.92rem;margin-top:8px;line-height:1.25}
+.label-en{font-size:11px;opacity:.6;line-height:1.3;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;padding:0 4px}
+.tag{display:inline-block;margin-top:4px;font-size:10px;font-weight:800;padding:1px 8px;border-radius:999px;background:rgba(255,255,255,.75)}
+.plot.conquered .tag{background:#fff3a8;color:#7a4e00}
+.plot.progress .tag{background:#ffe1c4;color:#9a3b00}
+.plot.todo .tag{background:#d8ecff;color:#0a4f8a}
+.plot.locked .tag{background:#eceae6;color:#5c5c5c}
+
+.side{position:sticky;top:16px;background:#fffef6;border-radius:24px;padding:16px;box-shadow:0 10px 24px rgba(53,88,42,.1);border:1px solid rgba(53,88,42,.08);max-height:calc(100vh - 24px);overflow:auto}
+.side h2{font-size:1.05rem}
+.side .sub{font-size:12px;opacity:.65;margin:4px 0 12px}
+.seed-item{display:grid;grid-template-columns:28px 1fr auto;gap:8px;align-items:center;width:100%;text-align:left;padding:9px 8px;border-radius:14px;background:#f3efe0;margin-bottom:8px}
+.seed-item:hover{background:#efe4b8}
+.seed-item .ico{font-size:18px;text-align:center}
+.seed-item .zh{font-weight:800;font-size:.9rem;display:block}
+.seed-item .en{font-size:11px;opacity:.6}
+.seed-item .st{font-size:10px;font-weight:800;opacity:.7}
+.legend{display:flex;flex-wrap:wrap;gap:8px 12px;margin-top:8px;padding-top:10px;border-top:1px dashed #d7ccae;font-size:11px;font-weight:800;opacity:.8}
+.coming-soon-card{margin:8px;padding:28px;border-radius:24px;text-align:center;background:#fffef6}
+.cs-badge{display:inline-block;padding:4px 10px;border-radius:999px;font-size:12px;font-weight:800;margin-bottom:10px;background:#e8f6c9}
+
+#modal{position:fixed;inset:0;z-index:80}
+#modal[hidden]{display:none !important}
+.modal-backdrop{position:absolute;inset:0;background:rgba(20,16,30,.45);backdrop-filter:blur(4px)}
+.modal-card{position:relative;z-index:1;margin:8vh auto 0;width:min(520px,calc(100% - 32px));max-height:min(84vh,720px);overflow:auto;padding:28px 26px 24px;border-radius:28px;background:#fff;box-shadow:0 30px 60px rgba(0,0,0,.22);animation:pop .28s ease}
+@keyframes pop{from{transform:translateY(16px) scale(.97);opacity:0}to{transform:none;opacity:1}}
+.modal-x{position:absolute;top:12px;right:12px;width:40px;height:40px;border-radius:50%;font-size:26px;line-height:1;background:#f3f1ee;color:#444}
+.modal-kicker{font-size:12px;letter-spacing:.08em;text-transform:uppercase;opacity:.6;font-weight:700;margin-bottom:8px}
+.modal-card h2{font-size:1.55rem;line-height:1.25;margin-bottom:4px}
+.modal-en{opacity:.65;margin-bottom:12px;font-size:.95rem}
+.modal-status{display:flex;align-items:center;gap:10px;margin-bottom:16px}
+.pill{display:inline-flex;align-items:center;padding:4px 10px;border-radius:999px;font-size:12px;font-weight:700}
+.status-conquered .pill{background:#ffe8a3;color:#7a4e00}
+.status-progress .pill{background:#ffe1c4;color:#9a3b00}
+.status-todo .pill{background:#d8ecff;color:#0a4f8a}
+.status-locked .pill{background:#eceae6;color:#5c5c5c}
+.stars{letter-spacing:1px;font-size:16px}
+.star{color:#d9d3c8}.star.on{color:#f5b301}
+.modal-lead{font-weight:700;margin-bottom:8px}
+.modal-los{padding-left:18px;list-style:disc;display:grid;gap:6px;margin-bottom:18px;color:#333}
+.btn-practice{display:block;width:100%;padding:14px 18px;border-radius:16px;background:#1f6f5a;color:#fff;font-weight:800;font-size:1rem;box-shadow:0 6px 0 #155445}
+.btn-practice:hover{filter:brightness(1.05)}
+.btn-practice:active{transform:translateY(2px);box-shadow:0 4px 0 #155445}
+.btn-practice:disabled{background:#c9c4bb;color:#6a655e;box-shadow:none;cursor:not-allowed;filter:none}
+.practice-note{margin-top:10px;padding:10px 12px;border-radius:12px;background:#fff6d8;color:#6b4e00;font-size:.9rem}
+body.modal-open{overflow:hidden}
+.page-foot{width:min(1180px,100%);margin:0 auto;padding:0 16px 24px;font-size:12px;color:#35582a;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.page-foot a{color:#35582a;font-weight:800}
+
+@media (max-width:860px){
+  .layout{grid-template-columns:1fr;padding:8px 10px 24px}
+  .side{position:relative;top:auto;max-height:210px;order:-1}
+  .vitals{grid-template-columns:72px 1fr;padding:10px;gap:8px}
+  .tree-wrap svg{width:72px;height:72px}
+  .stats-col .v{font-size:1.15rem}
+  .plots{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px 8px}
+  .plant{height:100px}
+  .plant svg{width:90px;height:100px}
+  .header-row{align-items:stretch}
+  .subject-tabs{margin-left:0;width:100%}
+  .label-en{display:none}
+  .hint{font-size:12px}
+}
+.load-error{margin:40px auto;width:min(520px,90%);background:#fffef6;padding:24px;border-radius:20px;text-align:center}
+</style>
+<!-- garden-practice-css:start -->
+  <link rel="stylesheet" href="assets/practice.css">
+<!-- garden-practice-css:end -->
+</head>
+<body>
+  <div class="demo-banner">
+    <a href="../parent/index.html">家长页面</a>
+    <span id="banner-text">⚠ 示例数据</span>
+  </div>
+  <header class="app-header">
+    <div class="header-row">
+      <div class="sign">
+        <div class="eyebrow" id="grade-line">小学四年级 · P4</div>
+        <h1 id="page-title">安安的知识花园</h1>
+      </div>
+      <nav class="subject-tabs" id="tabs" aria-label="学科"></nav>
+    </div>
+    <div class="vitals" id="vitals"></div>
+  </header>
+  <main class="layout" id="main">
+    <section class="garden" id="garden" aria-label="知识花园"></section>
+    <aside class="side" id="side"></aside>
+  </main>
+  <footer class="page-foot">
+    <span>知识点名称来自新加坡小学数学、科学大纲。</span>
+    <a href="../parent/index.html">打开家长查看页 →</a>
+  </footer>
+  <div id="modal" hidden></div>
+<script>
+/* Auto-generated from demo_student.json. JSON is the source of truth. */
+window.DEMO_DATA = {
+  "meta": {
+    "schema_version": 2,
+    "is_demo": true,
+    "disclaimer": "示例数据 · 掌握进度、历史记录和学习计划仅供预览，不是安安的真实记录。2026 年小四评估日期来自学校信函，已经考完；2027 年小五考试日尚未公布。",
+    "timezone": "Asia/Singapore",
+    "as_of": "2026-11-16",
+    "as_of_note": "页面上的「今天」按 as_of 计算，方便示例数据保持稳定。换成真实数据后可改为当天。",
+    "kb_source": "kb/topics.csv",
+    "assessment_source": "kb/school_assessment_2026_P4.md",
+    "assessment_source_pdf": "sources/school/P4_Assessment_Plan_2026_Sem2.pdf"
+  },
+  "student": {
+    "student_id": "stu-anan",
+    "display_name": "安安",
+    "grade": "P4",
+    "grade_zh": "小学四年级",
+    "school_year": "2026"
+  },
+  "subjects": [
+    {
+      "subject_id": "math",
+      "name_zh": "数学",
+      "name_en": "Mathematics",
+      "syllabus_subject": "Mathematics",
+      "coming_soon": false,
+      "accent": "#4c6fff"
+    },
+    {
+      "subject_id": "science",
+      "name_zh": "科学",
+      "name_en": "Science",
+      "syllabus_subject": "Science",
+      "coming_soon": false,
+      "accent": "#1ea36a"
+    },
+    {
+      "subject_id": "english",
+      "name_zh": "英文",
+      "name_en": "English",
+      "syllabus_subject": "English",
+      "coming_soon": true,
+      "accent": "#7b6bb0"
+    },
+    {
+      "subject_id": "higher_chinese",
+      "name_zh": "高级华文",
+      "name_en": "Higher Chinese",
+      "syllabus_subject": "Higher Chinese Language",
+      "coming_soon": true,
+      "accent": "#c45a10"
+    }
+  ],
+  "topics": [
+    {
+      "topic_id": "P4-MA-01",
+      "subject_id": "math",
+      "strand": "NUMBER AND ALGEBRA",
+      "strand_zh": "数与代数",
+      "syllabus_topic": "WHOLE NUMBERS — Numbers up to 100 000",
+      "name_en": "Numbers up to 100 000",
+      "name_zh": "十万以内的数",
+      "short": "十万以内",
+      "group": "整数",
+      "flower": "sunflower",
+      "status": "conquered",
+      "stars": 3,
+      "strength": "strong",
+      "learning_outcomes": [
+        {
+          "topic_id": "P4-MA-01",
+          "text_en": "number notation, representations and place values (ten thousands, thousands, hundreds, tens, ones)",
+          "text_zh": "数的记法、表示和数位（万、千、百、十、个）"
+        },
+        {
+          "topic_id": "P4-MA-02",
+          "text_en": "reading and writing numbers in numerals and in words",
+          "text_zh": "用数字和英文单词读、写数"
+        },
+        {
+          "topic_id": "P4-MA-03",
+          "text_en": "comparing and ordering numbers",
+          "text_zh": "比较和排序"
+        },
+        {
+          "topic_id": "P4-MA-04",
+          "text_en": "patterns in number sequences",
+          "text_zh": "数列中的规律"
+        },
+        {
+          "topic_id": "P4-MA-05",
+          "text_en": "rounding numbers to the nearest 10, 100 or 1000",
+          "text_zh": "四舍五入到最近的 10、100 或 1000"
+        },
+        {
+          "topic_id": "P4-MA-06",
+          "text_en": "use of ≈",
+          "text_zh": "使用约等号 ≈"
+        }
+      ],
+      "source": {
+        "file": "primary/P_Mathematics_2021_updated_Oct2025.pdf",
+        "page": "37"
+      }
+    },
+    {
+      "topic_id": "P4-MA-07",
+      "subject_id": "math",
+      "strand": "NUMBER AND ALGEBRA",
+      "strand_zh": "数与代数",
+      "syllabus_topic": "WHOLE NUMBERS — Factors and Multiples",
+      "name_en": "Factors and Multiples",
+      "name_zh": "因数与倍数",
+      "short": "因数倍数",
+      "group": "整数",
+      "flower": "clover",
+      "status": "conquered",
+      "stars": 3,
+      "strength": "strong",
+      "learning_outcomes": [
+        {
+          "topic_id": "P4-MA-07",
+          "text_en": "factors, multiples and their relationship",
+          "text_zh": "因数、倍数及其关系"
+        },
+        {
+          "topic_id": "P4-MA-08",
+          "text_en": "determining if a 1-digit number is a factor of a given number within 100",
+          "text_zh": "判断 1 位数是否为 100 以内某数的因数"
+        },
+        {
+          "topic_id": "P4-MA-09",
+          "text_en": "finding the common factors of two given numbers",
+          "text_zh": "求两个数的公因数"
+        },
+        {
+          "topic_id": "P4-MA-10",
+          "text_en": "determining if a number is a multiple of a given 1-digit number",
+          "text_zh": "判断某数是否为给定 1 位数的倍数"
+        },
+        {
+          "topic_id": "P4-MA-11",
+          "text_en": "finding the common multiples of two given 1-digit numbers",
+          "text_zh": "求两个 1 位数的公倍数"
+        }
+      ],
+      "source": {
+        "file": "primary/P_Mathematics_2021_updated_Oct2025.pdf",
+        "page": "37"
+      }
+    },
+    {
+      "topic_id": "P4-MA-12",
+      "subject_id": "math",
+      "strand": "NUMBER AND ALGEBRA",
+      "strand_zh": "数与代数",
+      "syllabus_topic": "WHOLE NUMBERS — Four Operations",
+      "name_en": "Four Operations",
+      "name_zh": "四则运算",
+      "short": "四则运算",
+      "group": "整数",
+      "flower": "tulip",
+      "status": "conquered",
+      "stars": 2,
+      "strength": "ok",
+      "learning_outcomes": [
+        {
+          "topic_id": "P4-MA-12",
+          "text_en": "multiplication algorithm; up to 4 digits by 1 digit; up to 3 digits by 2 digits",
+          "text_zh": "乘法算法：最多 4 位数乘 1 位数，最多 3 位数乘 2 位数"
+        },
+        {
+          "topic_id": "P4-MA-13",
+          "text_en": "division algorithm (up to 4 digits by 1 digit)",
+          "text_zh": "除法算法：最多 4 位数除以 1 位数"
+        }
+      ],
+      "source": {
+        "file": "primary/P_Mathematics_2021_updated_Oct2025.pdf",
+        "page": "37"
+      }
+    },
+    {
+      "topic_id": "P4-MA-14",
+      "subject_id": "math",
+      "strand": "NUMBER AND ALGEBRA",
+      "strand_zh": "数与代数",
+      "syllabus_topic": "FRACTIONS — Mixed Numbers and Improper Fractions",
+      "name_en": "Mixed Numbers and Improper Fractions",
+      "name_zh": "带分数与假分数",
+      "short": "带分数",
+      "group": "分数",
+      "flower": "rose",
+      "status": "conquered",
+      "stars": 3,
+      "strength": "strong",
+      "learning_outcomes": [
+        {
+          "topic_id": "P4-MA-14",
+          "text_en": "mixed numbers, improper fractions and their relationship",
+          "text_zh": "带分数、假分数及其互化"
+        }
+      ],
+      "source": {
+        "file": "primary/P_Mathematics_2021_updated_Oct2025.pdf",
+        "page": "37"
+      }
+    },
+    {
+      "topic_id": "P4-MA-15",
+      "subject_id": "math",
+      "strand": "NUMBER AND ALGEBRA",
+      "strand_zh": "数与代数",
+      "syllabus_topic": "FRACTIONS — Fraction of a Set",
+      "name_en": "Fraction of a Set",
+      "name_zh": "一组中的几分之几",
+      "short": "一组的几分之几",
+      "group": "分数",
+      "flower": "rose",
+      "status": "conquered",
+      "stars": 2,
+      "strength": "ok",
+      "learning_outcomes": [
+        {
+          "topic_id": "P4-MA-15",
+          "text_en": "fraction as part of a set",
+          "text_zh": "把分数理解为一个集合中的一部分"
+        }
+      ],
+      "source": {
+        "file": "primary/P_Mathematics_2021_updated_Oct2025.pdf",
+        "page": "37"
+      }
+    },
+    {
+      "topic_id": "P4-MA-16",
+      "subject_id": "math",
+      "strand": "NUMBER AND ALGEBRA",
+      "strand_zh": "数与代数",
+      "syllabus_topic": "FRACTIONS — Addition and Subtraction",
+      "name_en": "Fractions: Addition and Subtraction",
+      "name_zh": "分数的加法与减法",
+      "short": "分数加减",
+      "group": "分数",
+      "flower": "rose",
+      "status": "progress",
+      "stars": 1,
+      "strength": "weak",
+      "learning_outcomes": [
+        {
+          "topic_id": "P4-MA-16",
+          "text_en": "adding and subtracting fractions with denominators of given fractions not exceeding 12 and not more than two different denominators",
+          "text_zh": "加减分母不超过 12、且最多两个不同分母的分数"
+        }
+      ],
+      "source": {
+        "file": "primary/P_Mathematics_2021_updated_Oct2025.pdf",
+        "page": "37"
+      }
+    },
+    {
+      "topic_id": "P4-MA-17",
+      "subject_id": "math",
+      "strand": "NUMBER AND ALGEBRA",
+      "strand_zh": "数与代数",
+      "syllabus_topic": "DECIMALS — Decimals up to 3 decimal places",
+      "name_en": "Decimals up to 3 decimal places",
+      "name_zh": "三位小数",
+      "short": "三位小数",
+      "group": "小数",
+      "flower": "daisy",
+      "status": "progress",
+      "stars": 1,
+      "strength": "ok",
+      "learning_outcomes": [
+        {
+          "topic_id": "P4-MA-17",
+          "text_en": "notation, representations and place values (tenths, hundredths, thousandths)",
+          "text_zh": "记法、表示和数位（十分位、百分位、千分位）"
+        },
+        {
+          "topic_id": "P4-MA-18",
+          "text_en": "comparing and ordering decimals",
+          "text_zh": "比较和排序小数"
+        },
+        {
+          "topic_id": "P4-MA-19",
+          "text_en": "expressing decimals as fractions",
+          "text_zh": "小数化为分数"
+        },
+        {
+          "topic_id": "P4-MA-20",
+          "text_en": "expressing fractions as decimals when the denominator is a factor of 10 or 100",
+          "text_zh": "分母是 10 或 100 的因数时，分数化为小数"
+        },
+        {
+          "topic_id": "P4-MA-21",
+          "text_en": "rounding decimals to; the nearest whole number; 1 decimal place; 2 decimal places",
+          "text_zh": "四舍五入到整数、1 位或 2 位小数"
+        }
+      ],
+      "source": {
+        "file": "primary/P_Mathematics_2021_updated_Oct2025.pdf",
+        "page": "38"
+      }
+    },
+    {
+      "topic_id": "P4-MA-22",
+      "subject_id": "math",
+      "strand": "NUMBER AND ALGEBRA",
+      "strand_zh": "数与代数",
+      "syllabus_topic": "DECIMALS — Addition and Subtraction",
+      "name_en": "Decimals: Addition and Subtraction",
+      "name_zh": "小数的加法与减法",
+      "short": "小数加减",
+      "group": "小数",
+      "flower": "daisy",
+      "status": "todo",
+      "stars": 0,
+      "strength": null,
+      "learning_outcomes": [
+        {
+          "topic_id": "P4-MA-22",
+          "text_en": "adding and subtracting decimals (up to 2 decimal places)",
+          "text_zh": "加减最多 2 位小数"
+        }
+      ],
+      "source": {
+        "file": "primary/P_Mathematics_2021_updated_Oct2025.pdf",
+        "page": "38"
+      }
+    },
+    {
+      "topic_id": "P4-MA-23",
+      "subject_id": "math",
+      "strand": "NUMBER AND ALGEBRA",
+      "strand_zh": "数与代数",
+      "syllabus_topic": "DECIMALS — Multiplication and Division",
+      "name_en": "Decimals: Multiplication and Division",
+      "name_zh": "小数的乘法与除法",
+      "short": "小数乘除",
+      "group": "小数",
+      "flower": "daisy",
+      "status": "locked",
+      "stars": 0,
+      "strength": null,
+      "learning_outcomes": [
+        {
+          "topic_id": "P4-MA-23",
+          "text_en": "multiplying and dividing decimals (up to 2 decimal places) by a 1-digit whole number",
+          "text_zh": "最多 2 位小数乘或除以 1 位整数"
+        },
+        {
+          "topic_id": "P4-MA-24",
+          "text_en": "dividing a whole number by a whole number with quotient as a decimal",
+          "text_zh": "整数除以整数，商为小数"
+        },
+        {
+          "topic_id": "P4-MA-25",
+          "text_en": "rounding answers to a specified degree of accuracy",
+          "text_zh": "把答案四舍五入到指定精确度"
+        }
+      ],
+      "source": {
+        "file": "primary/P_Mathematics_2021_updated_Oct2025.pdf",
+        "page": "38"
+      }
+    },
+    {
+      "topic_id": "P4-MA-26",
+      "subject_id": "math",
+      "strand": "MEASUREMENT AND GEOMETRY",
+      "strand_zh": "测量与几何",
+      "syllabus_topic": "AREA AND VOLUME — Area and Perimeter",
+      "name_en": "Area and Perimeter",
+      "name_zh": "面积与周长",
+      "short": "面积周长",
+      "group": "面积与体积",
+      "flower": "fern",
+      "status": "locked",
+      "stars": 0,
+      "strength": null,
+      "learning_outcomes": [
+        {
+          "topic_id": "P4-MA-26",
+          "text_en": "finding one dimension of a rectangle given the other dimension and its area/perimeter",
+          "text_zh": "已知长方形一边和面积/周长，求另一边"
+        },
+        {
+          "topic_id": "P4-MA-27",
+          "text_en": "finding the length of one side of a square given its area/perimeter",
+          "text_zh": "已知正方形面积/周长，求边长"
+        },
+        {
+          "topic_id": "P4-MA-28",
+          "text_en": "finding the area and perimeter of composite figures made up of rectangles and squares",
+          "text_zh": "求由长方形和正方形组成的组合图形的面积与周长"
+        }
+      ],
+      "source": {
+        "file": "primary/P_Mathematics_2021_updated_Oct2025.pdf",
+        "page": "39"
+      }
+    },
+    {
+      "topic_id": "P4-MA-29",
+      "subject_id": "math",
+      "strand": "MEASUREMENT AND GEOMETRY",
+      "strand_zh": "测量与几何",
+      "syllabus_topic": "GEOMETRY — Angles",
+      "name_en": "Angles",
+      "name_zh": "角",
+      "short": "角",
+      "group": "几何",
+      "flower": "lily",
+      "status": "locked",
+      "stars": 0,
+      "strength": null,
+      "learning_outcomes": [
+        {
+          "topic_id": "P4-MA-29",
+          "text_en": "using notation such as ∠ABC and ∠a to name angles",
+          "text_zh": "用 ∠ABC、∠a 等符号给角命名"
+        },
+        {
+          "topic_id": "P4-MA-30",
+          "text_en": "measuring angles in degrees",
+          "text_zh": "用量角器量角（度）"
+        },
+        {
+          "topic_id": "P4-MA-31",
+          "text_en": "drawing an angle of given size",
+          "text_zh": "画出指定大小的角"
+        }
+      ],
+      "source": {
+        "file": "primary/P_Mathematics_2021_updated_Oct2025.pdf",
+        "page": "39"
+      }
+    },
+    {
+      "topic_id": "P4-MA-32",
+      "subject_id": "math",
+      "strand": "MEASUREMENT AND GEOMETRY",
+      "strand_zh": "测量与几何",
+      "syllabus_topic": "GEOMETRY — Rectangle and Square",
+      "name_en": "Rectangle and Square",
+      "name_zh": "长方形与正方形",
+      "short": "长方形正方形",
+      "group": "几何",
+      "flower": "lily",
+      "status": "locked",
+      "stars": 0,
+      "strength": null,
+      "learning_outcomes": [
+        {
+          "topic_id": "P4-MA-32",
+          "text_en": "properties of rectangle and square, excluding diagonal properties",
+          "text_zh": "长方形和正方形的性质（不含对角线性质）"
+        },
+        {
+          "topic_id": "P4-MA-33",
+          "text_en": "drawing rectangles and squares",
+          "text_zh": "画长方形和正方形"
+        }
+      ],
+      "source": {
+        "file": "primary/P_Mathematics_2021_updated_Oct2025.pdf",
+        "page": "39"
+      }
+    },
+    {
+      "topic_id": "P4-MA-34",
+      "subject_id": "math",
+      "strand": "MEASUREMENT AND GEOMETRY",
+      "strand_zh": "测量与几何",
+      "syllabus_topic": "GEOMETRY — Line Symmetry",
+      "name_en": "Line Symmetry",
+      "name_zh": "直线对称",
+      "short": "直线对称",
+      "group": "几何",
+      "flower": "lily",
+      "status": "locked",
+      "stars": 0,
+      "strength": null,
+      "learning_outcomes": [
+        {
+          "topic_id": "P4-MA-34",
+          "text_en": "identifying symmetric figures",
+          "text_zh": "辨认对称图形"
+        },
+        {
+          "topic_id": "P4-MA-35",
+          "text_en": "determining whether a straight line is a line of symmetry of a symmetric figure",
+          "text_zh": "判断一条直线是否为对称轴"
+        },
+        {
+          "topic_id": "P4-MA-36",
+          "text_en": "completing a symmetric figure with respect to a given line of symmetry on square grid",
+          "text_zh": "在方格纸上补全对称图形"
+        }
+      ],
+      "source": {
+        "file": "primary/P_Mathematics_2021_updated_Oct2025.pdf",
+        "page": "39"
+      }
+    },
+    {
+      "topic_id": "P4-MA-37",
+      "subject_id": "math",
+      "strand": "MEASUREMENT AND GEOMETRY",
+      "strand_zh": "测量与几何",
+      "syllabus_topic": "GEOMETRY — Nets",
+      "name_en": "Nets",
+      "name_zh": "立体展开图",
+      "short": "展开图",
+      "group": "几何",
+      "flower": "fern",
+      "status": "locked",
+      "stars": 0,
+      "strength": null,
+      "learning_outcomes": [
+        {
+          "topic_id": "P4-MA-37",
+          "text_en": "identifying 2D representations of; cube; cuboid; cone; cylinder; prism; pyramid",
+          "text_zh": "辨认立方体、长方体、圆锥、圆柱、棱柱、棱锥的二维表示"
+        },
+        {
+          "topic_id": "P4-MA-38",
+          "text_en": "drawing 2D representations of; cube; cuboid; prism; pyramid",
+          "text_zh": "画立方体、长方体、棱柱、棱锥的二维表示"
+        },
+        {
+          "topic_id": "P4-MA-39",
+          "text_en": "identifying the nets of 3D solids; cube; cuboid; prism; pyramid",
+          "text_zh": "辨认立方体、长方体、棱柱、棱锥的展开图"
+        },
+        {
+          "topic_id": "P4-MA-40",
+          "text_en": "identifying the solid which can be formed by a given net",
+          "text_zh": "根据展开图判断能折成的立体"
+        }
+      ],
+      "source": {
+        "file": "primary/P_Mathematics_2021_updated_Oct2025.pdf",
+        "page": "39"
+      }
+    },
+    {
+      "topic_id": "P4-MA-41",
+      "subject_id": "math",
+      "strand": "STATISTICS",
+      "strand_zh": "统计",
+      "syllabus_topic": "DATA REPRESENTATION AND INTERPRETATION — Tables, Line Graphs and Pie Charts",
+      "name_en": "Tables, Line Graphs and Pie Charts",
+      "name_zh": "表格、折线图与饼图",
+      "short": "统计图表",
+      "group": "数据",
+      "flower": "lavender",
+      "status": "locked",
+      "stars": 0,
+      "strength": null,
+      "learning_outcomes": [
+        {
+          "topic_id": "P4-MA-41",
+          "text_en": "completing a table from given data",
+          "text_zh": "根据所给数据补全表格"
+        },
+        {
+          "topic_id": "P4-MA-42",
+          "text_en": "reading and interpreting data from tables/line graphs/pie charts",
+          "text_zh": "读懂并解释表格、折线图和饼图中的数据"
+        }
+      ],
+      "source": {
+        "file": "primary/P_Mathematics_2021_updated_Oct2025.pdf",
+        "page": "40"
+      }
+    },
+    {
+      "topic_id": "P4-SC-01",
+      "subject_id": "science",
+      "strand": "Cycles",
+      "strand_zh": "循环",
+      "syllabus_topic": "Cycles in Matter and Water (Matter)",
+      "name_en": "Cycles in Matter and Water (Matter)",
+      "name_zh": "物质循环：物质",
+      "short": "物质",
+      "group": "循环",
+      "flower": "water",
+      "status": "conquered",
+      "stars": 3,
+      "strength": "strong",
+      "learning_outcomes": [
+        {
+          "topic_id": "P4-SC-01",
+          "text_en": "State that matter is anything that has mass and occupies space.",
+          "text_zh": "说明物质是任何有质量、占有空间的东西"
+        },
+        {
+          "topic_id": "P4-SC-02",
+          "text_en": "Differentiate among the three states of matter (solid, liquid, gas) in terms of shape and volume.",
+          "text_zh": "从形状和体积区分物质的三态（固、液、气）"
+        },
+        {
+          "topic_id": "P4-SC-03",
+          "text_en": "Practice: Measure mass and volume using appropriate apparatus.",
+          "text_zh": "实践：用合适仪器测量质量和体积"
+        }
+      ],
+      "source": {
+        "file": "primary/P_Science_P3-P6_updated_Jan2026.pdf",
+        "page": "49"
+      }
+    },
+    {
+      "topic_id": "P4-SC-04",
+      "subject_id": "science",
+      "strand": "Systems",
+      "strand_zh": "系统",
+      "syllabus_topic": "Human System (Digestive System)",
+      "name_en": "Human System (Digestive System)",
+      "name_zh": "人体系统：消化系统",
+      "short": "消化系统",
+      "group": "系统",
+      "flower": "tulip",
+      "status": "conquered",
+      "stars": 2,
+      "strength": "ok",
+      "learning_outcomes": [
+        {
+          "topic_id": "P4-SC-04",
+          "text_en": "Identify the human systems in the body and state their functions (digestive, respiratory, circulatory, skeletal and muscular). (Note: This learning outcome introduces students to an overview of human systems in the body. Detailed knowledge of the muscular and skeletal systems (such as names of the bones/muscles in the body and descriptions of how they work) are not required.)",
+          "text_zh": "辨认人体系统并说明功能（消化、呼吸、循环、骨骼、肌肉）"
+        },
+        {
+          "topic_id": "P4-SC-05",
+          "text_en": "Identify the parts in the human digestive system (mouth, gullet, stomach, small intestine and large intestine) and describe their functions.",
+          "text_zh": "辨认消化系统的部分（口、食道、胃、小肠、大肠）并说明功能"
+        }
+      ],
+      "source": {
+        "file": "primary/P_Science_P3-P6_updated_Jan2026.pdf",
+        "page": "54"
+      }
+    },
+    {
+      "topic_id": "P4-SC-06",
+      "subject_id": "science",
+      "strand": "Systems",
+      "strand_zh": "系统",
+      "syllabus_topic": "Plant System (Plant parts and functions)",
+      "name_en": "Plant System (Plant parts and functions)",
+      "name_zh": "植物系统：植物的部分与功能",
+      "short": "植物部分",
+      "group": "系统",
+      "flower": "tree",
+      "status": "progress",
+      "stars": 1,
+      "strength": "ok",
+      "learning_outcomes": [
+        {
+          "topic_id": "P4-SC-06",
+          "text_en": "Identify the different parts of plants and state their functions.; Leaf; Stem; Root (Note: Food-carrying and water-carrying tubes in the plant transport system are introduced in the topic of Plant System (Respiratory and Circulatory Systems) in P5.)",
+          "text_zh": "辨认植物不同部分并说明功能（叶、茎、根）"
+        },
+        {
+          "topic_id": "P4-SC-07",
+          "text_en": "Practice: Observe plant parts.",
+          "text_zh": "实践：观察植物的部分"
+        }
+      ],
+      "source": {
+        "file": "primary/P_Science_P3-P6_updated_Jan2026.pdf",
+        "page": "57"
+      }
+    },
+    {
+      "topic_id": "P4-SC-08",
+      "subject_id": "science",
+      "strand": "Energy",
+      "strand_zh": "能量",
+      "syllabus_topic": "Energy Forms and Uses (Light)",
+      "name_en": "Energy Forms and Uses (Light)",
+      "name_zh": "能量：光",
+      "short": "光",
+      "group": "能量",
+      "flower": "sunflower",
+      "status": "todo",
+      "stars": 0,
+      "strength": null,
+      "learning_outcomes": [
+        {
+          "topic_id": "P4-SC-08",
+          "text_en": "Recognise that an object can be seen when it reflects light or when it is a source of light. (Note: The law of reflection is not required.)",
+          "text_zh": "认识物体反射光或本身发光时才能被看见"
+        },
+        {
+          "topic_id": "P4-SC-09",
+          "text_en": "Recognise that light travels in straight lines and thus a shadow is formed when light is completely or partially blocked by an object.",
+          "text_zh": "认识光沿直线传播，物体完全或部分挡住光时形成影子"
+        },
+        {
+          "topic_id": "P4-SC-10",
+          "text_en": "Practice: Investigate the variables that affect shadows formed.; Shape, size and position of object(s); Distance between light source-object and object-screen (Note: The use of specific terms (transparent, translucent, opaque) is not required.)",
+          "text_zh": "实践：探究影响影子的变量（形状、大小、位置、距离）"
+        }
+      ],
+      "source": {
+        "file": "primary/P_Science_P3-P6_updated_Jan2026.pdf",
+        "page": "76"
+      }
+    },
+    {
+      "topic_id": "P4-SC-11",
+      "subject_id": "science",
+      "strand": "Energy",
+      "strand_zh": "能量",
+      "syllabus_topic": "Energy Forms and Uses (Heat)",
+      "name_en": "Energy Forms and Uses (Heat)",
+      "name_zh": "能量：热",
+      "short": "热",
+      "group": "能量",
+      "flower": "marigold",
+      "status": "locked",
+      "stars": 0,
+      "strength": null,
+      "learning_outcomes": [
+        {
+          "topic_id": "P4-SC-11",
+          "text_en": "Identify some common sources of heat.",
+          "text_zh": "指出一些常见热源"
+        },
+        {
+          "topic_id": "P4-SC-12",
+          "text_en": "State that the temperature of an object is a measurement of its degree of hotness.",
+          "text_zh": "说明温度是物体热的程度"
+        },
+        {
+          "topic_id": "P4-SC-13",
+          "text_en": "State that heat is a form of energy.",
+          "text_zh": "说明热是一种能量"
+        },
+        {
+          "topic_id": "P4-SC-14",
+          "text_en": "Differentiate between heat and temperature.",
+          "text_zh": "区分热和温度"
+        },
+        {
+          "topic_id": "P4-SC-15",
+          "text_en": "Show an understanding that heat flows from a hotter to a colder object/ region/ place until both reach the same temperature.",
+          "text_zh": "理解热从较热处流向较冷处，直到温度相同"
+        },
+        {
+          "topic_id": "P4-SC-16",
+          "text_en": "Relate the change in temperature of an object to the gain or loss of heat by the object.",
+          "text_zh": "把物体温度变化与得热或失热联系起来"
+        },
+        {
+          "topic_id": "P4-SC-17",
+          "text_en": "Practice: Measure temperature using a thermometer and a datalogger with temperature/heat sensors.",
+          "text_zh": "实践：用温度计或温度传感器测温度"
+        },
+        {
+          "topic_id": "P4-SC-18",
+          "text_en": "List some effects of heat gain/loss in our everyday life.; Contraction / expansion of objects (solid, liquid and gas); Change in state of matter",
+          "text_zh": "列出日常生活中得热/失热的现象（热胀冷缩、物态变化）"
+        },
+        {
+          "topic_id": "P4-SC-19",
+          "text_en": "Identify good and poor conductors of heat.; Good conductors: metals; Poor conductors: wood, plastics, air, rubber (Note: Recall of the rate of heat transfer of specific materials (such as different types of metals) is not required.)",
+          "text_zh": "辨认热的良导体和不良导体"
+        }
+      ],
+      "source": {
+        "file": "primary/P_Science_P3-P6_updated_Jan2026.pdf",
+        "page": "77"
+      }
+    }
+  ],
+  "mastery_events": [
+    {
+      "event_id": "ev-001",
+      "topic_id": "P4-MA-01",
+      "type": "conquered",
+      "at": "2026-08-20T16:20:00+08:00",
+      "stars": 3,
+      "note": "示例：攻克十万以内的数"
+    },
+    {
+      "event_id": "ev-002",
+      "topic_id": "P4-MA-07",
+      "type": "conquered",
+      "at": "2026-09-04T17:05:00+08:00",
+      "stars": 3,
+      "note": "示例：攻克因数与倍数"
+    },
+    {
+      "event_id": "ev-003",
+      "topic_id": "P4-SC-01",
+      "type": "conquered",
+      "at": "2026-09-11T16:40:00+08:00",
+      "stars": 3,
+      "note": "示例：攻克物质"
+    },
+    {
+      "event_id": "ev-004",
+      "topic_id": "P4-MA-12",
+      "type": "conquered",
+      "at": "2026-09-18T15:50:00+08:00",
+      "stars": 2,
+      "note": "示例：攻克四则运算"
+    },
+    {
+      "event_id": "ev-005",
+      "topic_id": "P4-MA-14",
+      "type": "conquered",
+      "at": "2026-10-20T16:10:00+08:00",
+      "stars": 3,
+      "note": "示例：攻克带分数与假分数"
+    },
+    {
+      "event_id": "ev-006",
+      "topic_id": "P4-SC-04",
+      "type": "conquered",
+      "at": "2026-10-23T17:15:00+08:00",
+      "stars": 2,
+      "note": "示例：攻克消化系统"
+    },
+    {
+      "event_id": "ev-007",
+      "topic_id": "P4-MA-16",
+      "type": "started",
+      "at": "2026-10-27T16:00:00+08:00",
+      "stars": 0,
+      "note": "示例：开始学分数加减"
+    },
+    {
+      "event_id": "ev-008",
+      "topic_id": "P4-MA-17",
+      "type": "started",
+      "at": "2026-11-03T16:20:00+08:00",
+      "stars": 0,
+      "note": "示例：开始学三位小数"
+    },
+    {
+      "event_id": "ev-009",
+      "topic_id": "P4-SC-06",
+      "type": "started",
+      "at": "2026-11-05T16:35:00+08:00",
+      "stars": 0,
+      "note": "示例：开始学植物的部分"
+    },
+    {
+      "event_id": "ev-010",
+      "topic_id": "P4-MA-15",
+      "type": "conquered",
+      "at": "2026-11-11T16:45:00+08:00",
+      "stars": 2,
+      "note": "示例：攻克一组中的几分之几"
+    },
+    {
+      "event_id": "ev-011",
+      "topic_id": "P4-MA-16",
+      "type": "progressed",
+      "at": "2026-11-12T17:00:00+08:00",
+      "stars": 1,
+      "note": "示例：分数加减仍需加强"
+    },
+    {
+      "event_id": "ev-012",
+      "topic_id": "P4-MA-17",
+      "type": "progressed",
+      "at": "2026-11-14T16:25:00+08:00",
+      "stars": 1,
+      "note": "示例：三位小数练习中"
+    }
+  ],
+  "plan_items": [
+    {
+      "plan_id": "pl-01",
+      "topic_id": "P4-MA-16",
+      "target_date": "2026-11-19",
+      "goal": "攻克",
+      "note": "把分数加减练熟，这是目前比较薄弱的一关"
+    },
+    {
+      "plan_id": "pl-02",
+      "topic_id": "P4-MA-17",
+      "target_date": "2026-11-21",
+      "goal": "继续练习",
+      "note": "把三位小数的数位和四舍五入做扎实"
+    },
+    {
+      "plan_id": "pl-03",
+      "topic_id": "P4-SC-06",
+      "target_date": "2026-11-22",
+      "goal": "攻克",
+      "note": "辨认叶、茎、根的功能"
+    },
+    {
+      "plan_id": "pl-04",
+      "topic_id": "P4-MA-22",
+      "target_date": "2026-11-23",
+      "goal": "开始并尽量攻克",
+      "note": "小数的加法与减法"
+    },
+    {
+      "plan_id": "pl-05",
+      "topic_id": "P4-MA-23",
+      "target_date": "2026-11-27",
+      "goal": "开始学习",
+      "note": "小数的乘法与除法"
+    },
+    {
+      "plan_id": "pl-06",
+      "topic_id": "P4-SC-08",
+      "target_date": "2026-11-29",
+      "goal": "攻克",
+      "note": "光与影子"
+    },
+    {
+      "plan_id": "pl-07",
+      "topic_id": "P4-MA-26",
+      "target_date": "2026-12-02",
+      "goal": "开始学习",
+      "note": "面积与周长"
+    },
+    {
+      "plan_id": "pl-08",
+      "topic_id": "P4-SC-11",
+      "target_date": "2026-12-06",
+      "goal": "开始学习",
+      "note": "热"
+    },
+    {
+      "plan_id": "pl-09",
+      "topic_id": "P4-MA-29",
+      "target_date": "2026-12-08",
+      "goal": "开始学习",
+      "note": "角"
+    },
+    {
+      "plan_id": "pl-10",
+      "topic_id": "P4-MA-32",
+      "target_date": "2026-12-11",
+      "goal": "开始学习",
+      "note": "长方形与正方形"
+    },
+    {
+      "plan_id": "pl-11",
+      "topic_id": "P4-MA-34",
+      "target_date": "2026-12-14",
+      "goal": "开始学习",
+      "note": "直线对称"
+    }
+  ],
+  "countdown": {
+    "target_year": 2027,
+    "target_grade": "P5",
+    "target_label_zh": "小五（P5）考试安排",
+    "target_label_en": "P5 assessments (2027)",
+    "date": null,
+    "date_status": "待确认",
+    "date_confirmed": false,
+    "date_note": "学校预计大约在 2027 年 1 月公布小五评估计划。在学校通知之前，不要把任何 2027 年的具体日期当成已确认的考试日。",
+    "next_plan_expected": "2027-01",
+    "next_plan_expected_note": "约 2027 年 1 月，仅表示学校通常公布计划的时段，不是考试日。",
+    "reference": {
+      "label_zh": "可参考的去年安排（2026 小四年终考试）",
+      "label_en": "Reference only: 2026 P4 End-of-Year Examination",
+      "note": "2026 年南华小学小四年终考试的书面主卷在 10 月下旬（科学 10 月 27 日、数学 10 月 29 日），口试在 9 月下旬。这只是已经结束的去年安排，不是 2027 年的日期。",
+      "eye_timing": "late October",
+      "highlights": [
+        {
+          "subject_id": "english",
+          "label": "英文口试",
+          "date": "2026-09-25"
+        },
+        {
+          "subject_id": "higher_chinese",
+          "label": "高级华文口试",
+          "date": "2026-09-28"
+        },
+        {
+          "subject_id": "english",
+          "label": "英文写作",
+          "date": "2026-10-05"
+        },
+        {
+          "subject_id": "higher_chinese",
+          "label": "高级华文写作",
+          "date": "2026-10-06"
+        },
+        {
+          "subject_id": "higher_chinese",
+          "label": "高级华文试卷二、听力",
+          "date": "2026-10-23"
+        },
+        {
+          "subject_id": "english",
+          "label": "英文试卷二、听力",
+          "date": "2026-10-26"
+        },
+        {
+          "subject_id": "science",
+          "label": "科学",
+          "date": "2026-10-27"
+        },
+        {
+          "subject_id": "math",
+          "label": "数学",
+          "date": "2026-10-29"
+        }
+      ]
+    }
+  },
+  "assessments": [
+    {
+      "assessment_id": "nhps-p4-2026-wa1",
+      "series": "WA1",
+      "term": 1,
+      "year": 2026,
+      "grade": "P4",
+      "subject_id": null,
+      "label_zh": "Term 1 加权测验（WA1）",
+      "label_en": "Term 1 Weighted Assessment (WA1)",
+      "weight_percent": 15,
+      "weight_note": "占该科全年成绩的 15%。本函只列出比重，没有给出日期和考查范围。",
+      "date": null,
+      "time_frame": null,
+      "date_confirmed": false,
+      "date_status": "未收录",
+      "status": "past",
+      "confirmation_note": "比重已由学校信函确认。具体日期和范围不在这份 Sem 2 信函里，故未填写。",
+      "scope": null,
+      "papers": [],
+      "source": {
+        "file": "sources/school/P4_Assessment_Plan_2026_Sem2.pdf",
+        "school": "Nan Hua Primary School",
+        "school_zh": "南华小学",
+        "letter_ref": "035/26/GEN",
+        "letter_date": "2026-07-10",
+        "title": "P4 Assessment Plan 2026 (Semester 2)",
+        "pages": [
+          1
+        ]
+      }
+    },
+    {
+      "assessment_id": "nhps-p4-2026-wa2",
+      "series": "WA2",
+      "term": 2,
+      "year": 2026,
+      "grade": "P4",
+      "subject_id": null,
+      "label_zh": "Term 2 加权测验（WA2）",
+      "label_en": "Term 2 Weighted Assessment (WA2)",
+      "weight_percent": 15,
+      "weight_note": "占该科全年成绩的 15%。本函只列出比重，没有给出日期和考查范围。",
+      "date": null,
+      "time_frame": null,
+      "date_confirmed": false,
+      "date_status": "未收录",
+      "status": "past",
+      "confirmation_note": "比重已由学校信函确认。具体日期和范围不在这份 Sem 2 信函里，故未填写。",
+      "scope": null,
+      "papers": [],
+      "source": {
+        "file": "sources/school/P4_Assessment_Plan_2026_Sem2.pdf",
+        "school": "Nan Hua Primary School",
+        "school_zh": "南华小学",
+        "letter_ref": "035/26/GEN",
+        "letter_date": "2026-07-10",
+        "title": "P4 Assessment Plan 2026 (Semester 2)",
+        "pages": [
+          1
+        ]
+      }
+    },
+    {
+      "assessment_id": "nhps-p4-2026-wa3-english",
+      "series": "WA3",
+      "term": 3,
+      "year": 2026,
+      "grade": "P4",
+      "subject_id": "english",
+      "label_zh": "Term 3 加权测验（英文）",
+      "label_en": "Term 3 Weighted Assessment (English)",
+      "weight_percent": 15,
+      "weight_note": "占该科全年成绩的 15%。",
+      "date": null,
+      "time_frame": "Week 5-6",
+      "date_confirmed": false,
+      "date_status": "未给日历日",
+      "status": "past",
+      "confirmation_note": "学校信函只写了 Week 5-6，没有写具体日历日。时间窗本身已由信函确认；不在此推算日期。",
+      "format": "Oracy",
+      "scope": {
+        "text_en": "Performance Task - Speaking",
+        "text_zh": "口语表现任务",
+        "chapters": []
+      },
+      "papers": [
+        {
+          "name_en": "Performance Task - Speaking",
+          "name_zh": "口语表现任务",
+          "date": null,
+          "time_frame": "Week 5-6",
+          "duration": null,
+          "time": "During Curriculum Time"
+        }
+      ],
+      "source": {
+        "file": "sources/school/P4_Assessment_Plan_2026_Sem2.pdf",
+        "school": "Nan Hua Primary School",
+        "school_zh": "南华小学",
+        "letter_ref": "035/26/GEN",
+        "letter_date": "2026-07-10",
+        "title": "P4 Assessment Plan 2026 (Semester 2)",
+        "pages": [
+          2
+        ]
+      }
+    },
+    {
+      "assessment_id": "nhps-p4-2026-wa3-higher-chinese",
+      "series": "WA3",
+      "term": 3,
+      "year": 2026,
+      "grade": "P4",
+      "subject_id": "higher_chinese",
+      "label_zh": "Term 3 加权测验（高级华文）",
+      "label_en": "Term 3 Weighted Assessment (Higher Chinese)",
+      "weight_percent": 15,
+      "weight_note": "占该科全年成绩的 15%。",
+      "date": "2026-08-05",
+      "time_frame": "Week 6",
+      "date_confirmed": true,
+      "date_status": "已确认（已结束）",
+      "status": "past",
+      "confirmation_note": "过去的安排，已由学校信函确认。",
+      "format": "看图作文",
+      "scope": {
+        "text_en": "Writing (picture composition)",
+        "text_zh": "写作：看图作文",
+        "chapters": []
+      },
+      "papers": [
+        {
+          "name_en": "Writing",
+          "name_zh": "看图作文",
+          "date": "2026-08-05",
+          "time_frame": "Week 6",
+          "duration": null,
+          "time": null
+        }
+      ],
+      "source": {
+        "file": "sources/school/P4_Assessment_Plan_2026_Sem2.pdf",
+        "school": "Nan Hua Primary School",
+        "school_zh": "南华小学",
+        "letter_ref": "035/26/GEN",
+        "letter_date": "2026-07-10",
+        "title": "P4 Assessment Plan 2026 (Semester 2)",
+        "pages": [
+          2
+        ]
+      }
+    },
+    {
+      "assessment_id": "nhps-p4-2026-wa3-mathematics",
+      "series": "WA3",
+      "term": 3,
+      "year": 2026,
+      "grade": "P4",
+      "subject_id": "math",
+      "label_zh": "Term 3 加权测验（数学）",
+      "label_en": "Term 3 Weighted Assessment (Mathematics)",
+      "weight_percent": 15,
+      "weight_note": "占该科全年成绩的 15%。",
+      "date": "2026-08-25",
+      "time_frame": "Week 9",
+      "date_confirmed": true,
+      "date_status": "已确认（已结束）",
+      "status": "past",
+      "confirmation_note": "过去的安排，已由学校信函确认。",
+      "format": "Multiple-choice, Short-answer and Long-answer questions",
+      "scope": {
+        "text_en": "Chapter 8: Rectangles and Squares; Chapter 9: Decimals; Chapter 10: Four Operations of Decimals; Heuristics: Equal Intervals",
+        "text_zh": "第 8 章长方形与正方形、第 9 章小数、第 10 章小数四则运算；启发式：等间隔（Equal Intervals）",
+        "chapters": [
+          {
+            "chapter": "8",
+            "title": "Rectangles and Squares",
+            "type": "textbook"
+          },
+          {
+            "chapter": "9",
+            "title": "Decimals",
+            "type": "textbook"
+          },
+          {
+            "chapter": "10",
+            "title": "Four Operations of Decimals",
+            "type": "textbook"
+          },
+          {
+            "chapter": null,
+            "title": "Heuristics: Equal Intervals",
+            "type": "heuristic"
+          }
+        ]
+      },
+      "papers": [
+        {
+          "name_en": "Mathematics",
+          "name_zh": "数学",
+          "date": "2026-08-25",
+          "time_frame": "Week 9",
+          "duration": null,
+          "time": null
+        }
+      ],
+      "source": {
+        "file": "sources/school/P4_Assessment_Plan_2026_Sem2.pdf",
+        "school": "Nan Hua Primary School",
+        "school_zh": "南华小学",
+        "letter_ref": "035/26/GEN",
+        "letter_date": "2026-07-10",
+        "title": "P4 Assessment Plan 2026 (Semester 2)",
+        "pages": [
+          2
+        ]
+      }
+    },
+    {
+      "assessment_id": "nhps-p4-2026-wa3-science",
+      "series": "WA3",
+      "term": 3,
+      "year": 2026,
+      "grade": "P4",
+      "subject_id": "science",
+      "label_zh": "Term 3 加权测验（科学）",
+      "label_en": "Term 3 Weighted Assessment (Science)",
+      "weight_percent": 15,
+      "weight_note": "占该科全年成绩的 15%。",
+      "date": "2026-08-18",
+      "time_frame": "Week 8",
+      "date_confirmed": true,
+      "date_status": "已确认（已结束）",
+      "status": "past",
+      "confirmation_note": "过去的安排，已由学校信函确认。",
+      "format": "Multiple-choice and Structured questions",
+      "scope": {
+        "text_en": "Chapter 3: Matter; Chapter 4: Light; Chapter 5: Shadows",
+        "text_zh": "第 3 章物质、第 4 章光、第 5 章影子",
+        "chapters": [
+          {
+            "chapter": "3",
+            "title": "Matter",
+            "type": "textbook"
+          },
+          {
+            "chapter": "4",
+            "title": "Light",
+            "type": "textbook"
+          },
+          {
+            "chapter": "5",
+            "title": "Shadows",
+            "type": "textbook"
+          }
+        ]
+      },
+      "papers": [
+        {
+          "name_en": "Science",
+          "name_zh": "科学",
+          "date": "2026-08-18",
+          "time_frame": "Week 8",
+          "duration": null,
+          "time": null
+        }
+      ],
+      "source": {
+        "file": "sources/school/P4_Assessment_Plan_2026_Sem2.pdf",
+        "school": "Nan Hua Primary School",
+        "school_zh": "南华小学",
+        "letter_ref": "035/26/GEN",
+        "letter_date": "2026-07-10",
+        "title": "P4 Assessment Plan 2026 (Semester 2)",
+        "pages": [
+          2
+        ]
+      }
+    },
+    {
+      "assessment_id": "nhps-p4-2026-eye-english",
+      "series": "EYE",
+      "term": 4,
+      "year": 2026,
+      "grade": "P4",
+      "subject_id": "english",
+      "label_zh": "年终考试（英文）",
+      "label_en": "End-of-Year Examination (English)",
+      "weight_percent": 55,
+      "weight_note": "占该科全年成绩的 55%。",
+      "date": "2026-10-26",
+      "date_note": "书面主卷日期取试卷二、听力日（10 月 26 日）；写作在 10 月 5 日，口试在 9 月 25 日。各分卷日期见 papers。",
+      "date_confirmed": true,
+      "date_status": "已确认（已结束）",
+      "status": "past",
+      "confirmation_note": "过去的安排，已由学校信函确认。",
+      "scope": {
+        "text_en": "Unit 1-8",
+        "text_zh": "Unit 1–8",
+        "units": "1-8",
+        "chapters": []
+      },
+      "papers": [
+        {
+          "name_en": "Paper 4 Oral",
+          "name_zh": "试卷四 口试",
+          "date": "2026-09-25",
+          "duration": null,
+          "time": "During Curriculum Time",
+          "format": "Reading Aloud; Stimulus-Based Conversation"
+        },
+        {
+          "name_en": "Paper 1 Writing",
+          "name_zh": "试卷一 写作",
+          "date": "2026-10-05",
+          "duration": "50 min",
+          "time": "7.50 a.m. - 8.40 a.m.",
+          "format": "Continuous Writing"
+        },
+        {
+          "name_en": "Oral Make-up",
+          "name_zh": "口试补考",
+          "date": "2026-10-07",
+          "duration": null,
+          "time": "During Curriculum Time"
+        },
+        {
+          "name_en": "Paper 2 Language Use and Comprehension",
+          "name_zh": "试卷二 语文应用与理解",
+          "date": "2026-10-26",
+          "duration": "1 h 15 min",
+          "time": "7.50 a.m. - 9.05 a.m.",
+          "format": "Multiple-choice, Short-answer and Long-answer questions"
+        },
+        {
+          "name_en": "Paper 3 Listening Comprehension",
+          "name_zh": "试卷三 听力",
+          "date": "2026-10-26",
+          "duration": "30 min",
+          "time": "11.15 a.m. - 11.45 a.m.",
+          "format": "Multiple-choice and Short-answer questions"
+        }
+      ],
+      "source": {
+        "file": "sources/school/P4_Assessment_Plan_2026_Sem2.pdf",
+        "school": "Nan Hua Primary School",
+        "school_zh": "南华小学",
+        "letter_ref": "035/26/GEN",
+        "letter_date": "2026-07-10",
+        "title": "P4 Assessment Plan 2026 (Semester 2)",
+        "pages": [
+          3,
+          4
+        ]
+      }
+    },
+    {
+      "assessment_id": "nhps-p4-2026-eye-higher-chinese",
+      "series": "EYE",
+      "term": 4,
+      "year": 2026,
+      "grade": "P4",
+      "subject_id": "higher_chinese",
+      "label_zh": "年终考试（高级华文）",
+      "label_en": "End-of-Year Examination (Higher Chinese)",
+      "weight_percent": 55,
+      "weight_note": "占该科全年成绩的 55%。",
+      "date": "2026-10-23",
+      "date_note": "书面主卷日期取试卷二、听力日（10 月 23 日）；写作在 10 月 6 日，口试在 9 月 28 日。各分卷日期见 papers。",
+      "date_confirmed": true,
+      "date_status": "已确认（已结束）",
+      "status": "past",
+      "confirmation_note": "过去的安排，已由学校信函确认。",
+      "scope": {
+        "text_en": "Primary 4 Higher Chinese textbook Lessons 1-16 (includes content from Primary 1-3)",
+        "text_zh": "四年级高华课本第 1–16 课（包含一到三年级所学内容）",
+        "lessons": "1-16",
+        "chapters": []
+      },
+      "papers": [
+        {
+          "name_en": "Paper 3 Oral",
+          "name_zh": "试卷四 / Paper 3 口试",
+          "date": "2026-09-28",
+          "duration": null,
+          "time": "During Curriculum Time",
+          "format": "朗读篇章和会话"
+        },
+        {
+          "name_en": "Paper 1 Writing",
+          "name_zh": "试卷一 看图作文",
+          "date": "2026-10-06",
+          "duration": "50 min",
+          "time": "7.50 a.m. - 8.40 a.m."
+        },
+        {
+          "name_en": "Oral Make-up",
+          "name_zh": "口试补考",
+          "date": "2026-10-07",
+          "duration": null,
+          "time": "During Curriculum Time"
+        },
+        {
+          "name_en": "Paper 2 Language Use and Comprehension",
+          "name_zh": "试卷二 语文理解与应用",
+          "date": "2026-10-23",
+          "duration": "1 h 20 min",
+          "time": "7.50 a.m. - 9.10 a.m.",
+          "format": "选择题和理解问答题"
+        },
+        {
+          "name_en": "Paper 3 Listening Comprehension",
+          "name_zh": "试卷三 听力",
+          "date": "2026-10-23",
+          "duration": "30 min",
+          "time": "11.15 a.m. - 11.45 a.m.",
+          "format": "选择题"
+        }
+      ],
+      "source": {
+        "file": "sources/school/P4_Assessment_Plan_2026_Sem2.pdf",
+        "school": "Nan Hua Primary School",
+        "school_zh": "南华小学",
+        "letter_ref": "035/26/GEN",
+        "letter_date": "2026-07-10",
+        "title": "P4 Assessment Plan 2026 (Semester 2)",
+        "pages": [
+          3,
+          4
+        ]
+      }
+    },
+    {
+      "assessment_id": "nhps-p4-2026-eye-science",
+      "series": "EYE",
+      "term": 4,
+      "year": 2026,
+      "grade": "P4",
+      "subject_id": "science",
+      "label_zh": "年终考试（科学）",
+      "label_en": "End-of-Year Examination (Science)",
+      "weight_percent": 55,
+      "weight_note": "占该科全年成绩的 55%。",
+      "date": "2026-10-27",
+      "date_confirmed": true,
+      "date_status": "已确认（已结束）",
+      "status": "past",
+      "confirmation_note": "过去的安排，已由学校信函确认。",
+      "format": "Booklet A: Multiple-choice questions; Booklet B: Structured questions",
+      "scope": {
+        "text_en": "All Primary 3 and Primary 4 topics.",
+        "text_zh": "全部小三、小四课题。",
+        "chapters": []
+      },
+      "papers": [
+        {
+          "name_en": "Science",
+          "name_zh": "科学",
+          "date": "2026-10-27",
+          "duration": "1 h 45 min",
+          "time": "7.50 a.m. - 9.35 a.m."
+        }
+      ],
+      "source": {
+        "file": "sources/school/P4_Assessment_Plan_2026_Sem2.pdf",
+        "school": "Nan Hua Primary School",
+        "school_zh": "南华小学",
+        "letter_ref": "035/26/GEN",
+        "letter_date": "2026-07-10",
+        "title": "P4 Assessment Plan 2026 (Semester 2)",
+        "pages": [
+          3,
+          4
+        ]
+      }
+    },
+    {
+      "assessment_id": "nhps-p4-2026-eye-mathematics",
+      "series": "EYE",
+      "term": 4,
+      "year": 2026,
+      "grade": "P4",
+      "subject_id": "math",
+      "label_zh": "年终考试（数学）",
+      "label_en": "End-of-Year Examination (Mathematics)",
+      "weight_percent": 55,
+      "weight_note": "占该科全年成绩的 55%。",
+      "date": "2026-10-29",
+      "date_confirmed": true,
+      "date_status": "已确认（已结束）",
+      "status": "past",
+      "confirmation_note": "过去的安排，已由学校信函确认。",
+      "format": "Section A: Multiple-choice; Section B: Short-answer; Section C: Long-answer questions",
+      "scope": {
+        "text_en": "All topics from Primary 3 and Primary 4 Textbook & Practice Book. All school-based materials.",
+        "text_zh": "小三和小四课本及练习册的全部课题，以及学校印发的材料。",
+        "chapters": []
+      },
+      "papers": [
+        {
+          "name_en": "Mathematics",
+          "name_zh": "数学",
+          "date": "2026-10-29",
+          "duration": "1 h 30 min",
+          "time": "7.50 a.m. - 9.20 a.m."
+        }
+      ],
+      "source": {
+        "file": "sources/school/P4_Assessment_Plan_2026_Sem2.pdf",
+        "school": "Nan Hua Primary School",
+        "school_zh": "南华小学",
+        "letter_ref": "035/26/GEN",
+        "letter_date": "2026-07-10",
+        "title": "P4 Assessment Plan 2026 (Semester 2)",
+        "pages": [
+          3,
+          4
+        ]
+      }
+    }
+  ]
+};
+
+</script>
+<script>
+const STATUS = {
+  conquered: { label:"已攻克" },
+  progress:  { label:"进行中" },
+  todo:      { label:"未开始" },
+  locked:    { label:"未解锁" }
+};
+function $(sel, root=document){ return root.querySelector(sel); }
+function starsHTML(n){
+  return [1,2,3].map(i => `<span class="star ${i<=n?"on":""}" aria-hidden="true">★</span>`).join("");
+}
+function flowerSVG(kind, status){
+  const grown = status==="conquered";
+  const seed = status==="todo" || status==="locked";
+  const grey = status==="locked" ? 'style="filter:grayscale(.7);opacity:.7"' : "";
+  if(seed){
+    const seedColor = status==="locked" ? "#9a9084" : "#6b4223";
+    return `<svg viewBox="0 0 110 118" ${grey} aria-hidden="true">
+      <ellipse cx="55" cy="104" rx="18" ry="5" fill="rgba(0,0,0,.12)"/>
+      <ellipse cx="55" cy="90" rx="7" ry="10" fill="${seedColor}" transform="rotate(-25 55 90)"/>
+      ${status==="todo" ? '<path d="M55 82c0-10 8-16 8-16" stroke="#6aaa4a" stroke-width="2" fill="none"/>' : ""}
+    </svg>`;
+  }
+  const stemH = grown ? 70 : 48;
+  const stem = `<path d="M55 104 C55 ${104-stemH*.3}, 55 ${104-stemH*.6}, 55 ${104-stemH}" stroke="#2f7a3c" stroke-width="4" fill="none" stroke-linecap="round"/>`;
+  const leafs = `<path d="M55 ${104-stemH*.45} C40 ${104-stemH*.55}, 32 ${104-stemH*.3}, 38 ${104-stemH*.2}" fill="#57a34a"/>
+                 <path d="M55 ${104-stemH*.6} C70 ${104-stemH*.7}, 78 ${104-stemH*.45}, 72 ${104-stemH*.35}" fill="#3f8f4b"/>`;
+  const heads = {
+    sunflower: grown
+      ? `<g transform="translate(55 ${104-stemH})">${Array.from({length:12},(_,i)=>`<ellipse cx="0" cy="-16" rx="5" ry="11" fill="#f0c43a" transform="rotate(${i*30})"/>`).join("")}<circle r="11" fill="#6b4223"/><circle r="7" fill="#3d2614"/></g>`
+      : `<g transform="translate(55 ${104-stemH})"><ellipse cx="0" cy="-8" rx="8" ry="11" fill="#8fcf5a"/><circle cy="-2" r="5" fill="#f0c43a"/></g>`,
+    clover: grown
+      ? `<g transform="translate(55 ${104-stemH})"><circle cx="-8" cy="-4" r="8" fill="#3f8f4b"/><circle cx="8" cy="-4" r="8" fill="#3f8f4b"/><circle cx="0" cy="-14" r="8" fill="#57a34a"/><circle cx="0" cy="-4" r="5" fill="#2f7a3c"/></g>`
+      : `<g transform="translate(55 ${104-stemH})"><circle cx="0" cy="-8" r="8" fill="#8fcf5a"/></g>`,
+    tulip: grown
+      ? `<g transform="translate(55 ${104-stemH})"><ellipse cx="-11" cy="-14" rx="11" ry="20" fill="#e8617a"/><ellipse cx="11" cy="-14" rx="11" ry="20" fill="#e8617a"/><ellipse cx="0" cy="-20" rx="12" ry="24" fill="#ff6b8a"/><circle cy="0" r="3.5" fill="#f0c43a"/></g>`
+      : `<g transform="translate(55 ${104-stemH})"><ellipse cx="0" cy="-10" rx="7" ry="11" fill="#8fcf5a"/><ellipse cx="0" cy="-14" rx="5" ry="7" fill="#ff8fa0"/></g>`,
+    rose: grown
+      ? `<g transform="translate(55 ${104-stemH})"><circle r="14" fill="#e8617a"/><circle r="9" fill="#ff8fa0"/><circle r="4" fill="#c43c5a"/></g>`
+      : `<g transform="translate(55 ${104-stemH})"><ellipse cx="0" cy="-6" rx="7" ry="9" fill="#8fcf5a"/><circle cy="-2" r="4" fill="#e8617a"/></g>`,
+    daisy: grown
+      ? `<g transform="translate(55 ${104-stemH})">${Array.from({length:8},(_,i)=>`<ellipse cx="0" cy="-13" rx="4" ry="9" fill="#fff" transform="rotate(${i*45})"/>`).join("")}<circle r="6" fill="#f0c43a"/></g>`
+      : `<g transform="translate(55 ${104-stemH})"><circle cy="-6" r="7" fill="#8fcf5a"/><circle cy="-4" r="3" fill="#f0c43a"/></g>`,
+    fern: grown
+      ? `<g transform="translate(55 ${104-stemH})"><path d="M0 0 C-2 -20 -14 -36 -8 -50" stroke="#2f7a3c" stroke-width="3" fill="none"/>${[-12,-22,-32,-42].map((y,i)=>`<ellipse cx="${-8-i}" cy="${y}" rx="10" ry="4" fill="#57a34a" transform="rotate(-30 ${-8} ${y})"/><ellipse cx="${8+i}" cy="${y+4}" rx="10" ry="4" fill="#3f8f4b" transform="rotate(30 ${8} ${y+4})"/>`).join("")}</g>`
+      : `<g transform="translate(55 ${104-stemH})"><path d="M0 0 C0 -16 6 -22 4 -28" stroke="#2f7a3c" stroke-width="3" fill="none"/><ellipse cx="-6" cy="-12" rx="7" ry="3" fill="#8fcf5a"/></g>`,
+    lily: grown
+      ? `<g transform="translate(55 ${104-stemH})"><path d="M0 4 C-18 -6 -8 -28 0 -30 C8 -28 18 -6 0 4Z" fill="#f4e9ff"/><path d="M-8 -8 C-16 -18 -4 -28 0 -18" fill="#e3c7f5"/><path d="M8 -8 C16 -18 4 -28 0 -18" fill="#e3c7f5"/><circle cy="-6" r="3" fill="#f0c43a"/></g>`
+      : `<g transform="translate(55 ${104-stemH})"><ellipse cy="-8" rx="6" ry="10" fill="#8fcf5a"/></g>`,
+    lavender: grown
+      ? `<g transform="translate(55 ${104-stemH})">${[-8,0,8].map(x=>`<g transform="translate(${x} 0)"><line x1="0" y1="0" x2="0" y2="-40" stroke="#2f7a3c" stroke-width="2"/>${[-18,-24,-30,-36].map(y=>`<circle cx="0" cy="${y}" r="3.5" fill="#8b6cc9"/>`).join("")}</g>`).join("")}</g>`
+      : `<g transform="translate(55 ${104-stemH})"><line x1="0" y1="0" x2="0" y2="-20" stroke="#2f7a3c" stroke-width="2"/><circle cy="-22" r="4" fill="#b9a4e0"/></g>`,
+    water: grown
+      ? `<g transform="translate(55 ${104-stemH})"><ellipse cx="0" cy="8" rx="28" ry="8" fill="#8ec6e8" opacity=".7"/><circle cx="-8" cy="-4" r="10" fill="#67b37a"/><circle cx="8" cy="-4" r="10" fill="#3f8f4b"/><circle cx="0" cy="-12" r="10" fill="#57a34a"/><circle cy="-4" r="4" fill="#f0c43a"/></g>`
+      : `<g transform="translate(55 ${104-stemH})"><ellipse cy="8" rx="20" ry="6" fill="#8ec6e8" opacity=".6"/><circle cy="-4" r="7" fill="#8fcf5a"/></g>`,
+    tree: grown
+      ? `<g transform="translate(55 ${104-stemH})"><rect x="-4" y="-10" width="8" height="22" rx="2" fill="#8a5a32"/><circle cx="-12" cy="-18" r="14" fill="#2f7a3c"/><circle cx="12" cy="-18" r="14" fill="#3f8f4b"/><circle cx="0" cy="-30" r="14" fill="#57a34a"/></g>`
+      : `<g transform="translate(55 ${104-stemH})"><rect x="-3" y="-4" width="6" height="14" rx="2" fill="#8a5a32"/><circle cy="-12" r="10" fill="#8fcf5a"/></g>`,
+    marigold: grown
+      ? `<g transform="translate(55 ${104-stemH})">${Array.from({length:10},(_,i)=>`<ellipse cx="0" cy="-13" rx="4" ry="10" fill="#f08a1a" transform="rotate(${i*36})"/>`).join("")}<circle r="6" fill="#f0c43a"/></g>`
+      : `<g transform="translate(55 ${104-stemH})"><ellipse cy="-7" rx="7" ry="9" fill="#8fcf5a"/><circle cy="-3" r="4" fill="#f08a1a"/></g>`
+  };
+  return `<svg viewBox="0 0 110 118" ${grey} aria-hidden="true">${stem}${leafs}${heads[kind]||heads.daisy}</svg>`;
+}
+function treeSVG(pct){
+  const grown = pct >= 30;
+  return `<svg viewBox="0 0 160 160" aria-hidden="true">
+    <ellipse cx="80" cy="148" rx="46" ry="8" fill="rgba(53,88,42,.18)"/>
+    <rect x="72" y="90" width="16" height="58" rx="4" fill="#8a5a32"/>
+    <circle cx="54" cy="90" r="${grown?28:18}" fill="#2f7a3c"/>
+    <circle cx="106" cy="90" r="${grown?28:18}" fill="#3f8f4b"/>
+    <circle cx="80" cy="64" r="${grown?32:20}" fill="#57a34a"/>
+    ${pct>=30?`<circle cx="64" cy="78" r="4" fill="#e8617a"/><circle cx="98" cy="70" r="4" fill="#f0c43a"/><circle cx="80" cy="54" r="4" fill="#e8617a"/>`:""}
+  </svg>`;
+}
+
+function topicsOf(data, sid){ return data.topics.filter(t => t.subject_id === sid); }
+function statsOf(data, sid){
+  const ts = topicsOf(data, sid);
+  const done = ts.filter(t => t.status==="conquered").length;
+  const total = ts.length;
+  const donePct = total ? Math.round(done/total*100) : 0;
+  return { done, total, donePct, remainPct: total? 100-donePct : 0, unfinished: ts.filter(t => t.status!=="conquered") };
+}
+
+let DATA = null;
+let current = "math";
+
+function openModal(id){
+  const t = DATA.topics.find(x => x.topic_id === id);
+  if(!t) return;
+  const st = STATUS[t.status];
+  const canPractice = t.status !== "locked";
+  const box = $("#modal");
+  box.innerHTML = `
+    <div class="modal-backdrop" data-close="1"></div>
+    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="md-title">
+      <button class="modal-x" type="button" data-close="1" aria-label="关闭">×</button>
+      <div class="modal-kicker">${t.strand_zh} · ${t.group} · ${t.topic_id}</div>
+      <h2 id="md-title">${t.name_zh}</h2>
+      <p class="modal-en">${t.name_en}</p>
+      <div class="modal-status status-${t.status}">
+        <span class="pill">${st.label}</span>
+        <span class="stars" aria-label="${t.stars} 颗星">${starsHTML(t.stars)}</span>
+      </div>
+      <p class="modal-lead">这一关你会：</p>
+      <ul class="modal-los">${t.learning_outcomes.map(x=>`<li>${x.text_zh}</li>`).join("")}</ul>
+      <button class="btn-practice" type="button" id="btn-practice" ${canPractice?"":"disabled"}>
+        ${canPractice? "练习真题": "先通关前面的知识点"}
+      </button>
+      <p class="practice-note" hidden>题库正在整理中，稍后就能在这里练习对应的真题啦。</p>
+    </div>`;
+  box.hidden = false;
+  document.body.classList.add("modal-open");
+  const prac = $("#btn-practice");
+  if(prac && canPractice){
+    prac.addEventListener("click", () => { box.querySelector(".practice-note").hidden = false; });
+  }
+  box.addEventListener("click", (e) => { if(e.target.dataset.close) closeModal(); });
+}
+function closeModal(){
+  const box = $("#modal");
+  box.hidden = true; box.innerHTML = "";
+  document.body.classList.remove("modal-open");
+}
+document.addEventListener("keydown", (e) => { if(e.key==="Escape") closeModal(); });
+
+function renderTabs(){
+  const tabs = $("#tabs");
+  tabs.innerHTML = DATA.subjects.map(s => {
+    const soon = s.coming_soon ? "is-soon" : "";
+    const sel = current===s.subject_id ? "true" : "false";
+    const extra = s.coming_soon ? "<small>即将开放</small>" : "";
+    return `<button type="button" class="${soon}" aria-selected="${sel}" data-id="${s.subject_id}">${s.name_zh}${extra}</button>`;
+  }).join("");
+  tabs.onclick = (e) => {
+    const b = e.target.closest("button");
+    if(!b) return;
+    current = b.dataset.id;
+    render();
+  };
+}
+
+function renderVitals(s){
+  if(s.coming_soon){ $("#vitals").style.display="none"; $("#vitals").innerHTML=""; return; }
+  $("#vitals").style.display="";
+  const st = statsOf(DATA, s.subject_id);
+  const inProg = st.unfinished.find(t => t.status==="progress");
+  const hint = inProg ? `今天可以先给「${inProg.name_zh}」浇浇水` : (st.unfinished[0] ? `下一株可以种「${st.unfinished[0].name_zh}」` : "这一科的花都开齐啦！");
+  $("#vitals").innerHTML = `
+    <div class="tree-wrap">${treeSVG(st.donePct)}</div>
+    <div class="stats-col">
+      <div class="stat done"><div class="k">已开花</div><div class="v">${st.donePct}%</div><div class="unit">（${st.done}/${st.total}）</div></div>
+      <div class="stat remain"><div class="k">还剩</div><div class="v">${st.remainPct}%</div></div>
+      <div class="stat todo"><div class="k">还没开花</div><div class="v">${st.unfinished.length}</div><div class="unit">株</div></div>
+      <div class="bar-wrap" aria-hidden="true"><span style="--p:${st.donePct}%"></span></div>
+      <p class="hint">${hint}</p>
+    </div>`;
+}
+
+function renderGarden(sid){
+  const topics = topicsOf(DATA, sid);
+  const showBf = statsOf(DATA, sid).donePct >= 30;
+  const plots = topics.map(t => {
+    const kind = t.flower || "daisy";
+    return `<button class="plot ${t.status}" type="button" data-id="${t.topic_id}" aria-label="${t.name_zh}，${STATUS[t.status].label}">
+      <div class="plant">${flowerSVG(kind, t.status)}</div>
+      <div class="pot"><span class="soil"></span></div>
+      <div class="label-zh">${t.name_zh}</div>
+      <div class="label-en">${t.name_en}</div>
+      <span class="tag">${STATUS[t.status].label}</span>
+    </button>`;
+  }).join("");
+  $("#garden").innerHTML = `
+    <div class="butterflies" aria-hidden="true">${showBf?`<span class="bf b1">🦋</span><span class="bf b2">🦋</span><span class="bf b3">🦋</span>`:""}</div>
+    <div class="plots">${plots}</div>`;
+  $("#garden").onclick = (e) => { const b=e.target.closest("[data-id]"); if(b) openModal(b.dataset.id); };
+}
+
+function renderSide(sid){
+  const s = DATA.subjects.find(x => x.subject_id===sid);
+  const list = statsOf(DATA, sid).unfinished;
+  const ico = {progress:"🌿", todo:"🌱", locked:"🌰"};
+  $("#side").innerHTML = `
+    <h2>还没开花的种子</h2>
+    <p class="sub">${s.name_zh}还有 ${list.length} 个知识点等你浇灌</p>
+    ${list.map(t => `
+      <button class="seed-item" type="button" data-id="${t.topic_id}">
+        <span class="ico">${ico[t.status]}</span>
+        <span><span class="zh">${t.name_zh}</span><span class="en">${t.name_en}</span></span>
+        <span class="st">${STATUS[t.status].label}</span>
+      </button>`).join("")}
+    <div class="legend">
+      <span>🌼 已攻克（开花）</span>
+      <span>🌿 进行中（嫩芽）</span>
+      <span>🌱 未开始（种子）</span>
+      <span>🌰 未解锁</span>
+    </div>`;
+  $("#side").onclick = (e) => { const b=e.target.closest("[data-id]"); if(b) openModal(b.dataset.id); };
+}
+
+function render(){
+  const stu = DATA.student;
+  $("#page-title").textContent = `${stu.display_name}的知识花园`;
+  $("#grade-line").textContent = `${stu.grade_zh} · ${stu.grade}`;
+  renderTabs();
+  const s = DATA.subjects.find(x => x.subject_id===current);
+  if(s.coming_soon){
+    renderVitals(s);
+    $("#garden").style.display = "none";
+    $("#garden").innerHTML = "";
+    $("#side").innerHTML = `<div class="coming-soon-card"><div class="cs-badge">即将开放</div><h3>${s.name_zh} · ${s.name_en}</h3><p>这一科的知识点页面还在准备中，先专心把数学和科学的花园照料好吧。</p></div>`;
+    return;
+  }
+  $("#garden").style.display = "";
+  renderVitals(s);
+  renderGarden(current);
+  renderSide(current);
+}
+
+async function loadDemoData(){
+  try{
+    const r = await fetch("../data/demo_student.json", {cache:"no-store"});
+    if(r.ok) return await r.json();
+  }catch(e){}
+  if(window.DEMO_DATA) return window.DEMO_DATA;
+  throw new Error("无法加载示例数据");
+}
+
+loadDemoData().then(data => {
+  DATA = data;
+  $("#banner-text").textContent = "⚠ " + (data.meta.disclaimer || "示例数据");
+  current = (data.subjects.find(s => !s.coming_soon) || data.subjects[0]).subject_id;
+  render();
+}).catch(err => {
+  document.querySelector("main").innerHTML = `<div class="load-error"><p>数据没有加载出来。</p><p>${err.message}</p></div>`;
+});
+</script>
+<!-- garden-practice-js:start -->
+  <script src="assets/practice-bank.js"></script>
+  <script src="assets/practice.js"></script>
+<!-- garden-practice-js:end -->
+</body>
+</html>
