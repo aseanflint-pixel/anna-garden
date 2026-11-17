@@ -22,6 +22,11 @@
 .practice-note-ok{
   margin:4px 0 10px;font-size:.88rem;font-weight:700;color:#35582a;
 }
+.subject-note{
+  margin:0 0 12px;padding:8px 12px;border-radius:14px;
+  background:#fff8e8;border:1px solid #f0ddb0;color:#6b4e00;
+  font-weight:700;font-size:.86rem;line-height:1.45;
+}
 .practice-filters{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 12px}
 .practice-filters button{
   padding:6px 10px;border-radius:999px;font-weight:800;font-size:.78rem;
@@ -39,6 +44,16 @@
   display:inline-flex;align-items:center;padding:3px 8px;border-radius:999px;
   background:#eef6e0;border:1px solid #d3e6b6;font-size:.78rem;
 }
+.q-context{
+  background:#fff;border:2px solid #d7e8c4;border-radius:18px;padding:10px;
+  overflow:auto;max-height:min(40vh, 420px);margin-bottom:10px;
+}
+.q-context-label{
+  font-size:.8rem;font-weight:800;letter-spacing:.04em;color:#35582a;
+  opacity:.85;margin:0 0 8px;
+}
+.q-context img{display:block;width:100%;height:auto;border-radius:10px;background:#fff;margin:0 0 8px}
+.q-context img:last-child{margin-bottom:0}
 .q-frame{
   background:#fff;border:2px solid #e4efd4;border-radius:18px;padding:10px;
   overflow:auto;max-height:min(52vh, 560px);
@@ -89,7 +104,8 @@
 .self-check-note{margin:8px 0 0 !important;font-size:.9rem}
 @media (max-width:860px){
   .modal-card.practice-mode{margin:2vh auto 0;padding:16px 12px 14px;width:calc(100% - 16px);max-height:96vh;border-radius:22px}
-  .q-frame{max-height:46vh;padding:6px}
+  .q-context{max-height:34vh;padding:6px}
+  .q-frame{max-height:40vh;padding:6px}
   .btn-nav{min-width:72px;padding:10px 8px}
   .practice-head h2{font-size:1.08rem}
 }

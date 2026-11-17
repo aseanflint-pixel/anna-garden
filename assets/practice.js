@@ -24,6 +24,16 @@
     return window.PRACTICE_BANK || null;
   }
 
+  function bankSubjectOf(t) {
+    return (t && t.bank_subject) || "";
+  }
+
+  function matchesSubject(t, q) {
+    const subj = bankSubjectOf(t);
+    if (!subj || !q || !q.subject) return true;
+    return q.subject === subj;
+  }
+
   function questionsFor(t, filterId) {
     const b = bank();
     if (!b || !b.questions) return [];
@@ -36,7 +46,7 @@
         if (seen[i]) return;
         seen[i] = true;
         const q = b.questions[i];
-        if (q) list.push(q);
+        if (q && matchesSubject(t, q)) list.push(q);
       });
     });
     return list;
@@ -157,9 +167,23 @@
       return;
     }
 
-    const img = q.image
-      ? "<img src=\"" + esc(q.image) + "\" alt=\"" + esc((q.school || "") + " " + (q.year || "") + " " + (q.q_label || q.question || "题目")) + "\" loading=\"eager\" decoding=\"async\">"
-      : "<div class=\"q-missing\">这道题的图片还没有准备好。</div>";
+    const qAlt = esc((q.school || "") + " " + (q.year || "") + " " + (q.q_label || q.question || "题目"));
+    const ctx = (q.context_images || []).filter(function (src) { return src && src !== q.image; });
+    let img = "";
+    if (ctx.length) {
+      img += "<div class=\"q-context\"><div class=\"q-context-label\">先看这段短文或图表，再做下面的题</div>";
+      ctx.forEach(function (src, i) {
+        const load = i === 0 ? "eager" : "lazy";
+        img += "<img src=\"" + esc(src) + "\" alt=\"题目材料\" loading=\"" + load + "\" decoding=\"async\">";
+      });
+      img += "</div>";
+    }
+    if (q.image) {
+      const load = ctx.length ? "lazy" : "eager";
+      img += "<div class=\"q-frame\"><img src=\"" + esc(q.image) + "\" alt=\"" + qAlt + "\" loading=\"" + load + "\" decoding=\"async\"></div>";
+    } else if (!ctx.length) {
+      img += "<div class=\"q-missing\">这道题的图片还没有准备好。</div>";
+    }
 
     const answerBlock = revealed
       ? "<div class=\"answer-box\">" +
@@ -184,7 +208,7 @@
         "<p class=\"practice-note-ok\">这些都是已经核对通过的真题。先自己做，做好了再点开答案。</p>" +
         renderFilters(t, filterId, counts, all.length) +
         "<div class=\"practice-meta\">" + metaLine(q) + "</div>" +
-        "<div class=\"q-frame\">" + img + "</div>" +
+        img +
         "<div class=\"practice-nav\">" +
           "<button class=\"btn-nav\" type=\"button\" data-nav=\"-1\"" + (safeIndex === 0 ? " disabled" : "") + ">上一题</button>" +
           "<div class=\"idx\">第 " + (safeIndex + 1) + " 道，共 " + qs.length + " 道</div>" +

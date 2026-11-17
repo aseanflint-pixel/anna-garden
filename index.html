@@ -220,7 +220,7 @@ body.modal-open{overflow:hidden}
     <aside class="side" id="side"></aside>
   </main>
   <footer class="page-foot">
-    <span>知识点名称来自新加坡小学数学、科学大纲。</span>
+    <span>知识点名称来自新加坡小学数学、科学、英文和华文大纲。</span>
     <span>进度保存在这台设备的浏览器里。</span>
   </footer>
   <div id="modal" hidden></div>
@@ -279,16 +279,30 @@ window.GARDEN_DATA = {
       "name_zh": "英文",
       "name_en": "English",
       "syllabus_subject": "English",
-      "coming_soon": true,
-      "accent": "#7b6bb0"
+      "coming_soon": false,
+      "accent": "#7b6bb0",
+      "bank_subject": "English",
+      "note": "这些都是已经核对过的学校试卷真题。有短文或图表的题目，会先给你看材料。"
     },
     {
       "subject_id": "higher_chinese",
       "name_zh": "高级华文",
       "name_en": "Higher Chinese",
       "syllabus_subject": "Higher Chinese Language",
-      "coming_soon": true,
-      "accent": "#c45a10"
+      "coming_soon": false,
+      "accent": "#c45a10",
+      "bank_subject": "Higher Chinese",
+      "note": "按试卷题型练习。欢乐伙伴第1–16课的课文生字还没有对上这些校卷真题。"
+    },
+    {
+      "subject_id": "chinese",
+      "name_zh": "华文",
+      "name_en": "Chinese",
+      "syllabus_subject": "Chinese Language",
+      "coming_soon": false,
+      "accent": "#b53d4a",
+      "bank_subject": "Chinese",
+      "note": "按试卷题型练习。欢乐伙伴第1–16课的课文生字还没有对上这些校卷真题。"
     }
   ],
   "topics": [
@@ -1015,6 +1029,936 @@ window.GARDEN_DATA = {
       "source": {
         "file": "primary/P_Science_P3-P6_updated_Jan2026.pdf",
         "page": "77"
+      }
+    },
+    {
+      "topic_id": "P4-EN-01",
+      "subject_id": "english",
+      "strand": "GRAMMAR (Paper 2: Grammar MCQ / Grammar Cloze / Editing)",
+      "strand_zh": "文法",
+      "syllabus_topic": "Tenses — simple present / past / future, present & past continuous",
+      "name_en": "Tenses",
+      "name_zh": "时态",
+      "short": "时态",
+      "group": "文法",
+      "flower": "sunflower",
+      "status": "todo",
+      "stars": 0,
+      "strength": null,
+      "bank_subject": "English",
+      "learning_outcomes": [
+        {
+          "topic_id": "P4-EN-01",
+          "text_en": "Tenses — simple present / past / future, present & past continuous",
+          "text_zh": "一般现在/过去/将来时和进行时"
+        },
+        {
+          "topic_id": "P4-EN-02",
+          "text_en": "Tenses — present perfect / past perfect",
+          "text_zh": "现在完成时和过去完成时"
+        }
+      ],
+      "source": {
+        "file": "kb/topics.csv",
+        "page": ""
+      }
+    },
+    {
+      "topic_id": "P4-EN-03",
+      "subject_id": "english",
+      "strand": "GRAMMAR (Paper 2: Grammar MCQ / Grammar Cloze / Editing)",
+      "strand_zh": "文法",
+      "syllabus_topic": "Subject–verb agreement",
+      "name_en": "Subject–verb agreement",
+      "name_zh": "主谓一致",
+      "short": "主谓一致",
+      "group": "文法",
+      "flower": "clover",
+      "status": "todo",
+      "stars": 0,
+      "strength": null,
+      "bank_subject": "English",
+      "learning_outcomes": [
+        {
+          "topic_id": "P4-EN-03",
+          "text_en": "Subject–verb agreement",
+          "text_zh": "主谓一致"
+        }
+      ],
+      "source": {
+        "file": "kb/topics.csv",
+        "page": ""
+      }
+    },
+    {
+      "topic_id": "P4-EN-04",
+      "subject_id": "english",
+      "strand": "GRAMMAR (Paper 2: Grammar MCQ / Grammar Cloze / Editing)",
+      "strand_zh": "文法",
+      "syllabus_topic": "Pronouns — personal, possessive, reflexive, indefinite",
+      "name_en": "Pronouns",
+      "name_zh": "代词",
+      "short": "代词",
+      "group": "文法",
+      "flower": "tulip",
+      "status": "todo",
+      "stars": 0,
+      "strength": null,
+      "bank_subject": "English",
+      "learning_outcomes": [
+        {
+          "topic_id": "P4-EN-04",
+          "text_en": "Pronouns — personal, possessive, reflexive, indefinite",
+          "text_zh": "人称、物主和反身代词"
+        },
+        {
+          "topic_id": "P4-EN-05",
+          "text_en": "Relative pronouns",
+          "text_zh": "关系代词"
+        }
+      ],
+      "source": {
+        "file": "kb/topics.csv",
+        "page": ""
+      }
+    },
+    {
+      "topic_id": "P4-EN-06",
+      "subject_id": "english",
+      "strand": "GRAMMAR (Paper 2: Grammar MCQ / Grammar Cloze / Editing)",
+      "strand_zh": "文法",
+      "syllabus_topic": "Prepositions",
+      "name_en": "Prepositions and conjunctions",
+      "name_zh": "介词和连词",
+      "short": "介词连词",
+      "group": "文法",
+      "flower": "rose",
+      "status": "todo",
+      "stars": 0,
+      "strength": null,
+      "bank_subject": "English",
+      "learning_outcomes": [
+        {
+          "topic_id": "P4-EN-06",
+          "text_en": "Prepositions",
+          "text_zh": "介词"
+        },
+        {
+          "topic_id": "P4-EN-07",
+          "text_en": "Conjunctions / connectors",
+          "text_zh": "连词"
+        }
+      ],
+      "source": {
+        "file": "kb/topics.csv",
+        "page": ""
+      }
+    },
+    {
+      "topic_id": "P4-EN-10",
+      "subject_id": "english",
+      "strand": "GRAMMAR (Paper 2: Grammar MCQ / Grammar Cloze / Editing)",
+      "strand_zh": "文法",
+      "syllabus_topic": "Nouns & quantifiers — countable / uncountable",
+      "name_en": "Nouns, quantifiers and articles",
+      "name_zh": "名词、量词和冠词",
+      "short": "名词冠词",
+      "group": "文法",
+      "flower": "daisy",
+      "status": "todo",
+      "stars": 0,
+      "strength": null,
+      "bank_subject": "English",
+      "learning_outcomes": [
+        {
+          "topic_id": "P4-EN-10",
+          "text_en": "Nouns & quantifiers — countable / uncountable",
+          "text_zh": "名词和量词"
+        },
+        {
+          "topic_id": "P4-EN-11",
+          "text_en": "Articles & determiners",
+          "text_zh": "冠词"
+        }
+      ],
+      "source": {
+        "file": "kb/topics.csv",
+        "page": ""
+      }
+    },
+    {
+      "topic_id": "P4-EN-12",
+      "subject_id": "english",
+      "strand": "GRAMMAR (Paper 2: Grammar MCQ / Grammar Cloze / Editing)",
+      "strand_zh": "文法",
+      "syllabus_topic": "Adjectives & adverbs",
+      "name_en": "Adjectives and adverbs",
+      "name_zh": "形容词和副词",
+      "short": "形容词副词",
+      "group": "文法",
+      "flower": "fern",
+      "status": "todo",
+      "stars": 0,
+      "strength": null,
+      "bank_subject": "English",
+      "learning_outcomes": [
+        {
+          "topic_id": "P4-EN-12",
+          "text_en": "Adjectives & adverbs",
+          "text_zh": "形容词和副词"
+        },
+        {
+          "topic_id": "P4-EN-15",
+          "text_en": "Word forms / word class",
+          "text_zh": "词性转换"
+        }
+      ],
+      "source": {
+        "file": "kb/topics.csv",
+        "page": ""
+      }
+    },
+    {
+      "topic_id": "P4-EN-13",
+      "subject_id": "english",
+      "strand": "GRAMMAR (Paper 2: Grammar MCQ / Grammar Cloze / Editing)",
+      "strand_zh": "文法",
+      "syllabus_topic": "Gerunds & infinitives",
+      "name_en": "Other verb patterns",
+      "name_zh": "动词的其他用法",
+      "short": "动词用法",
+      "group": "文法",
+      "flower": "lily",
+      "status": "todo",
+      "stars": 0,
+      "strength": null,
+      "bank_subject": "English",
+      "learning_outcomes": [
+        {
+          "topic_id": "P4-EN-13",
+          "text_en": "Gerunds & infinitives",
+          "text_zh": "动名词和不定式"
+        },
+        {
+          "topic_id": "P4-EN-14",
+          "text_en": "Phrasal verbs",
+          "text_zh": "短语动词"
+        },
+        {
+          "topic_id": "P4-EN-16",
+          "text_en": "Conditionals (first conditional)",
+          "text_zh": "条件句"
+        },
+        {
+          "topic_id": "P4-EN-17",
+          "text_en": "Active & passive voice",
+          "text_zh": "主动和被动"
+        },
+        {
+          "topic_id": "P4-EN-18",
+          "text_en": "Direct & reported speech",
+          "text_zh": "直接引语和间接引语"
+        }
+      ],
+      "source": {
+        "file": "kb/topics.csv",
+        "page": ""
+      }
+    },
+    {
+      "topic_id": "P4-EN-19",
+      "subject_id": "english",
+      "strand": "VOCABULARY (Paper 2: Vocabulary MCQ / Vocabulary Cloze)",
+      "strand_zh": "词汇",
+      "syllabus_topic": "Vocabulary MCQ — word meaning in context",
+      "name_en": "Vocabulary",
+      "name_zh": "词汇",
+      "short": "词汇",
+      "group": "词汇",
+      "flower": "lavender",
+      "status": "todo",
+      "stars": 0,
+      "strength": null,
+      "bank_subject": "English",
+      "learning_outcomes": [
+        {
+          "topic_id": "P4-EN-19",
+          "text_en": "Vocabulary MCQ — word meaning in context",
+          "text_zh": "词汇选择题"
+        },
+        {
+          "topic_id": "P4-EN-20",
+          "text_en": "Vocabulary cloze",
+          "text_zh": "词汇填空"
+        },
+        {
+          "topic_id": "P4-EN-21",
+          "text_en": "Synonyms, antonyms & words in context",
+          "text_zh": "近义词、反义词和语境"
+        }
+      ],
+      "source": {
+        "file": "kb/topics.csv",
+        "page": ""
+      }
+    },
+    {
+      "topic_id": "P4-EN-22",
+      "subject_id": "english",
+      "strand": "CLOZE & EDITING (Paper 2)",
+      "strand_zh": "填空与改错",
+      "syllabus_topic": "Grammar cloze — word box",
+      "name_en": "Grammar cloze",
+      "name_zh": "文法填空",
+      "short": "文法填空",
+      "group": "填空与改错",
+      "flower": "water",
+      "status": "todo",
+      "stars": 0,
+      "strength": null,
+      "bank_subject": "English",
+      "learning_outcomes": [
+        {
+          "topic_id": "P4-EN-22",
+          "text_en": "Grammar cloze — word box",
+          "text_zh": "文法填空（词框）"
+        },
+        {
+          "topic_id": "P4-EN-23",
+          "text_en": "Grammar cloze — bracket options / verb forms",
+          "text_zh": "文法填空（括号）"
+        }
+      ],
+      "source": {
+        "file": "kb/topics.csv",
+        "page": ""
+      }
+    },
+    {
+      "topic_id": "P4-EN-24",
+      "subject_id": "english",
+      "strand": "CLOZE & EDITING (Paper 2)",
+      "strand_zh": "填空与改错",
+      "syllabus_topic": "Editing — spelling",
+      "name_en": "Editing",
+      "name_zh": "改错",
+      "short": "改错",
+      "group": "填空与改错",
+      "flower": "tree",
+      "status": "todo",
+      "stars": 0,
+      "strength": null,
+      "bank_subject": "English",
+      "learning_outcomes": [
+        {
+          "topic_id": "P4-EN-24",
+          "text_en": "Editing — spelling",
+          "text_zh": "改错（拼写）"
+        },
+        {
+          "topic_id": "P4-EN-25",
+          "text_en": "Editing — grammar",
+          "text_zh": "改错（文法）"
+        }
+      ],
+      "source": {
+        "file": "kb/topics.csv",
+        "page": ""
+      }
+    },
+    {
+      "topic_id": "P4-EN-26",
+      "subject_id": "english",
+      "strand": "CLOZE & EDITING (Paper 2)",
+      "strand_zh": "填空与改错",
+      "syllabus_topic": "Comprehension cloze (open)",
+      "name_en": "Comprehension cloze",
+      "name_zh": "理解填空",
+      "short": "理解填空",
+      "group": "填空与改错",
+      "flower": "marigold",
+      "status": "todo",
+      "stars": 0,
+      "strength": null,
+      "bank_subject": "English",
+      "learning_outcomes": [
+        {
+          "topic_id": "P4-EN-26",
+          "text_en": "Comprehension cloze (open)",
+          "text_zh": "理解填空"
+        }
+      ],
+      "source": {
+        "file": "kb/topics.csv",
+        "page": ""
+      }
+    },
+    {
+      "topic_id": "P4-EN-27",
+      "subject_id": "english",
+      "strand": "SYNTHESIS & TRANSFORMATION (Paper 2)",
+      "strand_zh": "造句",
+      "syllabus_topic": "Combining with connectors",
+      "name_en": "Synthesis and transformation",
+      "name_zh": "造句和句型转换",
+      "short": "造句转换",
+      "group": "造句",
+      "flower": "sunflower",
+      "status": "todo",
+      "stars": 0,
+      "strength": null,
+      "bank_subject": "English",
+      "learning_outcomes": [
+        {
+          "topic_id": "P4-EN-27",
+          "text_en": "Combining with connectors",
+          "text_zh": "用连词造句"
+        },
+        {
+          "topic_id": "P4-EN-28",
+          "text_en": "Combining with relative pronouns",
+          "text_zh": "用关系代词造句"
+        },
+        {
+          "topic_id": "P4-EN-29",
+          "text_en": "Sentence transformation",
+          "text_zh": "句型转换"
+        }
+      ],
+      "source": {
+        "file": "kb/topics.csv",
+        "page": ""
+      }
+    },
+    {
+      "topic_id": "P4-EN-30",
+      "subject_id": "english",
+      "strand": "READING COMPREHENSION (Paper 2)",
+      "strand_zh": "阅读",
+      "syllabus_topic": "Visual text comprehension (MCQ)",
+      "name_en": "Visual text",
+      "name_zh": "图画理解",
+      "short": "图画理解",
+      "group": "阅读",
+      "flower": "clover",
+      "status": "todo",
+      "stars": 0,
+      "strength": null,
+      "bank_subject": "English",
+      "learning_outcomes": [
+        {
+          "topic_id": "P4-EN-30",
+          "text_en": "Visual text comprehension (MCQ)",
+          "text_zh": "图画理解"
+        }
+      ],
+      "source": {
+        "file": "kb/topics.csv",
+        "page": ""
+      }
+    },
+    {
+      "topic_id": "P4-EN-31",
+      "subject_id": "english",
+      "strand": "READING COMPREHENSION (Paper 2)",
+      "strand_zh": "阅读",
+      "syllabus_topic": "Comprehension — literal (find information)",
+      "name_en": "Reading comprehension",
+      "name_zh": "阅读理解",
+      "short": "阅读理解",
+      "group": "阅读",
+      "flower": "tulip",
+      "status": "todo",
+      "stars": 0,
+      "strength": null,
+      "bank_subject": "English",
+      "learning_outcomes": [
+        {
+          "topic_id": "P4-EN-31",
+          "text_en": "Comprehension — literal (find information)",
+          "text_zh": "找出文章里的信息"
+        },
+        {
+          "topic_id": "P4-EN-32",
+          "text_en": "Comprehension — inference (feelings, reasons, character)",
+          "text_zh": "推断心情、原因和人物"
+        },
+        {
+          "topic_id": "P4-EN-33",
+          "text_en": "Comprehension — referencing",
+          "text_zh": "指代（it / they 指什么）"
+        },
+        {
+          "topic_id": "P4-EN-34",
+          "text_en": "Comprehension — true/false with reason, sequencing, tick boxes",
+          "text_zh": "判断、排序和勾选"
+        }
+      ],
+      "source": {
+        "file": "kb/topics.csv",
+        "page": ""
+      }
+    },
+    {
+      "topic_id": "P4-HCL-17",
+      "subject_id": "higher_chinese",
+      "strand": "语文知识与应用（试卷二）",
+      "strand_zh": "语文应用",
+      "syllabus_topic": "辨字（同音/形近字）",
+      "name_en": "Choose the correct character",
+      "name_zh": "辨字",
+      "short": "辨字",
+      "group": "语文应用",
+      "flower": "rose",
+      "status": "todo",
+      "stars": 0,
+      "strength": null,
+      "bank_subject": "Higher Chinese",
+      "learning_outcomes": [
+        {
+          "topic_id": "P4-CL-17",
+          "text_en": "辨字（同音/形近字）",
+          "text_zh": "辨字（同音/形近字）"
+        }
+      ],
+      "source": {
+        "file": "kb/topics.csv",
+        "page": ""
+      }
+    },
+    {
+      "topic_id": "P4-HCL-18",
+      "subject_id": "higher_chinese",
+      "strand": "语文知识与应用（试卷二）",
+      "strand_zh": "语文应用",
+      "syllabus_topic": "词语选择",
+      "name_en": "Choose the correct word",
+      "name_zh": "词语选择",
+      "short": "词语选择",
+      "group": "语文应用",
+      "flower": "daisy",
+      "status": "todo",
+      "stars": 0,
+      "strength": null,
+      "bank_subject": "Higher Chinese",
+      "learning_outcomes": [
+        {
+          "topic_id": "P4-CL-18",
+          "text_en": "词语选择",
+          "text_zh": "词语选择"
+        }
+      ],
+      "source": {
+        "file": "kb/topics.csv",
+        "page": ""
+      }
+    },
+    {
+      "topic_id": "P4-HCL-19",
+      "subject_id": "higher_chinese",
+      "strand": "语文知识与应用（试卷二）",
+      "strand_zh": "语文应用",
+      "syllabus_topic": "词语搭配",
+      "name_en": "Collocations",
+      "name_zh": "词语搭配",
+      "short": "词语搭配",
+      "group": "语文应用",
+      "flower": "fern",
+      "status": "todo",
+      "stars": 0,
+      "strength": null,
+      "bank_subject": "Higher Chinese",
+      "learning_outcomes": [
+        {
+          "topic_id": "P4-CL-19",
+          "text_en": "词语搭配",
+          "text_zh": "词语搭配"
+        }
+      ],
+      "source": {
+        "file": "kb/topics.csv",
+        "page": ""
+      }
+    },
+    {
+      "topic_id": "P4-HCL-20",
+      "subject_id": "higher_chinese",
+      "strand": "语文知识与应用（试卷二）",
+      "strand_zh": "语文应用",
+      "syllabus_topic": "完成句子（关联词与句子衔接）",
+      "name_en": "Complete the sentence",
+      "name_zh": "完成句子",
+      "short": "完成句子",
+      "group": "语文应用",
+      "flower": "lily",
+      "status": "todo",
+      "stars": 0,
+      "strength": null,
+      "bank_subject": "Higher Chinese",
+      "learning_outcomes": [
+        {
+          "topic_id": "P4-CL-20",
+          "text_en": "完成句子（关联词与句子衔接）",
+          "text_zh": "完成句子（关联词与句子衔接）"
+        }
+      ],
+      "source": {
+        "file": "kb/topics.csv",
+        "page": ""
+      }
+    },
+    {
+      "topic_id": "P4-HCL-21",
+      "subject_id": "higher_chinese",
+      "strand": "语文知识与应用（试卷二）",
+      "strand_zh": "语文应用",
+      "syllabus_topic": "字词改正（错别字）",
+      "name_en": "Correct the character",
+      "name_zh": "字词改正",
+      "short": "字词改正",
+      "group": "语文应用",
+      "flower": "lavender",
+      "status": "todo",
+      "stars": 0,
+      "strength": null,
+      "bank_subject": "Higher Chinese",
+      "learning_outcomes": [
+        {
+          "topic_id": "P4-CL-21",
+          "text_en": "字词改正（错别字）",
+          "text_zh": "字词改正（错别字）"
+        }
+      ],
+      "source": {
+        "file": "kb/topics.csv",
+        "page": ""
+      }
+    },
+    {
+      "topic_id": "P4-HCL-22",
+      "subject_id": "higher_chinese",
+      "strand": "语文知识与应用（试卷二）",
+      "strand_zh": "语文应用",
+      "syllabus_topic": "短文填空",
+      "name_en": "Passage cloze",
+      "name_zh": "短文填空",
+      "short": "短文填空",
+      "group": "语文应用",
+      "flower": "water",
+      "status": "todo",
+      "stars": 0,
+      "strength": null,
+      "bank_subject": "Higher Chinese",
+      "learning_outcomes": [
+        {
+          "topic_id": "P4-CL-22",
+          "text_en": "短文填空",
+          "text_zh": "短文填空"
+        }
+      ],
+      "source": {
+        "file": "kb/topics.csv",
+        "page": ""
+      }
+    },
+    {
+      "topic_id": "P4-HCL-23",
+      "subject_id": "higher_chinese",
+      "strand": "语文知识与应用（试卷二）",
+      "strand_zh": "语文应用",
+      "syllabus_topic": "汉语拼音",
+      "name_en": "Hanyu Pinyin",
+      "name_zh": "汉语拼音",
+      "short": "拼音",
+      "group": "语文应用",
+      "flower": "tree",
+      "status": "todo",
+      "stars": 0,
+      "strength": null,
+      "bank_subject": "Higher Chinese",
+      "learning_outcomes": [
+        {
+          "topic_id": "P4-CL-23",
+          "text_en": "汉语拼音",
+          "text_zh": "汉语拼音"
+        }
+      ],
+      "source": {
+        "file": "kb/topics.csv",
+        "page": ""
+      }
+    },
+    {
+      "topic_id": "P4-HCL-25",
+      "subject_id": "higher_chinese",
+      "strand": "阅读理解（试卷二）",
+      "strand_zh": "阅读",
+      "syllabus_topic": "阅读理解一：实用文（广告/通知/书信）选择题",
+      "name_en": "Practical text comprehension",
+      "name_zh": "阅读理解一（实用文）",
+      "short": "实用文阅读",
+      "group": "阅读",
+      "flower": "marigold",
+      "status": "todo",
+      "stars": 0,
+      "strength": null,
+      "bank_subject": "Higher Chinese",
+      "learning_outcomes": [
+        {
+          "topic_id": "P4-CL-25",
+          "text_en": "阅读理解一：实用文（广告/通知/书信）选择题",
+          "text_zh": "阅读理解一：实用文（广告/通知/书信）选择题"
+        }
+      ],
+      "source": {
+        "file": "kb/topics.csv",
+        "page": ""
+      }
+    },
+    {
+      "topic_id": "P4-HCL-26",
+      "subject_id": "higher_chinese",
+      "strand": "阅读理解（试卷二）",
+      "strand_zh": "阅读",
+      "syllabus_topic": "阅读理解二：找词语（词义）",
+      "name_en": "Passage comprehension",
+      "name_zh": "阅读理解二",
+      "short": "阅读理解二",
+      "group": "阅读",
+      "flower": "sunflower",
+      "status": "todo",
+      "stars": 0,
+      "strength": null,
+      "bank_subject": "Higher Chinese",
+      "learning_outcomes": [
+        {
+          "topic_id": "P4-CL-26",
+          "text_en": "阅读理解二：找词语（词义）",
+          "text_zh": "阅读理解二：找词语（词义）"
+        },
+        {
+          "topic_id": "P4-CL-27",
+          "text_en": "阅读理解二：找具体信息/原因",
+          "text_zh": "阅读理解二：找具体信息/原因"
+        },
+        {
+          "topic_id": "P4-CL-28",
+          "text_en": "阅读理解二：推断与比较",
+          "text_zh": "阅读理解二：推断与比较"
+        },
+        {
+          "topic_id": "P4-CL-29",
+          "text_en": "阅读理解二：人物看法与道理",
+          "text_zh": "阅读理解二：人物看法与道理"
+        }
+      ],
+      "source": {
+        "file": "kb/topics.csv",
+        "page": ""
+      }
+    },
+    {
+      "topic_id": "P4-CL-17",
+      "subject_id": "chinese",
+      "strand": "语文知识与应用（试卷二）",
+      "strand_zh": "语文应用",
+      "syllabus_topic": "辨字（同音/形近字）",
+      "name_en": "Choose the correct character",
+      "name_zh": "辨字",
+      "short": "辨字",
+      "group": "语文应用",
+      "flower": "lily",
+      "status": "todo",
+      "stars": 0,
+      "strength": null,
+      "bank_subject": "Chinese",
+      "learning_outcomes": [
+        {
+          "topic_id": "P4-CL-17",
+          "text_en": "辨字（同音/形近字）",
+          "text_zh": "辨字（同音/形近字）"
+        }
+      ],
+      "source": {
+        "file": "kb/topics.csv",
+        "page": ""
+      }
+    },
+    {
+      "topic_id": "P4-CL-18",
+      "subject_id": "chinese",
+      "strand": "语文知识与应用（试卷二）",
+      "strand_zh": "语文应用",
+      "syllabus_topic": "词语选择",
+      "name_en": "Choose the correct word",
+      "name_zh": "词语选择",
+      "short": "词语选择",
+      "group": "语文应用",
+      "flower": "lavender",
+      "status": "todo",
+      "stars": 0,
+      "strength": null,
+      "bank_subject": "Chinese",
+      "learning_outcomes": [
+        {
+          "topic_id": "P4-CL-18",
+          "text_en": "词语选择",
+          "text_zh": "词语选择"
+        }
+      ],
+      "source": {
+        "file": "kb/topics.csv",
+        "page": ""
+      }
+    },
+    {
+      "topic_id": "P4-CL-19",
+      "subject_id": "chinese",
+      "strand": "语文知识与应用（试卷二）",
+      "strand_zh": "语文应用",
+      "syllabus_topic": "词语搭配",
+      "name_en": "Collocations",
+      "name_zh": "词语搭配",
+      "short": "词语搭配",
+      "group": "语文应用",
+      "flower": "water",
+      "status": "todo",
+      "stars": 0,
+      "strength": null,
+      "bank_subject": "Chinese",
+      "learning_outcomes": [
+        {
+          "topic_id": "P4-CL-19",
+          "text_en": "词语搭配",
+          "text_zh": "词语搭配"
+        }
+      ],
+      "source": {
+        "file": "kb/topics.csv",
+        "page": ""
+      }
+    },
+    {
+      "topic_id": "P4-CL-20",
+      "subject_id": "chinese",
+      "strand": "语文知识与应用（试卷二）",
+      "strand_zh": "语文应用",
+      "syllabus_topic": "完成句子（关联词与句子衔接）",
+      "name_en": "Complete the sentence",
+      "name_zh": "完成句子",
+      "short": "完成句子",
+      "group": "语文应用",
+      "flower": "tree",
+      "status": "todo",
+      "stars": 0,
+      "strength": null,
+      "bank_subject": "Chinese",
+      "learning_outcomes": [
+        {
+          "topic_id": "P4-CL-20",
+          "text_en": "完成句子（关联词与句子衔接）",
+          "text_zh": "完成句子（关联词与句子衔接）"
+        }
+      ],
+      "source": {
+        "file": "kb/topics.csv",
+        "page": ""
+      }
+    },
+    {
+      "topic_id": "P4-CL-22",
+      "subject_id": "chinese",
+      "strand": "语文知识与应用（试卷二）",
+      "strand_zh": "语文应用",
+      "syllabus_topic": "短文填空",
+      "name_en": "Passage cloze",
+      "name_zh": "短文填空",
+      "short": "短文填空",
+      "group": "语文应用",
+      "flower": "sunflower",
+      "status": "todo",
+      "stars": 0,
+      "strength": null,
+      "bank_subject": "Chinese",
+      "learning_outcomes": [
+        {
+          "topic_id": "P4-CL-22",
+          "text_en": "短文填空",
+          "text_zh": "短文填空"
+        }
+      ],
+      "source": {
+        "file": "kb/topics.csv",
+        "page": ""
+      }
+    },
+    {
+      "topic_id": "P4-CL-25",
+      "subject_id": "chinese",
+      "strand": "阅读理解（试卷二）",
+      "strand_zh": "阅读",
+      "syllabus_topic": "阅读理解一：实用文（广告/通知/书信）选择题",
+      "name_en": "Practical text comprehension",
+      "name_zh": "阅读理解一（实用文）",
+      "short": "实用文阅读",
+      "group": "阅读",
+      "flower": "tulip",
+      "status": "todo",
+      "stars": 0,
+      "strength": null,
+      "bank_subject": "Chinese",
+      "learning_outcomes": [
+        {
+          "topic_id": "P4-CL-25",
+          "text_en": "阅读理解一：实用文（广告/通知/书信）选择题",
+          "text_zh": "阅读理解一：实用文（广告/通知/书信）选择题"
+        }
+      ],
+      "source": {
+        "file": "kb/topics.csv",
+        "page": ""
+      }
+    },
+    {
+      "topic_id": "P4-CL-26",
+      "subject_id": "chinese",
+      "strand": "阅读理解（试卷二）",
+      "strand_zh": "阅读",
+      "syllabus_topic": "阅读理解二：找词语（词义）",
+      "name_en": "Passage comprehension",
+      "name_zh": "阅读理解二",
+      "short": "阅读理解二",
+      "group": "阅读",
+      "flower": "rose",
+      "status": "todo",
+      "stars": 0,
+      "strength": null,
+      "bank_subject": "Chinese",
+      "learning_outcomes": [
+        {
+          "topic_id": "P4-CL-26",
+          "text_en": "阅读理解二：找词语（词义）",
+          "text_zh": "阅读理解二：找词语（词义）"
+        },
+        {
+          "topic_id": "P4-CL-27",
+          "text_en": "阅读理解二：找具体信息/原因",
+          "text_zh": "阅读理解二：找具体信息/原因"
+        },
+        {
+          "topic_id": "P4-CL-28",
+          "text_en": "阅读理解二：推断与比较",
+          "text_zh": "阅读理解二：推断与比较"
+        },
+        {
+          "topic_id": "P4-CL-29",
+          "text_en": "阅读理解二：人物看法与道理",
+          "text_zh": "阅读理解二：人物看法与道理"
+        }
+      ],
+      "source": {
+        "file": "kb/topics.csv",
+        "page": ""
       }
     }
   ],
@@ -1785,12 +2729,14 @@ function questionCountFor(topicId){
   const ids = [t.topic_id].concat((t.learning_outcomes || []).map(lo => lo.topic_id));
   const seen = {};
   let n = 0;
+  const subj = t.bank_subject || "";
   ids.forEach(id => {
     const idxs = (b.byTopic && b.byTopic[id]) || [];
     idxs.forEach(i => {
       if(seen[i]) return;
       seen[i] = true;
-      if(b.questions[i]) n += 1;
+      const q = b.questions[i];
+      if(q && (!subj || !q.subject || q.subject === subj)) n += 1;
     });
   });
   return n;
@@ -1984,7 +2930,10 @@ function renderGarden(sid){
       <span class="tag">${statusText(t)}</span>
     </button>`;
   }).join("");
+  const s = DATA.subjects.find(x => x.subject_id === sid);
+  const note = (s && s.note) ? `<p class="subject-note">${s.note}</p>` : "";
   $("#garden").innerHTML = `
+    ${note}
     <div class="butterflies" aria-hidden="true">${showBf?`<span class="bf b1">🦋</span><span class="bf b2">🦋</span><span class="bf b3">🦋</span>`:""}</div>
     <div class="plots">${plots}</div>`;
   $("#garden").onclick = (e) => { const b=e.target.closest("[data-id]"); if(b) openModal(b.dataset.id); };
