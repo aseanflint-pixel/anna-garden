@@ -223,20 +223,11 @@
   window.__gardenSession = { orders: orders, labelize: labelize }; // read by the headless tests only
 
   /* ---------- rendering ---------- */
-  function filtersHTML(t, filterId, counts, total) {
-    const ids = topicIdsOf(t).filter(function (id) { return counts[id]; });
-    if (ids.length <= 1) return "";
-    const chips = ["<button type=\"button\" data-filter=\"\" aria-pressed=\"" + (!filterId) + "\">全部 <span class=\"n\">" + total + "</span></button>"];
-    ids.forEach(function (id) {
-      chips.push("<button type=\"button\" data-filter=\"" + esc(id) + "\" aria-pressed=\"" + (filterId === id) + "\">" + esc(loLabel(t, id)) + " <span class=\"n\">" + counts[id] + "</span></button>");
-    });
-    return "<div class=\"practice-filters\" role=\"tablist\" aria-label=\"按小知识点筛选\">" + chips.join("") + "</div>";
-  }
+  // Lu 2026-11-18: 知识点筛选那一行拿掉 — practice always runs over every question of the flower
+  function filtersHTML() { return ""; }
   function metaHTML(q) {
-    const chips = [q.level, q.subject_zh, q.marks ? q.marks + " 分" : "", q.type_zh];
-    let h = chips.filter(Boolean).map(function (c) { return "<span class=\"chip\">" + esc(c) + "</span>"; }).join("");
-    if (q.mode === "parent" || (q.mode === "multi" && q.parts.some(function (p) { return p.kind === "parent"; }))) h += "<span class=\"chip chip-parent\">家长批改</span>";
-    return h;
+    // Lu 2026-11-18: only P4 · subject · question type (no marks, nothing else)
+    return [q.level, q.subject_zh, q.type_zh].filter(Boolean).map(function (c) { return "<span class=\"chip\">" + esc(c) + "</span>"; }).join("");
   }
   function answerBoxHTML(q, t) {
     const b = bank();
@@ -407,9 +398,7 @@
       if (e.target.closest("[data-practice-back]")) { openModal(t.topic_id); return; }
       const nav = e.target.closest("[data-nav]");
       if (nav && !nav.disabled) { renderPractice(t, filterId, index + Number(nav.dataset.nav), false); return; }
-      const chip = e.target.closest("[data-filter]");
-      if (chip) { renderPractice(t, chip.dataset.filter || null, 0, false); return; }
-      if (!q) return;
+            if (!q) return;
       const pick = e.target.closest("[data-pick]");
       if (pick && !pick.disabled) {
         const k = Number(pick.dataset.pick);
