@@ -84,7 +84,84 @@
     return "wrong";
   }
 
-  const session = {}; // qid -> { pick, typed, result } for this visit only
+  const session = {}; // qid -> { pick, typed, result } for this practice session only
+
+  /* ---------- practice sessions: random order each time ----------
+     Every time a flower's practice starts, the questions are put in a fresh random order (no fixed seed):
+     not-yet-done first, then tried-but-not-right, then already right; groups are shuffled within each tier.
+     Questions that share a reading passage or a notice/figure stay together, in their original order.
+     Choice options are also shuffled per session; checking uses the option itself, never its position. */
+  const orders = {}; // topic_id -> { ids:[qid], perms:{qid:[original option index in display order]} }
+  function rnd(n) {
+    if (window.crypto && window.crypto.getRandomValues) { const a = new Uint32Array(1); window.crypto.getRandomValues(a); return a[0] % n; }
+    return Math.floor(Math.random() * n);
+  }
+  function shuffle(arr) {
+    for (let i = arr.length - 1; i > 0; i--) { const j = rnd(i + 1); const x = arr[i]; arr[i] = arr[j]; arr[j] = x; }
+    return arr;
+  }
+  function tierOf(t, q) {
+    const A = api(); if (!A) return 0;
+    if (q.mode === "parent") {
+      const rec = A.getOpen(q.id);
+      if (!rec) return 0;
+      return rec.status === "right" ? 2 : 1;
+    }
+    const m = A.getMark(t.topic_id, q.id);
+    if (!m) return 0;
+    return m === "right" ? 2 : 1;
+  }
+  function lastFirstGet(id) { try { return sessionStorage.getItem("anna-garden.first." + id); } catch (e) { return null; } }
+  function lastFirstSet(id, qid) { try { sessionStorage.setItem("anna-garden.first." + id, qid); } catch (e) {} }
+  function startSession(t) {
+    const qs = questionsFor(t, null);
+    qs.forEach(function (q) { delete session[q.id]; });
+    const groups = []; const byKey = {};
+    qs.forEach(function (q) {
+      const key = q.grp ? "g:" + q.grp : "q:" + q.id;
+      if (!byKey[key]) { byKey[key] = []; groups.push(byKey[key]); }
+      byKey[key].push(q);
+    });
+    const tiers = [[], [], []];
+    groups.forEach(function (g) {
+      const tier = Math.min.apply(null, g.map(function (q) { return tierOf(t, q); }));
+      tiers[tier].push(g);
+    });
+    tiers.forEach(shuffle);
+    // do not start with the same question as the previous session when there is another choice in the first tier
+    const first = tiers.find(function (x) { return x.length; }) || [];
+    const prev = lastFirstGet(t.topic_id);
+    if (first.length > 1 && prev && first[0][0].id === prev) { const j = 1 + rnd(first.length - 1); const x = first[0]; first[0] = first[j]; first[j] = x; }
+    const ids = [];
+    tiers.forEach(function (tier) { tier.forEach(function (g) { g.forEach(function (q) { ids.push(q.id); }); }); });
+    const perms = {};
+    qs.forEach(function (q) {
+      if (q.mode !== "choice") return;
+      const p = q.options.map(function (_, i) { return i; });
+      perms[q.id] = q.fixed ? p : shuffle(p);
+    });
+    orders[t.topic_id] = { ids: ids, perms: perms };
+    if (ids.length) lastFirstSet(t.topic_id, ids[0]);
+    return orders[t.topic_id];
+  }
+  function sessionList(t, filterId) {
+    const o = orders[t.topic_id] || startSession(t);
+    const b = bank();
+    const allow = filterId ? {} : null;
+    if (filterId) questionsFor(t, filterId).forEach(function (q) { allow[q.id] = true; });
+    return o.ids.filter(function (id) { return !allow || allow[id]; }).map(function (id) { return b.questions[b.idIndex[id]]; });
+  }
+  function permOf(t, q) {
+    const o = orders[t.topic_id];
+    return (o && o.perms[q.id]) || q.options.map(function (_, i) { return i; });
+  }
+  // {{o:k}} in an explanation / answer = original option k → the label it has on screen now
+  function labelize(text, t, q) {
+    if (!q || q.mode !== "choice") return text;
+    const p = permOf(t, q);
+    return String(text || "").replace(/\{\{o:(\d+)\}\}/g, function (_, k) { const pos = p.indexOf(Number(k)); return pos >= 0 ? "(" + (pos + 1) + ")" : ""; });
+  }
+  window.__gardenSession = { orders: orders, labelize: labelize }; // read by the headless tests only
 
   /* ---------- rendering ---------- */
   function filtersHTML(t, filterId, counts, total) {
@@ -102,11 +179,11 @@
     if (q.mode === "parent") h += "<span class=\"chip chip-parent\">家长批改</span>";
     return h;
   }
-  function answerBoxHTML(q) {
+  function answerBoxHTML(q, t) {
     const b = bank();
-    const steps = String(q.explanation || "").split("\n").filter(function (x) { return x.trim(); });
+    const steps = labelize(String(q.explanation || ""), t, q).split("\n").filter(function (x) { return x.trim(); });
     let h = "<div class=\"answer-box\">";
-    h += "<div class=\"k\">" + (q.mode === "parent" ? "参考答案" : "答案") + "</div><div class=\"v\">" + richText(q.answer || "") + "</div>";
+    h += "<div class=\"k\">" + (q.mode === "parent" ? "参考答案" : "答案") + "</div><div class=\"v\">" + richText(labelize(q.answer || "", t, q)) + "</div>";
     if (q.mode === "parent" && q.marking_points && q.marking_points.length) {
       h += "<div class=\"k k2\">评分要点（家长对照）</div><ul class=\"mp\">" + q.marking_points.map(function (x) { return "<li>" + esc(x) + "</li>"; }).join("") + "</ul>";
     }
@@ -123,13 +200,14 @@
     if (q.mode === "choice") {
       const done = typeof s.pick === "number";
       let h = "<ol class=\"opts\" role=\"list\">";
-      q.options.forEach(function (o, i) {
+      permOf(t, q).forEach(function (i, pos) {
+        const o = q.options[i];
         let cls = "";
         if (done || revealed) {
           if (i === q.answer_index) cls = " is-right";
           else if (done && i === s.pick) cls = " is-wrong";
         }
-        h += "<li><button type=\"button\" class=\"opt" + cls + "\" data-pick=\"" + i + "\"" + (done ? " disabled" : "") + "><b>(" + (i + 1) + ")</b> " + richText(o) + "</button></li>";
+        h += "<li><button type=\"button\" class=\"opt" + cls + "\" data-pick=\"" + i + "\"" + (done ? " disabled" : "") + "><b>(" + (pos + 1) + ")</b> " + richText(o) + "</button></li>";
       });
       h += "</ol>";
       if (done) h += resultHTML(t, s.result);
@@ -173,7 +251,7 @@
 
   function renderPractice(t, filterId, index, revealed) {
     const all = questionsFor(t, null);
-    const qs = questionsFor(t, filterId);
+    const qs = sessionList(t, filterId);
     const counts = countsByTopic(t);
     const i = qs.length ? Math.max(0, Math.min(index, qs.length - 1)) : 0;
     const q = qs[i];
@@ -195,10 +273,10 @@
       filtersHTML(t, filterId, counts, all.length) +
       "<div class=\"practice-meta\">" + metaHTML(q) + "</div>" +
       passage + fig +
-      "<div class=\"q-stem\">" + richText(q.stem) + "</div>" +
+      "<div class=\"q-stem\" data-q=\"" + esc(q.id) + "\">" + richText(q.stem) + "</div>" +
       interactionHTML(t, q, revealed) +
       "<button class=\"btn-reveal" + (showAns ? " is-open" : "") + "\" type=\"button\" data-reveal=\"1\">" + (showAns ? "收起答案" : "看看答案和讲解") + "</button>" +
-      (showAns ? answerBoxHTML(q) : "") +
+      (showAns ? answerBoxHTML(q, t) : "") +
       "<div class=\"practice-nav\"><button class=\"btn-nav\" type=\"button\" data-nav=\"-1\"" + (i === 0 ? " disabled" : "") + ">上一题</button>" +
       "<div class=\"idx\">第 " + (i + 1) + " 道，共 " + qs.length + " 道</div>" +
       "<button class=\"btn-nav\" type=\"button\" data-nav=\"1\"" + (i === qs.length - 1 ? " disabled" : "") + ">下一题</button></div></div>";
@@ -209,7 +287,7 @@
   function bind(t, filterId, index, revealed) {
     const box = document.querySelector("#modal");
     box.hidden = false; document.body.classList.add("modal-open");
-    const q = questionsFor(t, filterId)[index];
+    const q = sessionList(t, filterId)[index];
     const A = api();
     box.onclick = function (e) {
       if (e.target.dataset && e.target.dataset.close) { closeModal(); return; }
@@ -267,7 +345,7 @@
         if (e.key === "Enter" && e.target.tagName === "INPUT") { e.preventDefault(); const c = box.querySelector("[data-check]"); if (c) c.click(); }
         return;
       }
-      const n = questionsFor(t, filterId).length;
+      const n = sessionList(t, filterId).length;
       if (e.key === "ArrowRight" && index < n - 1) { e.preventDefault(); renderPractice(t, filterId, index + 1, false); }
       else if (e.key === "ArrowLeft" && index > 0) { e.preventDefault(); renderPractice(t, filterId, index - 1, false); }
       else if (e.key === "Escape") { e.preventDefault(); e.stopImmediatePropagation(); openModal(t.topic_id); }
@@ -405,7 +483,7 @@
     const open = qs.filter(function (q) { return q.mode === "parent"; }).length;
     neu.disabled = false;
     neu.innerHTML = "练习题<span class=\"btn-practice-count\">" + qs.length + " 道" + (open ? "（其中 " + open + " 道由家长批改）" : "") + "</span>";
-    neu.addEventListener("click", function () { renderPractice(t, null, 0, false); });
+    neu.addEventListener("click", function () { startSession(t); renderPractice(t, null, 0, false); });
   }
 
   const origOpen = window.openModal;
