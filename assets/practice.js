@@ -75,6 +75,10 @@
   function checkExact(q, input) {
     const v = norm(input);
     if (!v) return null;
+    if (q.numset) { // a list of numbers in any order (e.g. all the factors): same numbers, each once
+      const got = (String(input).match(/\d+/g) || []).map(Number).sort(function (a, b) { return a - b; });
+      return got.length === q.numset.length && got.every(function (x, i) { return x === q.numset[i]; }) ? "right" : "wrong";
+    }
     if ((q.accept || []).some(function (a) { return norm(a) === v; })) return "right";
     if (typeof q.num === "number") {
       const x = numOf(input);
@@ -102,7 +106,7 @@
   }
   function tierOf(t, q) {
     const A = api(); if (!A) return 0;
-    if (q.mode === "parent") {
+    if (q.mode === "parent" || q.mode === "multi") {
       const rec = A.getOpen(q.id);
       if (!rec) return 0;
       return rec.status === "right" ? 2 : 1;
@@ -176,13 +180,19 @@
   function metaHTML(q) {
     const chips = [q.level, q.subject_zh, q.marks ? q.marks + " 分" : "", q.type_zh];
     let h = chips.filter(Boolean).map(function (c) { return "<span class=\"chip\">" + esc(c) + "</span>"; }).join("");
-    if (q.mode === "parent") h += "<span class=\"chip chip-parent\">家长批改</span>";
+    if (q.mode === "parent" || (q.mode === "multi" && q.parts.some(function (p) { return p.kind === "parent"; }))) h += "<span class=\"chip chip-parent\">家长批改</span>";
     return h;
   }
   function answerBoxHTML(q, t) {
     const b = bank();
     const steps = labelize(String(q.explanation || ""), t, q).split("\n").filter(function (x) { return x.trim(); });
     let h = "<div class=\"answer-box\">";
+    if (q.mode === "multi") {
+      h += "<div class=\"k\">" + (q.parts.some(function (p) { return p.kind === "parent"; }) ? "参考答案" : "答案") + "</div><ul class=\"part-ans\">" + q.parts.map(function (p) {
+        return "<li><b>" + esc(p.label || p.prompt) + "</b> " + richText(p.answer) +
+          (p.kind === "parent" && p.marking_points && p.marking_points.length ? "<ul class=\"mp\">" + p.marking_points.map(function (x) { return "<li>" + esc(x) + "</li>"; }).join("") + "</ul>" : "") + "</li>";
+      }).join("") + "</ul>";
+    } else
     h += "<div class=\"k\">" + (q.mode === "parent" ? "参考答案" : "答案") + "</div><div class=\"v\">" + richText(labelize(q.answer || "", t, q)) + "</div>";
     if (q.mode === "parent" && q.marking_points && q.marking_points.length) {
       h += "<div class=\"k k2\">评分要点（家长对照）</div><ul class=\"mp\">" + q.marking_points.map(function (x) { return "<li>" + esc(x) + "</li>"; }).join("") + "</ul>";
@@ -198,7 +208,7 @@
     const s = session[q.id] || {};
     const mark = A ? A.getMark(t.topic_id, q.id) : null;
     if (q.mode === "choice") {
-      const done = typeof s.pick === "number";
+      const done = typeof s.pick === "number" || s.result === "revealed";
       let h = "<ol class=\"opts\" role=\"list\">";
       permOf(t, q).forEach(function (i, pos) {
         const o = q.options[i];
@@ -210,21 +220,25 @@
         h += "<li><button type=\"button\" class=\"opt" + cls + "\" data-pick=\"" + i + "\"" + (done ? " disabled" : "") + "><b>(" + (pos + 1) + ")</b> " + richText(o) + "</button></li>";
       });
       h += "</ol>";
-      if (done) h += resultHTML(t, s.result);
+      if (s.result === "revealed") h += "<p class=\"result no\">先看了答案，这次不算做对。</p>";
+      else if (done) h += resultHTML(t, s.result);
       return h;
     }
     if (q.mode === "exact") {
       const done = !!s.result;
       let h = "<div class=\"exact\"><input type=\"text\" class=\"exact-in\" inputmode=\"text\" autocomplete=\"off\" placeholder=\"在这里写答案\" value=\"" + esc(s.typed || "") + "\"" + (done ? " disabled" : "") + ">" +
         "<button type=\"button\" class=\"btn-check\" data-check=\"1\"" + (done ? " disabled" : "") + ">检查答案</button></div>";
-      if (done) {
+      if (s.result === "revealed") h += "<p class=\"result no\">先看了答案，这次不算做对。</p>";
+      else if (done) {
         h += resultHTML(t, s.result);
         if (s.result === "wrong") h += "<button type=\"button\" class=\"btn-override\" data-override=\"1\">我的写法不一样，其实是对的</button>";
       }
       return h;
     }
+    if (q.mode === "multi") return multiHTML(t, q);
     if (q.mode === "parent") {
       const rec = A ? A.getOpen(q.id) : null;
+      if (rec && rec.revealed) return revealedHTML();
       if (rec) {
         const label = { pending: "待家长确认", right: "家长批改：对", partial: "家长批改：部分对", wrong: "家长批改：不对" }[rec.status] || "待家长确认";
         return "<div class=\"open-done status-" + esc(rec.status) + "\"><div class=\"k\">我的答案</div><div class=\"mine\">" + esc(rec.text) + "</div>" +
@@ -241,6 +255,49 @@
     return "<div class=\"self-check\"><p>对一下答案，你做对了吗？</p><div class=\"self-check-row\" role=\"group\">" +
       "<button type=\"button\" data-mark=\"right\" aria-pressed=\"" + (mark === "right") + "\">做对了</button>" +
       "<button type=\"button\" data-mark=\"wrong\" aria-pressed=\"" + (mark === "wrong") + "\">做错了</button></div></div>";
+  }
+  function revealedHTML() {
+    return "<div class=\"open-done status-wrong\"><div class=\"open-status\">先看了答案，这次不算做对。</div>" +
+      "<button type=\"button\" class=\"btn-redo\" data-redo=\"1\">重新做一次</button></div>";
+  }
+  const PART_LABEL = { pending: "待家长确认", right: "对", partial: "部分对", wrong: "不对" };
+  function multiHTML(t, q) {
+    const A = api(); const rec = A ? A.getOpen(q.id) : null; const s = session[q.id] || {};
+    if (rec && rec.revealed) return revealedHTML();
+    if (rec && rec.parts) {
+      let h = "<div class=\"open-done multi-done status-" + esc(rec.status) + "\">";
+      q.parts.forEach(function (p, i) {
+        const r = rec.parts[i] || {};
+        const st = r.auto ? (r.status === "right" ? "✔ 对" : "✘ 不对") : (r.status === "pending" ? "待家长确认" : "家长批改：" + PART_LABEL[r.status]);
+        h += "<div class=\"part-row\"><div class=\"part-l\">" + esc(p.label) + (p.label && p.prompt ? " " : "") + esc(p.label ? "" : p.prompt) + "</div>" +
+          "<div class=\"mine\">" + esc(r.text || "") + "</div><div class=\"part-st st-" + esc(r.status) + "\">" + st + "</div></div>";
+      });
+      const overall = rec.status === "pending" ? "还有小题等家长批改，批改完才算进花朵。" :
+        { right: "整题：对", partial: "整题：部分对（算半题）", wrong: "整题：不对" }[rec.status];
+      h += "<div class=\"open-status\">" + overall + "</div>";
+      if (rec.status !== "pending" && A) h += "<p class=\"open-note\">这朵花现在 " + A.percentFor(t.topic_id) + "%。</p>";
+      return h + "<button type=\"button\" class=\"btn-redo\" data-redo=\"1\">重新做一次</button></div>";
+    }
+    let h = "<div class=\"multi-box\">";
+    q.parts.forEach(function (p, i) {
+      const v = (s.typed && s.typed[i]) || "";
+      const lab = "<span class=\"part-l\">" + esc(p.label || "") + "</span>" + (p.label ? "" : "<span class=\"part-p\">" + esc(p.prompt) + "</span>");
+      h += "<label class=\"part-row part-in-row\">" + lab +
+        (p.kind === "parent"
+          ? "<textarea class=\"part-in\" data-part=\"" + i + "\" rows=\"2\" placeholder=\"写下这一小题的答案\">" + esc(v) + "</textarea>"
+          : "<input class=\"part-in\" data-part=\"" + i + "\" type=\"text\" autocomplete=\"off\" inputmode=\"" + (p.label ? "text" : "numeric") + "\" placeholder=\"" + (p.label ? "答案" : "第几") + "\" value=\"" + esc(v) + "\">") +
+        "</label>";
+    });
+    const anyParent = q.parts.some(function (p) { return p.kind === "parent"; });
+    h += "<p class=\"pin-err part-err\" role=\"alert\"></p><button type=\"button\" class=\"btn-submit\" data-submit-multi=\"1\">" + (anyParent ? "提交（能自动判的先判，其余交给家长）" : "检查答案") + "</button></div>";
+    return h;
+  }
+  function answeredNow(t, q) {
+    const A = api(); const s = session[q.id] || {};
+    if (q.mode === "choice") return typeof s.pick === "number" || s.result === "revealed";
+    if (q.mode === "exact") return !!s.result;
+    if (q.mode === "parent" || q.mode === "multi") return !!(A && A.getOpen(q.id));
+    return true;
   }
   function resultHTML(t, result) {
     const A = api(); const pct = A ? A.percentFor(t.topic_id) : 0;
@@ -268,14 +325,15 @@
     const ps = q.passage && b.passages ? b.passages[q.passage] : null;
     const passage = ps ? "<details class=\"q-passage\" open><summary>" + (q.subject === "Mathematics" || q.subject === "Science" || q.subject === "English" ? "Read first: " : "先读材料：") + "<b>" + esc(ps.title || "") + "</b></summary><div class=\"pbody\">" + passageHTML(ps.text) + "</div></details>" : "";
     const fig = q.figure ? "<div class=\"q-fig\"><img src=\"" + esc(q.figure) + "\" alt=\"题目的图\" decoding=\"async\"></div>" : "";
-    const showAns = revealed || (session[q.id] && session[q.id].result) || (q.mode === "parent" && api() && api().getOpen(q.id));
+    const showAns = revealed || (session[q.id] && session[q.id].result) || ((q.mode === "parent" || q.mode === "multi") && api() && api().getOpen(q.id));
+    const askFirst = !showAns && !answeredNow(t, q);
     box.innerHTML = head +
       filtersHTML(t, filterId, counts, all.length) +
       "<div class=\"practice-meta\">" + metaHTML(q) + "</div>" +
       passage + fig +
       "<div class=\"q-stem\" data-q=\"" + esc(q.id) + "\">" + richText(q.stem) + "</div>" +
       interactionHTML(t, q, revealed) +
-      "<button class=\"btn-reveal" + (showAns ? " is-open" : "") + "\" type=\"button\" data-reveal=\"1\">" + (showAns ? "收起答案" : "看看答案和讲解") + "</button>" +
+      "<button class=\"btn-reveal" + (showAns ? " is-open" : "") + (askFirst ? " ask-first" : "") + "\" type=\"button\" data-reveal=\"1\">" + (showAns ? "收起答案" : (askFirst ? "先作答；不会做也可以看答案和讲解" : "看看答案和讲解")) + "</button>" +
       (showAns ? answerBoxHTML(q, t) : "") +
       "<div class=\"practice-nav\"><button class=\"btn-nav\" type=\"button\" data-nav=\"-1\"" + (i === 0 ? " disabled" : "") + ">上一题</button>" +
       "<div class=\"idx\">第 " + (i + 1) + " 道，共 " + qs.length + " 道</div>" +
@@ -332,17 +390,40 @@
         if (A) A.withdrawOpen(q.id);
         renderPractice(t, filterId, index, false); return;
       }
+      if (e.target.closest("[data-submit-multi]")) {
+        const ins = [...box.querySelectorAll(".part-in")];
+        const empty = ins.find(function (x) { return !x.value.trim(); });
+        if (empty) { empty.focus(); const er = box.querySelector(".part-err"); if (er) er.textContent = "每一小题都要写答案。"; return; }
+        const answers = q.parts.map(function (p, i) {
+          const v = ins[i].value.trim();
+          return { text: v, result: p.kind === "exact" ? checkExact(p, v) : null };
+        });
+        session[q.id] = {};
+        if (A) A.submitMulti(t.topic_id, q.id, answers);
+        renderPractice(t, filterId, index, true); return;
+      }
+      const rv = e.target.closest("[data-reveal]");
+      if (rv && !revealed && !answeredNow(t, q)) {
+        // answering comes first; looking at the answer without answering counts as not correct
+        if (!rv.dataset.sure) { rv.dataset.sure = "1"; rv.textContent = "先看答案的话，这题这次算没做对。确定要看吗？"; rv.classList.add("is-warn"); return; }
+        if (q.mode === "choice" || q.mode === "exact") { session[q.id] = { result: "revealed" }; if (A) A.markQuestion(t.topic_id, q.id, "wrong"); }
+        else if (A) A.revealUnanswered(t.topic_id, q.id);
+        renderPractice(t, filterId, index, true); return;
+      }
       const mk = e.target.closest("[data-mark]");
       if (mk) { if (A) A.markQuestion(t.topic_id, q.id, mk.dataset.mark); renderPractice(t, filterId, index, true); return; }
       if (e.target.closest("[data-reveal]")) renderPractice(t, filterId, index, !revealed);
     };
     const ta = box.querySelector(".open-in, .exact-in");
     if (ta && q) ta.addEventListener("input", function () { session[q.id] = Object.assign({}, session[q.id], { typed: ta.value }); });
+    box.querySelectorAll(".part-in").forEach(function (el) {
+      el.addEventListener("input", function () { const s = Object.assign({ typed: {} }, session[q.id]); s.typed = Object.assign({}, s.typed); s.typed[el.dataset.part] = el.value; session[q.id] = s; });
+    });
     if (keyHandler) document.removeEventListener("keydown", keyHandler, true);
     keyHandler = function (e) {
       if (!document.querySelector(".modal-card.practice-mode")) return;
       if (e.target && (e.target.tagName === "INPUT" || e.target.tagName === "TEXTAREA")) {
-        if (e.key === "Enter" && e.target.tagName === "INPUT") { e.preventDefault(); const c = box.querySelector("[data-check]"); if (c) c.click(); }
+        if (e.key === "Enter" && e.target.tagName === "INPUT") { e.preventDefault(); const c = box.querySelector("[data-check], [data-submit-multi]"); if (c) c.click(); }
         return;
       }
       const n = sessionList(t, filterId).length;
@@ -362,7 +443,21 @@
     const A = api(); const box = document.querySelector("#modal");
     const list = A ? A.openList() : [];
     const pending = list.filter(function (x) { return x.status === "pending"; });
-    const done = list.filter(function (x) { return x.status !== "pending"; }).slice(0, 20);
+    const done = list.filter(function (x) { return x.status !== "pending" && !x.revealed; }).slice(0, 20);
+    function partsCard(x, q) {
+      // one block per part: her answer, that part's reference answer and marking points; auto parts are already checked
+      return q.parts.map(function (p, i) {
+        const r = x.parts[i] || {};
+        let h = "<div class=\"pc-part\"><div class=\"pc-part-h\">" + esc(p.label || p.prompt) + (p.label && p.prompt ? " <span class=\"pc-prompt\">" + esc(p.prompt) + "</span>" : "") + "</div>" +
+          "<div class=\"k\">安安的答案</div><div class=\"mine\">" + esc(r.text || "") + "</div>" +
+          "<div class=\"k\">参考答案</div><div class=\"ref\">" + richText(p.answer) + "</div>" +
+          (p.marking_points && p.marking_points.length ? "<div class=\"k\">评分要点</div><ul class=\"mp\">" + p.marking_points.map(function (m) { return "<li>" + esc(m) + "</li>"; }).join("") + "</ul>" : "");
+        if (r.auto) h += "<div class=\"pc-done\">已自动判：" + (r.status === "right" ? "对" : "不对") + "</div>";
+        else if (r.status === "pending") h += "<div class=\"pc-row\"><button type=\"button\" data-judge=\"right\" data-part=\"" + i + "\">对</button><button type=\"button\" data-judge=\"partial\" data-part=\"" + i + "\">部分对</button><button type=\"button\" data-judge=\"wrong\" data-part=\"" + i + "\">不对</button></div>";
+        else h += "<div class=\"pc-done\">已批改：" + ({ right: "对", partial: "部分对", wrong: "不对" })[r.status] + "</div>";
+        return h + "</div>";
+      }).join("");
+    }
     function card(x, withButtons) {
       const q = findQ(x.qid); if (!q) return "";
       const t = (window.GARDEN_DATA.topics || []).find(function (y) { return y.topic_id === x.topic; });
@@ -373,17 +468,19 @@
         (ps ? "<details class=\"q-passage\"><summary>材料：<b>" + esc(ps.title || "") + "</b></summary><div class=\"pbody\">" + passageHTML(ps.text) + "</div></details>" : "") +
         (q.figure ? "<div class=\"q-fig\"><img src=\"" + esc(q.figure) + "\" alt=\"题目的图\"></div>" : "") +
         "<div class=\"q-stem small\">" + richText(q.stem) + "</div>" +
+        (x.parts && q.parts ? partsCard(x, q) :
         "<div class=\"k\">安安的答案</div><div class=\"mine\">" + esc(x.text) + "</div>" +
-        "<div class=\"k\">参考答案</div><div class=\"ref\">" + richText(q.answer) + "</div>" +
-        (q.marking_points && q.marking_points.length ? "<div class=\"k\">评分要点</div><ul class=\"mp\">" + q.marking_points.map(function (m) { return "<li>" + esc(m) + "</li>"; }).join("") + "</ul>" : "") +
-        (withButtons ? "<div class=\"pc-row\"><button type=\"button\" data-judge=\"right\">对</button><button type=\"button\" data-judge=\"partial\">部分对</button><button type=\"button\" data-judge=\"wrong\">不对</button></div>"
+        "<div class=\"k\">参考答案</div><div class=\"ref\">" + richText(q.answer) + "</div>") +
+        (!x.parts && q.marking_points && q.marking_points.length ? "<div class=\"k\">评分要点</div><ul class=\"mp\">" + q.marking_points.map(function (m) { return "<li>" + esc(m) + "</li>"; }).join("") + "</ul>" : "") +
+        (x.parts ? (withButtons ? "" : "<div class=\"pc-done\">整题：" + lab + " <button type=\"button\" class=\"pc-undo\" data-judge=\"pending\">改回待确认</button></div>") :
+        withButtons ? "<div class=\"pc-row\"><button type=\"button\" data-judge=\"right\">对</button><button type=\"button\" data-judge=\"partial\">部分对</button><button type=\"button\" data-judge=\"wrong\">不对</button></div>"
           : "<div class=\"pc-done\">已批改：" + lab + " <button type=\"button\" class=\"pc-undo\" data-judge=\"pending\">改回待确认</button></div>") +
         "</section>";
     }
     box.innerHTML = "<div class=\"modal-backdrop\" data-close=\"1\"></div><div class=\"modal-card practice-mode parent-mode\" role=\"dialog\" aria-modal=\"true\" aria-labelledby=\"pc-title\">" +
       "<button class=\"modal-x\" type=\"button\" data-close=\"1\" aria-label=\"关闭\">×</button>" +
       "<div class=\"practice-head\"><div class=\"titles\"><div class=\"kicker\">给爸爸妈妈</div><h2 id=\"pc-title\">家长确认</h2></div></div>" +
-      "<p class=\"practice-note-ok\">这些是安安写的开放题答案。对照参考答案和评分要点，点「对 / 部分对 / 不对」。「对」算一题，「部分对」算半题，「不对」不算。看完请点右上角 × 关闭，关闭后要重新输入密码。</p>" +
+      "<p class=\"practice-note-ok\">这些是安安写的开放题答案（分小题的题目每一小题分开批改，能自动判的小题已经判好）。对照参考答案和评分要点，点「对 / 部分对 / 不对」。「对」算一题，「部分对」算半题，「不对」不算。看完请点右上角 × 关闭，关闭后要重新输入密码。</p>" +
       (pending.length ? pending.map(function (x) { return card(x, true); }).join("") : "<p class=\"practice-empty\">现在没有等待批改的答案。</p>") +
       (done.length ? "<h3 class=\"pc-h\">最近批改过的</h3>" + done.map(function (x) { return card(x, false); }).join("") : "") +
       "</div>";
@@ -391,7 +488,7 @@
     box.onclick = function (e) {
       if (e.target.dataset && e.target.dataset.close) { closeModal(); return; }
       const j = e.target.closest("[data-judge]");
-      if (j && A) { if (!A.isParentUnlocked()) { renderPinEnter(); return; } A.confirmOpen(j.closest("[data-qid]").dataset.qid, j.dataset.judge); renderParentList(); }
+      if (j && A) { if (!A.isParentUnlocked()) { renderPinEnter(); return; } A.confirmOpen(j.closest("[data-qid]").dataset.qid, j.dataset.judge, j.dataset.part); renderParentList(); }
     };
   }
   /* ---------- 家长密码 ---------- */
@@ -480,7 +577,7 @@
     prac.parentNode.replaceChild(neu, prac);
     const qs = questionsFor(t);
     if (!bank() || !qs.length) { neu.disabled = true; neu.textContent = bank() ? "这里还没有题目" : "题库还没有加载出来"; return; }
-    const open = qs.filter(function (q) { return q.mode === "parent"; }).length;
+    const open = qs.filter(function (q) { return q.mode === "parent" || (q.mode === "multi" && q.parts.some(function (p) { return p.kind === "parent"; })); }).length;
     neu.disabled = false;
     neu.innerHTML = "练习题<span class=\"btn-practice-count\">" + qs.length + " 道" + (open ? "（其中 " + open + " 道由家长批改）" : "") + "</span>";
     neu.addEventListener("click", function () { startSession(t); renderPractice(t, null, 0, false); });

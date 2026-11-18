@@ -2079,6 +2079,17 @@ function sanitizeStore(obj){
     const st = ["pending", "right", "partial", "wrong"].includes(r.status) ? r.status : "pending";
     open[qid] = { topic:r.topic, text:r.text.slice(0, 4000), status:st,
       at: typeof r.at === "string" ? r.at : null, checkedAt: typeof r.checkedAt === "string" ? r.checkedAt : null };
+    if(r.parts && typeof r.parts === "object" && !Array.isArray(r.parts)){
+      const ps = {};
+      Object.keys(r.parts).forEach(k => {
+        const p = r.parts[k];
+        if(!/^\d+$/.test(k) || !p || typeof p !== "object") return;
+        ps[k] = { text: typeof p.text === "string" ? p.text.slice(0, 2000) : "", auto: p.auto === true,
+          status: ["pending", "right", "partial", "wrong"].includes(p.status) ? p.status : "pending" };
+      });
+      open[qid].parts = ps;
+    }
+    if(r.revealed === true) open[qid].revealed = true;
   });
   let savedAt = null;
   if(typeof obj.savedAt === "string" && !Number.isNaN(Date.parse(obj.savedAt))){
@@ -2220,7 +2231,7 @@ function decorate(t){
 function markQuestion(topicId, qid, result){
   if((result !== "right" && result !== "wrong") || !qid || !knownTopic(topicId)) return percentFor(topicId);
   const bq = bankQ(String(qid));
-  if(bq && bq.mode === "parent") return percentFor(topicId); // open-ended answers are only marked in 家长确认
+  if(bq && (bq.mode === "parent" || bq.mode === "multi")) return percentFor(topicId); // open-ended answers are only marked in 家长确认
   const rec = ensureRec(topicId);
   rec.marks[String(qid)] = result;
   if(result === "wrong") rec.mastered = false;
@@ -2243,16 +2254,66 @@ function withdrawOpen(qid){
   if(store.topics[r.topic] && store.topics[r.topic].marks) delete store.topics[r.topic].marks[qid];
   writeStore(); render();
 }
-function confirmOpen(qid, result){
-  if(!isParentUnlocked()) return false;
-  const r = getOpen(qid); if(!r) return false;
+/* ---------- open answers, multi-part answers, parent marking ----------
+   Multi-part questions keep one record with a status per part. Auto parts (exact values) are right/wrong at once;
+   the other parts wait for 家长确认. The item rolls up: all parts right = 对, none = 不对, otherwise 部分对 (½ credit). */
+function rollupParts(r){
+  const ks = Object.keys(r.parts || {});
+  if(!ks.length || ks.some(k => r.parts[k].status === "pending")) return "pending";
+  const s = ks.reduce((n, k) => n + (r.parts[k].status === "right" ? 1 : r.parts[k].status === "partial" ? 0.5 : 0), 0);
+  return s === ks.length ? "right" : (s === 0 ? "wrong" : "partial");
+}
+function applyOpen(qid, r){
   const rec = ensureRec(r.topic);
-  if(result === "pending"){ r.status = "pending"; r.checkedAt = null; delete rec.marks[qid]; }
-  else if(result === "right" || result === "partial" || result === "wrong"){
-    r.status = result; r.checkedAt = nowIso(); rec.marks[qid] = result;
-    if(result === "wrong") rec.mastered = false;
-  } else return;
+  if(r.parts) r.status = rollupParts(r);
+  if(r.status === "pending"){ delete rec.marks[qid]; r.checkedAt = null; }
+  else { rec.marks[qid] = r.status; r.checkedAt = nowIso(); if(r.status === "wrong") rec.mastered = false; }
+}
+function confirmOpen(qid, result, part){
+  if(!isParentUnlocked()) return false;
+  const r = getOpen(qid); if(!r || r.revealed) return false;
+  if(result === "pending"){
+    if(r.parts) Object.keys(r.parts).forEach(k => { if(!r.parts[k].auto) r.parts[k].status = "pending"; });
+    else r.status = "pending";
+  } else if(result === "right" || result === "partial" || result === "wrong"){
+    if(r.parts){
+      const p = r.parts[String(part)];
+      if(!p || p.auto) return false;
+      p.status = result;
+    } else r.status = result;
+  } else return false;
+  applyOpen(qid, r);
   writeStore(); render();
+  return true;
+}
+function submitMulti(topicId, qid, answers){
+  const q = bankQ(qid);
+  if(!q || q.mode !== "multi" || !knownTopic(topicId) || !Array.isArray(answers) || answers.length !== q.parts.length) return false;
+  const parts = {};
+  q.parts.forEach((p, i) => {
+    const a = answers[i] || {};
+    const auto = p.kind === "exact";
+    parts[i] = { text:String(a.text || "").slice(0, 2000), auto, status: auto ? (a.result === "right" ? "right" : "wrong") : "pending" };
+  });
+  if(!store.open) store.open = {};
+  const r = { topic:topicId, text:q.parts.map((p, i) => ((p.label || p.prompt || "") + " " + parts[i].text).trim()).join("\n").slice(0, 4000),
+    status:"pending", at:nowIso(), checkedAt:null, parts };
+  store.open[qid] = r;
+  applyOpen(qid, r);
+  writeStore(); render();
+  return true;
+}
+/* looking at the answer before answering counts as not correct */
+function revealUnanswered(topicId, qid){
+  const q = bankQ(qid); if(!q || !knownTopic(topicId)) return false;
+  if(q.mode === "parent" || q.mode === "multi"){
+    if(getOpen(qid)) return false;
+    if(!store.open) store.open = {};
+    store.open[qid] = { topic:topicId, text:"", status:"wrong", revealed:true, at:nowIso(), checkedAt:null };
+  }
+  const rec = ensureRec(topicId); rec.marks[qid] = "wrong"; rec.mastered = false;
+  writeStore(); render();
+  return true;
 }
 function openList(){
   const o = store.open || {};
@@ -2640,7 +2701,7 @@ function bankQ(qid){
   if(!b || !b.idIndex || !Object.prototype.hasOwnProperty.call(b.idIndex, qid)) return null;
   return b.questions[b.idIndex[qid]] || null;
 }
-window.AnnaProgress = { markQuestion, getMark, percentFor, setMastered, goalFor, getOpen, submitOpen, withdrawOpen, confirmOpen, openList, hasPin, setPin, unlockParent, lockParent, isParentUnlocked, resetPin, pinWaitSeconds };
+window.AnnaProgress = { markQuestion, getMark, percentFor, setMastered, goalFor, getOpen, submitOpen, withdrawOpen, confirmOpen, openList, hasPin, setPin, unlockParent, lockParent, isParentUnlocked, resetPin, pinWaitSeconds, submitMulti, revealUnanswered };
 window.bootGarden = bootGarden;
 </script>
 <!-- garden-practice-js:start -->
