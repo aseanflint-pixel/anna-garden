@@ -72,6 +72,51 @@
     const m = norm(s).replace(/[$,]/g, "").replace(/(\d) (?=\d)/g, "$1").match(/^(-?\d+(?:\.\d+)?) ?([a-z°%]*[23]?|元|分|个|ℓ)$/);
     return m ? { n: Number(m[1]), unit: m[2] || "" } : null;
   }
+  /* exact value of what she typed: whole number, decimal, fraction a/b, mixed number "a b/c";
+     "$", thousands spaces/commas, "about"/"≈" and a trailing unit or count word are allowed */
+  const MEASURE = ["cm", "m", "km", "mm", "kg", "g", "ml", "l", "cm2", "m2", "cm3", "°", "%", "h", "min", "s", "°c"];
+  function gcd(a, b) { while (b) { const t = a % b; a = b; b = t; } return a; }
+  function valOf(input) {
+    let s = String(input == null ? "" : input).normalize("NFKC").toLowerCase().replace(/\s+/g, " ").trim().replace(/[。.]+$/, "");
+    s = s.replace(/^(about|approximately|approx\.?|约|≈|~)\s*/, "").replace(/\$/g, "").trim();
+    let m, kind, n, d, dp = 0, rest, fn = 0, fd = 1;
+    if ((m = s.match(/^(\d+) (\d+) ?\/ ?(\d+)\s*(.*)$/))) {
+      fn = +m[2]; fd = +m[3]; if (!fd) return null;
+      kind = "mixed"; n = +m[1] * fd + fn; d = fd; rest = m[4];
+    } else if ((m = s.match(/^(\d+) ?\/ ?(\d+)\s*(.*)$/))) {
+      fn = +m[1]; fd = +m[2]; if (!fd) return null;
+      kind = "frac"; n = fn; d = fd; rest = m[3];
+    } else if ((m = s.match(/^(\d{1,3}(?:[ ,]\d{3})+|\d+)?(?:\.(\d+))?\s*(.*)$/)) && (m[1] || m[2])) {
+      const w = (m[1] || "0").replace(/[ ,]/g, ""); dp = (m[2] || "").length;
+      kind = dp ? "dec" : "int"; d = Math.pow(10, dp); n = Number(w) * d + Number(m[2] || 0); rest = m[3];
+    } else return null;
+    rest = (rest || "").replace(/\s+/g, "").replace(/²/g, "2").replace(/³/g, "3").replace(/ℓ/g, "l");
+    let unit = "";
+    if (rest) {
+      if (MEASURE.indexOf(rest) >= 0) unit = rest;
+      else if (rest === "元" || /^[a-z][a-z']*$/.test(rest)) unit = ""; // count word: boxes, pizzas, dollars
+      else return null;
+    }
+    return { n: n, d: d, kind: kind, dp: dp, unit: unit, wrote: !!rest, measure: MEASURE.indexOf(rest) >= 0, fn: fn, fd: fd };
+  }
+  function valOk(q, x) {
+    if (x.n * q.val[1] !== q.val[0] * x.d) return false;              // numerically equal?
+    // a written unit must be the right one (a bare number is fine)
+    const want = q.unit ? String(q.unit).replace(/ℓ/g, "l") : "";
+    if (x.measure && x.unit !== want) return false;
+    if (want && x.wrote && !x.measure) return false;                    // "50 boxes" when the answer is 50 cm
+    const forms = q.forms || [];
+    for (let i = 0; i < forms.length; i++) {
+      const f = forms[i];
+      if (f === "mixed" && !(x.kind === "mixed" && x.fn < x.fd && x.fn > 0)) return false;
+      if (f === "improper" && !(x.kind === "frac" && x.fn >= x.fd)) return false;
+      if (f === "fraction" && !(x.kind === "frac" || x.kind === "mixed")) return false;
+      if (f === "simplest" && !((x.kind === "frac" || x.kind === "mixed") && gcd(x.fn, x.fd) === 1 && (x.kind === "frac" || x.fn < x.fd))) return false;
+      if (f === "decimal" && !(x.kind === "dec" || x.kind === "int")) return false;
+      if (f === "round" && (x.kind === "frac" || x.kind === "mixed" || (q.dp && x.dp !== q.dp))) return false;
+    }
+    return true;
+  }
   function checkExact(q, input) {
     const v = norm(input);
     if (!v) return null;
@@ -79,7 +124,17 @@
       const got = (String(input).match(/\d+/g) || []).map(Number).sort(function (a, b) { return a - b; });
       return got.length === q.numset.length && got.every(function (x, i) { return x === q.numset[i]; }) ? "right" : "wrong";
     }
+    if (q.rem) { // quotient and remainder asked for: "1250 r 2", "1 250 remainder 2", "quotient 1250, remainder 2"
+      const t = String(input).normalize("NFKC").replace(/(\d)[ ,](?=\d{3}\b)/g, "$1");
+      const ns = (t.match(/\d+/g) || []).map(Number);
+      if (ns.length === 2 && /r|remainder|余/i.test(t) && ns[0] === q.rem[0] && ns[1] === q.rem[1]) return "right";
+    }
     if ((q.accept || []).some(function (a) { return norm(a) === v; })) return "right";
+    if (q.val) {
+      // Lu: 数值相等就算对，除非题目指定了形式
+      const x = valOf(input);
+      return x && valOk(q, x) ? "right" : "wrong";   // e.g. "10 r 2" is not a number of boxes
+    }
     if (typeof q.num === "number") {
       const x = numOf(input);
       // a bare number is fine; if she writes a unit it must be the right one
