@@ -1,331 +1,423 @@
-/* Practice-view logic for 安安's knowledge garden.
-   Wraps openModal and lets her mark 做对了 / 做错了 after the answer is shown.
-*/
+/* Practice view for 安安's knowledge garden — original question bank (text + drawn figures).
+   Choice items and exact-value items are checked automatically; other items use 做对了 / 做错了;
+   open-ended items are typed in, saved, and wait for a parent to mark them (家长确认). */
 (function () {
   "use strict";
 
   function esc(s) {
-    return String(s ?? "").replace(/[&<>"']/g, function (c) {
+    return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) {
       return ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c];
     });
   }
+  // escaped text, but keep <u>…</u> underlines used in some stems and passages
+  function richText(s) {
+    return esc(s).replace(/&lt;u&gt;/g, "<u>").replace(/&lt;\/u&gt;/g, "</u>").replace(/\n/g, "<br>");
+  }
+  function passageHTML(p) {
+    let s = esc(p).replace(/&lt;u&gt;/g, "<u>").replace(/&lt;\/u&gt;/g, "</u>");
+    s = s.replace(/^(Word box|词语框|词语表)[:：]?\s*(.*)$/gm, function (_, a, b) {
+      return "<div class=\"wbox\">" + b.split(/\s*\|\s*/).map(function (w) { return "<span>" + w + "</span>"; }).join("") + "</div>";
+    });
+    s = s.replace(/\[(\d+)\] /g, "<b class=\"pn\">$1</b> ");
+    return s.split(/\n\n/).map(function (x) { return "<p>" + x.replace(/\n/g, "<br>") + "</p>"; }).join("");
+  }
+
+  function bank() { return window.PRACTICE_BANK || null; }
+  function api() { return window.AnnaProgress || null; }
 
   function topicIdsOf(t) {
     const ids = [];
-    function add(id) {
-      if (id && ids.indexOf(id) === -1) ids.push(id);
-    }
+    function add(id) { if (id && ids.indexOf(id) === -1) ids.push(id); }
     add(t.topic_id);
     (t.learning_outcomes || []).forEach(function (lo) { add(lo.topic_id); });
     return ids;
   }
-
-  function bank() {
-    return window.PRACTICE_BANK || null;
-  }
-
-  function bankSubjectOf(t) {
-    return (t && t.bank_subject) || "";
-  }
-
   function matchesSubject(t, q) {
-    const subj = bankSubjectOf(t);
-    if (!subj || !q || !q.subject) return true;
-    return q.subject === subj;
+    const subj = (t && t.bank_subject) || "";
+    return !subj || !q || q.subject === subj;
   }
-
   function questionsFor(t, filterId) {
     const b = bank();
     if (!b || !b.questions) return [];
     const ids = filterId ? [filterId] : topicIdsOf(t);
-    const seen = {};
-    const list = [];
+    const seen = {}; const list = [];
     ids.forEach(function (id) {
-      const idxs = (b.byTopic && b.byTopic[id]) || [];
-      idxs.forEach(function (i) {
-        if (seen[i]) return;
-        seen[i] = true;
+      ((b.byTopic && b.byTopic[id]) || []).forEach(function (i) {
+        if (seen[i]) return; seen[i] = true;
         const q = b.questions[i];
         if (q && matchesSubject(t, q)) list.push(q);
       });
     });
     return list;
   }
-
   function loLabel(t, topicId) {
     const lo = (t.learning_outcomes || []).find(function (x) { return x.topic_id === topicId; });
     if (lo && lo.text_zh) return lo.text_zh;
-    if (topicId === t.topic_id) return t.name_zh;
-    return topicId;
+    return topicId === t.topic_id ? t.name_zh : topicId;
   }
-
   function countsByTopic(t) {
-    const b = bank();
     const out = {};
-    topicIdsOf(t).forEach(function (id) {
-      out[id] = b && b.byTopic && b.byTopic[id] ? b.byTopic[id].length : 0;
-    });
+    topicIdsOf(t).forEach(function (id) { out[id] = questionsFor(t, id).length; });
     return out;
   }
 
-  function enhancePracticeButton(id) {
-    const box = document.querySelector("#modal");
-    if (!box) return;
-    const prac = box.querySelector("#btn-practice");
-    const note = box.querySelector(".practice-note");
-    if (!prac) return;
-    const t = DATA && DATA.topics ? DATA.topics.find(function (x) { return x.topic_id === id; }) : null;
-    if (!t) return;
-
-    const neu = prac.cloneNode(true);
-    prac.parentNode.replaceChild(neu, prac);
-
-    if (!bank()) {
-      neu.disabled = true;
-      neu.textContent = "题库还没有加载出来";
-      if (note) {
-        note.hidden = false;
-        note.textContent = "请把这个页面和 assets 文件夹放在一起打开。";
-      }
-      return;
+  /* ---------- answer checking ---------- */
+  function norm(s) {
+    return String(s == null ? "" : s).normalize("NFKC").toLowerCase()
+      .replace(/\s+/g, " ").trim()
+      .replace(/ /g, function (m, off, str) { return (/\d/.test(str[off - 1] || "") && /\d/.test(str[off + 1] || "")) ? " " : ""; })
+      .replace(/[。.!！]+$/, "");
+  }
+  function numOf(s) {
+    const m = norm(s).replace(/[$,]/g, "").replace(/(\d) (?=\d)/g, "$1").match(/^(-?\d+(?:\.\d+)?) ?([a-z°%]*[23]?|元|分|个|ℓ)$/);
+    return m ? { n: Number(m[1]), unit: m[2] || "" } : null;
+  }
+  function checkExact(q, input) {
+    const v = norm(input);
+    if (!v) return null;
+    if ((q.accept || []).some(function (a) { return norm(a) === v; })) return "right";
+    if (typeof q.num === "number") {
+      const x = numOf(input);
+      // a bare number is fine; if she writes a unit it must be the right one
+      if (x && Math.abs(x.n - q.num) < 1e-9 && (!x.unit || !q.unit || x.unit === q.unit)) return "right";
     }
-
-    const qs = questionsFor(t);
-    if (qs.length === 0) {
-      neu.disabled = true;
-      neu.textContent = "这个知识点还没有通过核对的真题";
-      if (note) {
-        note.hidden = false;
-        note.textContent = "题库里暂时没有已核对通过、标在这个知识点上的题目。";
-      }
-      return;
-    }
-
-    neu.disabled = false;
-    neu.innerHTML = "练习真题<span class=\"btn-practice-count\">" + qs.length + " 道已核对</span>";
-    neu.addEventListener("click", function () {
-      openPractice(t, null, 0);
-    });
+    return "wrong";
   }
 
-  function renderFilters(t, filterId, counts, total) {
-    const ids = topicIdsOf(t);
+  const session = {}; // qid -> { pick, typed, result } for this visit only
+
+  /* ---------- rendering ---------- */
+  function filtersHTML(t, filterId, counts, total) {
+    const ids = topicIdsOf(t).filter(function (id) { return counts[id]; });
     if (ids.length <= 1) return "";
-    const chips = [
-      "<button type=\"button\" data-filter=\"\" aria-pressed=\"" + (!filterId ? "true" : "false") + "\">全部 <span class=\"n\">" + total + "</span></button>"
-    ];
+    const chips = ["<button type=\"button\" data-filter=\"\" aria-pressed=\"" + (!filterId) + "\">全部 <span class=\"n\">" + total + "</span></button>"];
     ids.forEach(function (id) {
-      const n = counts[id] || 0;
-      if (!n) return;
-      const pressed = filterId === id ? "true" : "false";
-      chips.push(
-        "<button type=\"button\" data-filter=\"" + esc(id) + "\" aria-pressed=\"" + pressed + "\" title=\"" + esc(id) + "\">" +
-          esc(loLabel(t, id)) + " <span class=\"n\">" + n + "</span></button>"
-      );
+      chips.push("<button type=\"button\" data-filter=\"" + esc(id) + "\" aria-pressed=\"" + (filterId === id) + "\">" + esc(loLabel(t, id)) + " <span class=\"n\">" + counts[id] + "</span></button>");
     });
     return "<div class=\"practice-filters\" role=\"tablist\" aria-label=\"按小知识点筛选\">" + chips.join("") + "</div>";
   }
-
-  function metaLine(q) {
-    const chips = [];
-    if (q.level) chips.push(q.level);
-    if (q.subject_zh) chips.push(q.subject_zh);
-    else if (q.subject) chips.push(q.subject);
-    chips.push(q.school || "");
-    if (q.year) chips.push(String(q.year));
-    if (q.exam) chips.push(q.exam);
-    if (q.paper) chips.push(q.paper);
-    if (q.q_label) chips.push(q.q_label);
-    if (q.marks) chips.push(q.marks + " 分");
-    if (q.type_zh) chips.push(q.type_zh);
-    return chips.filter(Boolean).map(function (c) {
-      return "<span class=\"chip\">" + esc(c) + "</span>";
-    }).join("");
+  function metaHTML(q) {
+    const chips = [q.level, q.subject_zh, q.marks ? q.marks + " 分" : "", q.type_zh];
+    let h = chips.filter(Boolean).map(function (c) { return "<span class=\"chip\">" + esc(c) + "</span>"; }).join("");
+    if (q.mode === "parent") h += "<span class=\"chip chip-parent\">家长批改</span>";
+    return h;
+  }
+  function answerBoxHTML(q) {
+    const b = bank();
+    const steps = String(q.explanation || "").split("\n").filter(function (x) { return x.trim(); });
+    let h = "<div class=\"answer-box\">";
+    h += "<div class=\"k\">" + (q.mode === "parent" ? "参考答案" : "答案") + "</div><div class=\"v\">" + richText(q.answer || "") + "</div>";
+    if (q.mode === "parent" && q.marking_points && q.marking_points.length) {
+      h += "<div class=\"k k2\">评分要点（家长对照）</div><ul class=\"mp\">" + q.marking_points.map(function (x) { return "<li>" + esc(x) + "</li>"; }).join("") + "</ul>";
+    }
+    if (steps.length) {
+      h += "<div class=\"k k2\">解题思路</div><ol class=\"steps\">" + steps.map(function (x) { return "<li>" + richText(x) + "</li>"; }).join("") + "</ol>";
+    }
+    if (q.explanation_figure) h += "<div class=\"q-fig\"><img src=\"" + esc(q.explanation_figure) + "\" alt=\"讲解图\"></div>";
+    return h + "</div>";
+  }
+  function interactionHTML(t, q, revealed) {
+    const A = api();
+    const s = session[q.id] || {};
+    const mark = A ? A.getMark(t.topic_id, q.id) : null;
+    if (q.mode === "choice") {
+      const done = typeof s.pick === "number";
+      let h = "<ol class=\"opts\" role=\"list\">";
+      q.options.forEach(function (o, i) {
+        let cls = "";
+        if (done || revealed) {
+          if (i === q.answer_index) cls = " is-right";
+          else if (done && i === s.pick) cls = " is-wrong";
+        }
+        h += "<li><button type=\"button\" class=\"opt" + cls + "\" data-pick=\"" + i + "\"" + (done ? " disabled" : "") + "><b>(" + (i + 1) + ")</b> " + richText(o) + "</button></li>";
+      });
+      h += "</ol>";
+      if (done) h += resultHTML(t, s.result);
+      return h;
+    }
+    if (q.mode === "exact") {
+      const done = !!s.result;
+      let h = "<div class=\"exact\"><input type=\"text\" class=\"exact-in\" inputmode=\"text\" autocomplete=\"off\" placeholder=\"在这里写答案\" value=\"" + esc(s.typed || "") + "\"" + (done ? " disabled" : "") + ">" +
+        "<button type=\"button\" class=\"btn-check\" data-check=\"1\"" + (done ? " disabled" : "") + ">检查答案</button></div>";
+      if (done) {
+        h += resultHTML(t, s.result);
+        if (s.result === "wrong") h += "<button type=\"button\" class=\"btn-override\" data-override=\"1\">我的写法不一样，其实是对的</button>";
+      }
+      return h;
+    }
+    if (q.mode === "parent") {
+      const rec = A ? A.getOpen(q.id) : null;
+      if (rec) {
+        const label = { pending: "待家长确认", right: "家长批改：对", partial: "家长批改：部分对", wrong: "家长批改：不对" }[rec.status] || "待家长确认";
+        return "<div class=\"open-done status-" + esc(rec.status) + "\"><div class=\"k\">我的答案</div><div class=\"mine\">" + esc(rec.text) + "</div>" +
+          "<div class=\"open-status\">" + label + "</div>" +
+          (rec.status === "pending" ? "<p class=\"open-note\">请爸爸妈妈点上面的「家长确认」来批改。批改以前，这题不算进花朵的进度。对算一题，部分对算半题。</p>" : "") +
+          "<button type=\"button\" class=\"btn-redo\" data-redo=\"1\">重新写一次</button></div>";
+      }
+      return "<div class=\"open-box\"><textarea class=\"open-in\" rows=\"4\" placeholder=\"把你的答案写在这里\">" + esc(s.typed || "") + "</textarea>" +
+        "<button type=\"button\" class=\"btn-submit\" data-submit=\"1\">交给家长批改</button>" +
+        "<p class=\"open-note\">这题没有唯一的标准答案。写好交出去，爸爸妈妈会对照参考答案帮你批改。</p></div>";
+    }
+    // self-report
+    if (!revealed) return "";
+    return "<div class=\"self-check\"><p>对一下答案，你做对了吗？</p><div class=\"self-check-row\" role=\"group\">" +
+      "<button type=\"button\" data-mark=\"right\" aria-pressed=\"" + (mark === "right") + "\">做对了</button>" +
+      "<button type=\"button\" data-mark=\"wrong\" aria-pressed=\"" + (mark === "wrong") + "\">做错了</button></div></div>";
+  }
+  function resultHTML(t, result) {
+    const A = api(); const pct = A ? A.percentFor(t.topic_id) : 0;
+    return result === "right"
+      ? "<p class=\"result ok\">✔ 答对了！这朵花现在 " + pct + "%。</p>"
+      : "<p class=\"result no\">✘ 还不对，看看下面的答案和讲解。这朵花现在 " + pct + "%。</p>";
   }
 
   function renderPractice(t, filterId, index, revealed) {
     const all = questionsFor(t, null);
     const qs = questionsFor(t, filterId);
     const counts = countsByTopic(t);
-    const safeIndex = qs.length ? Math.max(0, Math.min(index, qs.length - 1)) : 0;
-    const q = qs[safeIndex];
+    const i = qs.length ? Math.max(0, Math.min(index, qs.length - 1)) : 0;
+    const q = qs[i];
     const box = document.querySelector("#modal");
-
-    if (!qs.length) {
-      box.innerHTML =
-        "<div class=\"modal-backdrop\" data-close=\"1\"></div>" +
-        "<div class=\"modal-card practice-mode\" role=\"dialog\" aria-modal=\"true\" aria-labelledby=\"md-title\">" +
-          "<button class=\"modal-x\" type=\"button\" data-close=\"1\" aria-label=\"关闭\">×</button>" +
-          "<div class=\"practice-head\">" +
-            "<button class=\"practice-back\" type=\"button\" data-practice-back=\"1\">← 返回</button>" +
-            "<div class=\"titles\"><div class=\"kicker\">练习真题</div><h2 id=\"md-title\">" + esc(t.name_zh) + "</h2></div>" +
-          "</div>" +
-          renderFilters(t, filterId, counts, all.length) +
-          "<p class=\"practice-empty\">这个小知识点还没有通过核对的真题，换一个看看吧。</p>" +
-        "</div>";
-      bindPractice(t, filterId, 0);
-      return;
+    const head = "<div class=\"modal-backdrop\" data-close=\"1\"></div><div class=\"modal-card practice-mode\" role=\"dialog\" aria-modal=\"true\" aria-labelledby=\"md-title\">" +
+      "<button class=\"modal-x\" type=\"button\" data-close=\"1\" aria-label=\"关闭\">×</button>" +
+      "<div class=\"practice-head\"><button class=\"practice-back\" type=\"button\" data-practice-back=\"1\">← 返回</button>" +
+      "<div class=\"titles\"><div class=\"kicker\">练习题</div><h2 id=\"md-title\">" + esc(t.name_zh) + "</h2></div></div>";
+    if (!q) {
+      box.innerHTML = head + filtersHTML(t, filterId, counts, all.length) + "<p class=\"practice-empty\">这里还没有题目，换一个看看吧。</p></div>";
+      bind(t, filterId, 0, false); return;
     }
-
-    const qAlt = esc((q.school || "") + " " + (q.year || "") + " " + (q.q_label || q.question || "题目"));
-    const ctx = (q.context_images || []).filter(function (src) { return src && src !== q.image; });
-    let img = "";
-    if (ctx.length) {
-      img += "<div class=\"q-context\"><div class=\"q-context-label\">先看这段短文或图表，再做下面的题</div>";
-      ctx.forEach(function (src, i) {
-        const load = i === 0 ? "eager" : "lazy";
-        img += "<img src=\"" + esc(src) + "\" alt=\"题目材料\" loading=\"" + load + "\" decoding=\"async\">";
-      });
-      img += "</div>";
-    }
-    if (q.image) {
-      const load = ctx.length ? "lazy" : "eager";
-      img += "<div class=\"q-frame\"><img src=\"" + esc(q.image) + "\" alt=\"" + qAlt + "\" loading=\"" + load + "\" decoding=\"async\"></div>";
-    } else if (!ctx.length) {
-      img += "<div class=\"q-missing\">这道题的图片还没有准备好。</div>";
-    }
-
-    const answerBlock = revealed
-      ? "<div class=\"answer-box\">" +
-          "<div class=\"k\">核对通过的答案</div>" +
-          "<div class=\"v\">" + esc(q.answer || "（没有写下答案）") + "</div>" +
-          (q.explanation ? "<div class=\"exp\">" + esc(q.explanation) + "</div>" : "") +
-        "</div>" +
-        selfCheckHTML(t, q)
-      : "";
-
-    box.innerHTML =
-      "<div class=\"modal-backdrop\" data-close=\"1\"></div>" +
-      "<div class=\"modal-card practice-mode\" role=\"dialog\" aria-modal=\"true\" aria-labelledby=\"md-title\">" +
-        "<button class=\"modal-x\" type=\"button\" data-close=\"1\" aria-label=\"关闭\">×</button>" +
-        "<div class=\"practice-head\">" +
-          "<button class=\"practice-back\" type=\"button\" data-practice-back=\"1\">← 返回</button>" +
-          "<div class=\"titles\">" +
-            "<div class=\"kicker\">练习真题 · " + esc(t.topic_id) + "</div>" +
-            "<h2 id=\"md-title\">" + esc(t.name_zh) + "</h2>" +
-          "</div>" +
-        "</div>" +
-        "<p class=\"practice-note-ok\">这些都是已经核对通过的真题。先自己做，做好了再点开答案。</p>" +
-        renderFilters(t, filterId, counts, all.length) +
-        "<div class=\"practice-meta\">" + metaLine(q) + "</div>" +
-        img +
-        "<div class=\"practice-nav\">" +
-          "<button class=\"btn-nav\" type=\"button\" data-nav=\"-1\"" + (safeIndex === 0 ? " disabled" : "") + ">上一题</button>" +
-          "<div class=\"idx\">第 " + (safeIndex + 1) + " 道，共 " + qs.length + " 道</div>" +
-          "<button class=\"btn-nav\" type=\"button\" data-nav=\"1\"" + (safeIndex === qs.length - 1 ? " disabled" : "") + ">下一题</button>" +
-        "</div>" +
-        "<button class=\"btn-reveal" + (revealed ? " is-open" : "") + "\" type=\"button\" data-reveal=\"1\" aria-expanded=\"" + (revealed ? "true" : "false") + "\">" +
-          (revealed ? "收起答案" : "看看答案") +
-        "</button>" +
-        answerBlock +
-      "</div>";
-    bindPractice(t, filterId, safeIndex, revealed);
+    const b = bank();
+    const ps = q.passage && b.passages ? b.passages[q.passage] : null;
+    const passage = ps ? "<details class=\"q-passage\" open><summary>" + (q.subject === "Mathematics" || q.subject === "Science" || q.subject === "English" ? "Read first: " : "先读材料：") + "<b>" + esc(ps.title || "") + "</b></summary><div class=\"pbody\">" + passageHTML(ps.text) + "</div></details>" : "";
+    const fig = q.figure ? "<div class=\"q-fig\"><img src=\"" + esc(q.figure) + "\" alt=\"题目的图\" decoding=\"async\"></div>" : "";
+    const showAns = revealed || (session[q.id] && session[q.id].result) || (q.mode === "parent" && api() && api().getOpen(q.id));
+    box.innerHTML = head +
+      filtersHTML(t, filterId, counts, all.length) +
+      "<div class=\"practice-meta\">" + metaHTML(q) + "</div>" +
+      passage + fig +
+      "<div class=\"q-stem\">" + richText(q.stem) + "</div>" +
+      interactionHTML(t, q, revealed) +
+      "<button class=\"btn-reveal" + (showAns ? " is-open" : "") + "\" type=\"button\" data-reveal=\"1\">" + (showAns ? "收起答案" : "看看答案和讲解") + "</button>" +
+      (showAns ? answerBoxHTML(q) : "") +
+      "<div class=\"practice-nav\"><button class=\"btn-nav\" type=\"button\" data-nav=\"-1\"" + (i === 0 ? " disabled" : "") + ">上一题</button>" +
+      "<div class=\"idx\">第 " + (i + 1) + " 道，共 " + qs.length + " 道</div>" +
+      "<button class=\"btn-nav\" type=\"button\" data-nav=\"1\"" + (i === qs.length - 1 ? " disabled" : "") + ">下一题</button></div></div>";
+    bind(t, filterId, i, !!showAns);
   }
 
-  function selfCheckHTML(t, q){
-    const api = window.AnnaProgress;
-    const mark = api ? api.getMark(t.topic_id, q.id) : null;
-    const pct = api ? api.percentFor(t.topic_id) : 0;
-    let note = "对一下答案，再告诉花园这道题做得怎么样。";
-    if(mark === "right") note = "做对了，这朵花现在 " + pct + "%。";
-    else if(mark === "wrong") note = "做错了也没关系，这朵花现在 " + pct + "%。再试一题吧。";
-    return "<div class=\"self-check\">" +
-      "<p>你做对了吗？</p>" +
-      "<div class=\"self-check-row\" role=\"group\" aria-label=\"这道题做得怎么样\">" +
-        "<button type=\"button\" data-mark=\"right\" aria-pressed=\"" + (mark === "right" ? "true" : "false") + "\">做对了</button>" +
-        "<button type=\"button\" data-mark=\"wrong\" aria-pressed=\"" + (mark === "wrong" ? "true" : "false") + "\">做错了</button>" +
-      "</div>" +
-      "<p class=\"self-check-note\">" + esc(note) + "</p>" +
-    "</div>";
-  }
-
-  let practiceKeyHandler = null;
-
-  function bindPractice(t, filterId, index, revealed) {
+  let keyHandler = null;
+  function bind(t, filterId, index, revealed) {
     const box = document.querySelector("#modal");
-    box.hidden = false;
-    document.body.classList.add("modal-open");
-
+    box.hidden = false; document.body.classList.add("modal-open");
+    const q = questionsFor(t, filterId)[index];
+    const A = api();
     box.onclick = function (e) {
-      if (e.target.dataset.close) {
-        closeModal();
-        return;
-      }
-      if (e.target.closest("[data-practice-back]")) {
-        openModal(t.topic_id);
-        return;
-      }
+      if (e.target.dataset && e.target.dataset.close) { closeModal(); return; }
+      if (e.target.closest("[data-practice-back]")) { openModal(t.topic_id); return; }
       const nav = e.target.closest("[data-nav]");
-      if (nav && !nav.disabled) {
-        const next = index + Number(nav.dataset.nav);
-        renderPractice(t, filterId, next, false);
-        return;
-      }
+      if (nav && !nav.disabled) { renderPractice(t, filterId, index + Number(nav.dataset.nav), false); return; }
       const chip = e.target.closest("[data-filter]");
-      if (chip && chip.closest(".practice-filters")) {
-        const fid = chip.dataset.filter || null;
-        renderPractice(t, fid, 0, false);
+      if (chip) { renderPractice(t, chip.dataset.filter || null, 0, false); return; }
+      if (!q) return;
+      const pick = e.target.closest("[data-pick]");
+      if (pick && !pick.disabled) {
+        const k = Number(pick.dataset.pick);
+        const res = k === q.answer_index ? "right" : "wrong";
+        session[q.id] = { pick: k, result: res };
+        if (A) A.markQuestion(t.topic_id, q.id, res);
+        renderPractice(t, filterId, index, true); return;
+      }
+      if (e.target.closest("[data-check]")) {
+        const inp = box.querySelector(".exact-in");
+        const typed = inp ? inp.value : "";
+        const res = checkExact(q, typed);
+        if (!res) { inp && inp.focus(); return; }
+        session[q.id] = { typed: typed, result: res };
+        if (A) A.markQuestion(t.topic_id, q.id, res);
+        renderPractice(t, filterId, index, true); return;
+      }
+      if (e.target.closest("[data-override]")) {
+        session[q.id] = Object.assign({}, session[q.id], { result: "right" });
+        if (A) A.markQuestion(t.topic_id, q.id, "right");
+        renderPractice(t, filterId, index, true); return;
+      }
+      if (e.target.closest("[data-submit]")) {
+        const ta = box.querySelector(".open-in");
+        const text = ta ? ta.value.trim() : "";
+        if (!text) { ta && ta.focus(); return; }
+        if (A) A.submitOpen(t.topic_id, q.id, text);
+        renderPractice(t, filterId, index, true); return;
+      }
+      if (e.target.closest("[data-redo]")) {
+        const rec = A ? A.getOpen(q.id) : null;
+        session[q.id] = { typed: rec ? rec.text : "" };
+        if (A) A.withdrawOpen(q.id);
+        renderPractice(t, filterId, index, false); return;
+      }
+      const mk = e.target.closest("[data-mark]");
+      if (mk) { if (A) A.markQuestion(t.topic_id, q.id, mk.dataset.mark); renderPractice(t, filterId, index, true); return; }
+      if (e.target.closest("[data-reveal]")) renderPractice(t, filterId, index, !revealed);
+    };
+    const ta = box.querySelector(".open-in, .exact-in");
+    if (ta && q) ta.addEventListener("input", function () { session[q.id] = Object.assign({}, session[q.id], { typed: ta.value }); });
+    if (keyHandler) document.removeEventListener("keydown", keyHandler, true);
+    keyHandler = function (e) {
+      if (!document.querySelector(".modal-card.practice-mode")) return;
+      if (e.target && (e.target.tagName === "INPUT" || e.target.tagName === "TEXTAREA")) {
+        if (e.key === "Enter" && e.target.tagName === "INPUT") { e.preventDefault(); const c = box.querySelector("[data-check]"); if (c) c.click(); }
         return;
       }
-      const markBtn = e.target.closest("[data-mark]");
-      if (markBtn && markBtn.closest(".self-check")) {
-        const list = questionsFor(t, filterId);
-        const currentQ = list[index];
-        if (currentQ && window.AnnaProgress) {
-          window.AnnaProgress.markQuestion(t.topic_id, currentQ.id, markBtn.dataset.mark);
-        }
-        renderPractice(t, filterId, index, true);
-        return;
-      }
-      if (e.target.closest("[data-reveal]")) {
-        renderPractice(t, filterId, index, !revealed);
-      }
+      const n = questionsFor(t, filterId).length;
+      if (e.key === "ArrowRight" && index < n - 1) { e.preventDefault(); renderPractice(t, filterId, index + 1, false); }
+      else if (e.key === "ArrowLeft" && index > 0) { e.preventDefault(); renderPractice(t, filterId, index - 1, false); }
+      else if (e.key === "Escape") { e.preventDefault(); e.stopImmediatePropagation(); openModal(t.topic_id); }
     };
-
-    if (practiceKeyHandler) {
-      document.removeEventListener("keydown", practiceKeyHandler, true);
-    }
-    practiceKeyHandler = function (e) {
-      const card = document.querySelector(".modal-card.practice-mode");
-      if (!card) return;
-      if (e.key === "ArrowRight") {
-        e.preventDefault();
-        const qs = questionsFor(t, filterId);
-        if (index < qs.length - 1) renderPractice(t, filterId, index + 1, false);
-      } else if (e.key === "ArrowLeft") {
-        e.preventDefault();
-        if (index > 0) renderPractice(t, filterId, index - 1, false);
-      } else if (e.key === "Escape") {
-        const confirmBox = document.querySelector("#confirm");
-        if (confirmBox && !confirmBox.hidden) return;
-        e.preventDefault();
-        e.stopImmediatePropagation();
-        openModal(t.topic_id);
-      }
-    };
-    document.addEventListener("keydown", practiceKeyHandler, true);
+    document.addEventListener("keydown", keyHandler, true);
   }
 
-  function openPractice(t, filterId, index) {
-    renderPractice(t, filterId, index || 0, false);
+  /* ---------- 家长确认 ---------- */
+  function findQ(qid) {
+    const b = bank(); if (!b || !b.idIndex) return null;
+    const i = b.idIndex[qid]; return typeof i === "number" ? b.questions[i] : null;
+  }
+  function renderParentList() {
+    const A = api(); const box = document.querySelector("#modal");
+    const list = A ? A.openList() : [];
+    const pending = list.filter(function (x) { return x.status === "pending"; });
+    const done = list.filter(function (x) { return x.status !== "pending"; }).slice(0, 20);
+    function card(x, withButtons) {
+      const q = findQ(x.qid); if (!q) return "";
+      const t = (window.GARDEN_DATA.topics || []).find(function (y) { return y.topic_id === x.topic; });
+      const b = bank(); const ps = q.passage && b.passages ? b.passages[q.passage] : null;
+      const lab = { right: "对", partial: "部分对", wrong: "不对" }[x.status];
+      return "<section class=\"pc-card\" data-qid=\"" + esc(x.qid) + "\">" +
+        "<div class=\"pc-meta\">" + esc(q.subject_zh) + " · " + esc(t ? t.name_zh : "") + " · " + esc(q.marks ? q.marks + " 分" : "") + "</div>" +
+        (ps ? "<details class=\"q-passage\"><summary>材料：<b>" + esc(ps.title || "") + "</b></summary><div class=\"pbody\">" + passageHTML(ps.text) + "</div></details>" : "") +
+        (q.figure ? "<div class=\"q-fig\"><img src=\"" + esc(q.figure) + "\" alt=\"题目的图\"></div>" : "") +
+        "<div class=\"q-stem small\">" + richText(q.stem) + "</div>" +
+        "<div class=\"k\">安安的答案</div><div class=\"mine\">" + esc(x.text) + "</div>" +
+        "<div class=\"k\">参考答案</div><div class=\"ref\">" + richText(q.answer) + "</div>" +
+        (q.marking_points && q.marking_points.length ? "<div class=\"k\">评分要点</div><ul class=\"mp\">" + q.marking_points.map(function (m) { return "<li>" + esc(m) + "</li>"; }).join("") + "</ul>" : "") +
+        (withButtons ? "<div class=\"pc-row\"><button type=\"button\" data-judge=\"right\">对</button><button type=\"button\" data-judge=\"partial\">部分对</button><button type=\"button\" data-judge=\"wrong\">不对</button></div>"
+          : "<div class=\"pc-done\">已批改：" + lab + " <button type=\"button\" class=\"pc-undo\" data-judge=\"pending\">改回待确认</button></div>") +
+        "</section>";
+    }
+    box.innerHTML = "<div class=\"modal-backdrop\" data-close=\"1\"></div><div class=\"modal-card practice-mode parent-mode\" role=\"dialog\" aria-modal=\"true\" aria-labelledby=\"pc-title\">" +
+      "<button class=\"modal-x\" type=\"button\" data-close=\"1\" aria-label=\"关闭\">×</button>" +
+      "<div class=\"practice-head\"><div class=\"titles\"><div class=\"kicker\">给爸爸妈妈</div><h2 id=\"pc-title\">家长确认</h2></div></div>" +
+      "<p class=\"practice-note-ok\">这些是安安写的开放题答案。对照参考答案和评分要点，点「对 / 部分对 / 不对」。「对」算一题，「部分对」算半题，「不对」不算。看完请点右上角 × 关闭，关闭后要重新输入密码。</p>" +
+      (pending.length ? pending.map(function (x) { return card(x, true); }).join("") : "<p class=\"practice-empty\">现在没有等待批改的答案。</p>") +
+      (done.length ? "<h3 class=\"pc-h\">最近批改过的</h3>" + done.map(function (x) { return card(x, false); }).join("") : "") +
+      "</div>";
+    box.hidden = false; document.body.classList.add("modal-open");
+    box.onclick = function (e) {
+      if (e.target.dataset && e.target.dataset.close) { closeModal(); return; }
+      const j = e.target.closest("[data-judge]");
+      if (j && A) { if (!A.isParentUnlocked()) { renderPinEnter(); return; } A.confirmOpen(j.closest("[data-qid]").dataset.qid, j.dataset.judge); renderParentList(); }
+    };
+  }
+  /* ---------- 家长密码 ---------- */
+  let afterUnlock = null;
+  function parentShell(title, body) {
+    const box = document.querySelector("#modal");
+    box.innerHTML = "<div class=\"modal-backdrop\" data-close=\"1\"></div><div class=\"modal-card practice-mode parent-mode pin-mode\" role=\"dialog\" aria-modal=\"true\" aria-labelledby=\"pc-title\">" +
+      "<button class=\"modal-x\" type=\"button\" data-close=\"1\" aria-label=\"关闭\">×</button>" +
+      "<div class=\"practice-head\"><div class=\"titles\"><div class=\"kicker\">给爸爸妈妈</div><h2 id=\"pc-title\">" + esc(title) + "</h2></div></div>" + body + "</div>";
+    box.hidden = false; document.body.classList.add("modal-open");
+    return box;
+  }
+  function pinInput(name, label) {
+    return "<label class=\"pin-l\">" + esc(label) + "<input class=\"pin-in\" name=\"" + name + "\" type=\"password\" inputmode=\"numeric\" pattern=\"[0-9]*\" maxlength=\"4\" autocomplete=\"off\"></label>";
+  }
+  const WHY = { format: "密码要是 4 位数字。", mismatch: "两次输入的密码不一样。", phrase: "家长确认语不对。", storage: "这台设备存不住密码。", locked: "请先输入原来的密码。" };
+  function done() { const f = afterUnlock || renderParentList; afterUnlock = null; f(); }
+  function renderPinSetup() {
+    const box = parentShell("设置家长密码",
+      "<p class=\"pin-note\">第一次打开「家长确认」，请爸爸妈妈设一个 <b>4 位数字密码</b>。以后批改开放题都要先输入这个密码，安安自己不能批改。</p>" +
+      pinInput("pin", "新密码（4 位数字）") + pinInput("again", "再输入一次") +
+      "<p class=\"pin-note pin-phrase\">忘记密码时：点「忘记密码？」，输入家长确认语 <b>我是家长</b>，再设新密码。已经交上来的答案和批改结果不会丢。请记住这句话，不要告诉安安。</p>" +
+      "<p class=\"pin-err\" role=\"alert\"></p><button type=\"button\" class=\"btn-submit\" data-pin-save=\"1\">保存密码</button>");
+    wirePin(box, function () {
+      const r = api().setPin(val(box, "pin"), val(box, "again"));
+      if (r.ok) { toast2("家长密码已经设好"); done(); } else showErr(box, WHY[r.why] || "没有设好，再试一次。");
+    }, "[data-pin-save]");
+  }
+  function renderPinEnter(why) {
+    const box = parentShell("输入家长密码",
+      "<p class=\"pin-note\">" + esc(why || "批改开放题以前，请输入家长密码。") + "</p>" + pinInput("pin", "家长密码") +
+      "<p class=\"pin-err\" role=\"alert\"></p><button type=\"button\" class=\"btn-submit\" data-pin-ok=\"1\">确定</button>" +
+      "<button type=\"button\" class=\"pin-forgot\" data-pin-forgot=\"1\">忘记密码？</button>");
+    wirePin(box, function () {
+      const r = api().unlockParent(val(box, "pin"));
+      if (r.ok) { done(); return; }
+      box.querySelector("[name=pin]").value = "";
+      showErr(box, r.why === "wait" ? "试错太多次了，请 " + r.wait + " 秒后再试。" : "密码不对" + (r.left ? "，还可以试 " + r.left + " 次。" : "。"));
+    }, "[data-pin-ok]");
+  }
+  function renderPinForgot() {
+    const box = parentShell("重设家长密码",
+      "<p class=\"pin-note\">请输入设密码时看到的<b>家长确认语</b>（四个字），再设一个新密码。已经交上来的答案和批改结果都会保留。</p>" +
+      "<label class=\"pin-l\">家长确认语<input class=\"pin-in pin-phrase-in\" name=\"phrase\" type=\"text\" autocomplete=\"off\"></label>" +
+      pinInput("pin", "新密码（4 位数字）") + pinInput("again", "再输入一次") +
+      "<p class=\"pin-err\" role=\"alert\"></p><button type=\"button\" class=\"btn-submit\" data-pin-reset=\"1\">重设密码</button>" +
+      "<button type=\"button\" class=\"pin-forgot\" data-pin-back=\"1\">← 我想起来了</button>");
+    wirePin(box, function () {
+      const r = api().resetPin(val(box, "phrase"), val(box, "pin"), val(box, "again"));
+      if (r.ok) { toast2("新的家长密码已经设好"); done(); } else showErr(box, WHY[r.why] || "没有设好，再试一次。");
+    }, "[data-pin-reset]");
+  }
+  function val(box, name) { const el = box.querySelector("[name=\"" + name + "\"]"); return el ? el.value.trim() : ""; }
+  function showErr(box, msg) { const el = box.querySelector(".pin-err"); if (el) el.textContent = msg; }
+  function toast2(msg) { const el = document.querySelector("#toast"); if (!el) return; el.textContent = msg; el.hidden = false; setTimeout(function () { el.hidden = true; }, 2200); }
+  function wirePin(box, submit, sel) {
+    const first = box.querySelector(".pin-in"); if (first) setTimeout(function () { first.focus(); }, 30);
+    box.onclick = function (e) {
+      if (e.target.dataset && e.target.dataset.close) { afterUnlock = null; closeModal(); return; }
+      if (e.target.closest(sel)) { submit(); return; }
+      if (e.target.closest("[data-pin-forgot]")) { renderPinForgot(); return; }
+      if (e.target.closest("[data-pin-back]")) { renderPinEnter(); return; }
+    };
+    box.onkeydown = function (e) { if (e.key === "Enter" && e.target.classList.contains("pin-in")) { e.preventDefault(); submit(); } };
+  }
+  function openParent(fn, why) {
+    const A = api(); if (!A) return;
+    afterUnlock = fn || null;
+    if (!A.hasPin()) renderPinSetup();
+    else if (!A.isParentUnlocked()) renderPinEnter(why);
+    else done();
+  }
+  window.openParentReview = function () { openParent(null); };
+  window.withParentPin = function (fn, label) {
+    openParent(function () { closeModal(); fn(); }, label ? "「" + label + "」需要家长密码。" : null);
+  };
+  document.addEventListener("visibilitychange", function () { if (document.hidden && api()) api().lockParent(); });
+
+  function enhancePracticeButton(id) {
+    const box = document.querySelector("#modal");
+    const prac = box && box.querySelector("#btn-practice");
+    if (!prac) return;
+    const t = DATA.topics.find(function (x) { return x.topic_id === id; });
+    if (!t) return;
+    const neu = prac.cloneNode(true);
+    prac.parentNode.replaceChild(neu, prac);
+    const qs = questionsFor(t);
+    if (!bank() || !qs.length) { neu.disabled = true; neu.textContent = bank() ? "这里还没有题目" : "题库还没有加载出来"; return; }
+    const open = qs.filter(function (q) { return q.mode === "parent"; }).length;
+    neu.disabled = false;
+    neu.innerHTML = "练习题<span class=\"btn-practice-count\">" + qs.length + " 道" + (open ? "（其中 " + open + " 道由家长批改）" : "") + "</span>";
+    neu.addEventListener("click", function () { renderPractice(t, null, 0, false); });
   }
 
   const origOpen = window.openModal;
   window.openModal = function (id) {
-    if (practiceKeyHandler) {
-      document.removeEventListener("keydown", practiceKeyHandler, true);
-      practiceKeyHandler = null;
-    }
-    origOpen(id);
-    enhancePracticeButton(id);
+    if (keyHandler) { document.removeEventListener("keydown", keyHandler, true); keyHandler = null; }
+    origOpen(id); enhancePracticeButton(id);
   };
-
   const origClose = window.closeModal;
   window.closeModal = function () {
-    if (practiceKeyHandler) {
-      document.removeEventListener("keydown", practiceKeyHandler, true);
-      practiceKeyHandler = null;
-    }
+    if (keyHandler) { document.removeEventListener("keydown", keyHandler, true); keyHandler = null; }
+    const box = document.querySelector("#modal"); if (box) box.onkeydown = null;
+    if (api()) api().lockParent(); // 家长确认 locks again whenever the window is closed
     origClose();
   };
 })();

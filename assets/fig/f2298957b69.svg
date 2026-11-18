@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 396" width="360" height="396" font-family="Arial, Helvetica, sans-serif">
+<rect x="4" y="4" width="352" height="388" rx="14" fill="#fffdf5" stroke="#2e7d32" stroke-width="4"/>
+<rect x="4" y="4" width="352" height="54" rx="14" fill="#2e7d32"/>
+<text x="180.0" y="40" text-anchor="middle" font-size="22" font-weight="bold" fill="#fff">GREEN FINGERS DAY</text>
+<text x="18" y="84" font-size="15" font-weight="bold" fill="#222">Learn to grow your own vegetables!</text>
+<text x="18" y="110" font-size="13" font-weight="normal" fill="#222">Date: Saturday, 14 March</text>
+<text x="18" y="136" font-size="13" font-weight="normal" fill="#222">Time: 9 a.m. to 12 noon</text>
+<text x="18" y="162" font-size="13" font-weight="normal" fill="#222">Place: Bukit Batok Community Garden</text>
+<text x="18" y="188" font-size="13" font-weight="normal" fill="#222">Adults: $8</text>
+<text x="18" y="214" font-size="13" font-weight="normal" fill="#222">Children (4 to 12 years old): $5</text>
+<text x="18" y="240" font-size="13" font-weight="normal" fill="#222">Children under 4: FREE</text>
+<text x="18" y="266" font-size="13" font-weight="normal" fill="#222">Every participant brings home a pot of chilli seedlings!</text>
+<text x="18" y="292" font-size="13" font-weight="normal" fill="#222">Wear covered shoes. Bring a water bottle.</text>
+<text x="18" y="318" font-size="13" font-weight="normal" fill="#222">Register at the Community Centre counter by 7 March.</text>
+<g transform="translate(302,334)"><path d="M8 30 L40 30 L35 52 L13 52 Z" fill="#a1542a"/><path d="M24 30 C24 18 14 12 6 12 C10 22 16 26 24 30" fill="#43a047"/><path d="M24 30 C24 16 34 8 44 8 C40 20 32 26 24 30" fill="#66bb6a"/></g>
+</svg>

@@ -199,6 +199,7 @@ body.modal-open{overflow:hidden}
 <body>
   <div class="save-bar" id="save-bar">
     <button type="button" class="primary" id="btn-save">保存进度</button>
+    <button type="button" id="btn-parent">家长确认<span class="btn-parent-badge" id="parent-badge" hidden>0</span></button>
     <button type="button" id="btn-export">导出进度</button>
     <button type="button" id="btn-import">导入进度</button>
     <input id="import-file" class="sr-only" type="file" accept="application/json,.json" aria-label="选择进度文件">
@@ -221,7 +222,7 @@ body.modal-open{overflow:hidden}
   </main>
   <footer class="page-foot">
     <span>知识点名称来自新加坡小学数学、科学、英文和华文大纲。</span>
-    <span>进度保存在这台设备的浏览器里。</span>
+    <span>练习题都是为安安原创的。进度保存在这台设备的浏览器里，每做一题自动保存。</span>
   </footer>
   <div id="modal" hidden></div>
   <div id="toast" class="toast" hidden role="status" aria-live="polite"></div>
@@ -244,11 +245,9 @@ window.GARDEN_DATA = {
     "is_demo": false,
     "disclaimer": "",
     "timezone": "Asia/Singapore",
-    "as_of": "2026-11-16",
+    "as_of": "2026-11-18",
     "as_of_note": "进度保存在这台设备的浏览器里，也可以导出备份。",
-    "kb_source": "kb/topics.csv",
-    "assessment_source": "kb/school_assessment_2026_P4.md",
-    "assessment_source_pdf": "sources/school/P4_Assessment_Plan_2026_Sem2.pdf"
+    "bank": "original"
   },
   "student": {
     "student_id": "stu-anan",
@@ -264,7 +263,9 @@ window.GARDEN_DATA = {
       "name_en": "Mathematics",
       "syllabus_subject": "Mathematics",
       "coming_soon": false,
-      "accent": "#4c6fff"
+      "accent": "#4c6fff",
+      "note": "这些都是为安安原创的练习题，每道题都有分步讲解。",
+      "bank_subject": "Mathematics"
     },
     {
       "subject_id": "science",
@@ -272,7 +273,9 @@ window.GARDEN_DATA = {
       "name_en": "Science",
       "syllabus_subject": "Science",
       "coming_soon": false,
-      "accent": "#1ea36a"
+      "accent": "#1ea36a",
+      "note": "原创练习题，图都是按题目画的。开放题写好以后，由家长对照参考答案批改。",
+      "bank_subject": "Science"
     },
     {
       "subject_id": "english",
@@ -282,7 +285,7 @@ window.GARDEN_DATA = {
       "coming_soon": false,
       "accent": "#7b6bb0",
       "bank_subject": "English",
-      "note": "这些都是已经核对过的学校试卷真题。有短文或图表的题目，会先给你看材料。"
+      "note": "Original practice questions with step-by-step explanations. 开放题由家长批改。"
     },
     {
       "subject_id": "higher_chinese",
@@ -292,7 +295,7 @@ window.GARDEN_DATA = {
       "coming_soon": false,
       "accent": "#c45a10",
       "bank_subject": "Higher Chinese",
-      "note": "按试卷题型练习。欢乐伙伴第1–16课的课文生字还没有对上这些校卷真题。"
+      "note": "原创练习题，短文和通知都是新写的。开放题由家长批改。"
     },
     {
       "subject_id": "chinese",
@@ -302,7 +305,7 @@ window.GARDEN_DATA = {
       "coming_soon": false,
       "accent": "#b53d4a",
       "bank_subject": "Chinese",
-      "note": "按试卷题型练习。欢乐伙伴第1–16课的课文生字还没有对上这些校卷真题。"
+      "note": "原创练习题，短文和通知都是新写的。开放题由家长批改。"
     }
   ],
   "topics": [
@@ -352,10 +355,7 @@ window.GARDEN_DATA = {
           "text_zh": "使用约等号 ≈"
         }
       ],
-      "source": {
-        "file": "primary/P_Mathematics_2021_updated_Oct2025.pdf",
-        "page": "37"
-      }
+      "bank_subject": "Mathematics"
     },
     {
       "topic_id": "P4-MA-07",
@@ -398,10 +398,7 @@ window.GARDEN_DATA = {
           "text_zh": "求两个 1 位数的公倍数"
         }
       ],
-      "source": {
-        "file": "primary/P_Mathematics_2021_updated_Oct2025.pdf",
-        "page": "37"
-      }
+      "bank_subject": "Mathematics"
     },
     {
       "topic_id": "P4-MA-12",
@@ -429,10 +426,7 @@ window.GARDEN_DATA = {
           "text_zh": "除法算法：最多 4 位数除以 1 位数"
         }
       ],
-      "source": {
-        "file": "primary/P_Mathematics_2021_updated_Oct2025.pdf",
-        "page": "37"
-      }
+      "bank_subject": "Mathematics"
     },
     {
       "topic_id": "P4-MA-14",
@@ -455,10 +449,7 @@ window.GARDEN_DATA = {
           "text_zh": "带分数、假分数及其互化"
         }
       ],
-      "source": {
-        "file": "primary/P_Mathematics_2021_updated_Oct2025.pdf",
-        "page": "37"
-      }
+      "bank_subject": "Mathematics"
     },
     {
       "topic_id": "P4-MA-15",
@@ -481,10 +472,7 @@ window.GARDEN_DATA = {
           "text_zh": "把分数理解为一个集合中的一部分"
         }
       ],
-      "source": {
-        "file": "primary/P_Mathematics_2021_updated_Oct2025.pdf",
-        "page": "37"
-      }
+      "bank_subject": "Mathematics"
     },
     {
       "topic_id": "P4-MA-16",
@@ -507,10 +495,7 @@ window.GARDEN_DATA = {
           "text_zh": "加减分母不超过 12、且最多两个不同分母的分数"
         }
       ],
-      "source": {
-        "file": "primary/P_Mathematics_2021_updated_Oct2025.pdf",
-        "page": "37"
-      }
+      "bank_subject": "Mathematics"
     },
     {
       "topic_id": "P4-MA-17",
@@ -553,10 +538,7 @@ window.GARDEN_DATA = {
           "text_zh": "四舍五入到整数、1 位或 2 位小数"
         }
       ],
-      "source": {
-        "file": "primary/P_Mathematics_2021_updated_Oct2025.pdf",
-        "page": "38"
-      }
+      "bank_subject": "Mathematics"
     },
     {
       "topic_id": "P4-MA-22",
@@ -579,10 +561,7 @@ window.GARDEN_DATA = {
           "text_zh": "加减最多 2 位小数"
         }
       ],
-      "source": {
-        "file": "primary/P_Mathematics_2021_updated_Oct2025.pdf",
-        "page": "38"
-      }
+      "bank_subject": "Mathematics"
     },
     {
       "topic_id": "P4-MA-23",
@@ -615,10 +594,7 @@ window.GARDEN_DATA = {
           "text_zh": "把答案四舍五入到指定精确度"
         }
       ],
-      "source": {
-        "file": "primary/P_Mathematics_2021_updated_Oct2025.pdf",
-        "page": "38"
-      }
+      "bank_subject": "Mathematics"
     },
     {
       "topic_id": "P4-MA-26",
@@ -651,10 +627,7 @@ window.GARDEN_DATA = {
           "text_zh": "求由长方形和正方形组成的组合图形的面积与周长"
         }
       ],
-      "source": {
-        "file": "primary/P_Mathematics_2021_updated_Oct2025.pdf",
-        "page": "39"
-      }
+      "bank_subject": "Mathematics"
     },
     {
       "topic_id": "P4-MA-29",
@@ -687,10 +660,7 @@ window.GARDEN_DATA = {
           "text_zh": "画出指定大小的角"
         }
       ],
-      "source": {
-        "file": "primary/P_Mathematics_2021_updated_Oct2025.pdf",
-        "page": "39"
-      }
+      "bank_subject": "Mathematics"
     },
     {
       "topic_id": "P4-MA-32",
@@ -718,10 +688,7 @@ window.GARDEN_DATA = {
           "text_zh": "画长方形和正方形"
         }
       ],
-      "source": {
-        "file": "primary/P_Mathematics_2021_updated_Oct2025.pdf",
-        "page": "39"
-      }
+      "bank_subject": "Mathematics"
     },
     {
       "topic_id": "P4-MA-34",
@@ -754,10 +721,7 @@ window.GARDEN_DATA = {
           "text_zh": "在方格纸上补全对称图形"
         }
       ],
-      "source": {
-        "file": "primary/P_Mathematics_2021_updated_Oct2025.pdf",
-        "page": "39"
-      }
+      "bank_subject": "Mathematics"
     },
     {
       "topic_id": "P4-MA-37",
@@ -795,10 +759,7 @@ window.GARDEN_DATA = {
           "text_zh": "根据展开图判断能折成的立体"
         }
       ],
-      "source": {
-        "file": "primary/P_Mathematics_2021_updated_Oct2025.pdf",
-        "page": "39"
-      }
+      "bank_subject": "Mathematics"
     },
     {
       "topic_id": "P4-MA-41",
@@ -826,10 +787,7 @@ window.GARDEN_DATA = {
           "text_zh": "读懂并解释表格、折线图和饼图中的数据"
         }
       ],
-      "source": {
-        "file": "primary/P_Mathematics_2021_updated_Oct2025.pdf",
-        "page": "40"
-      }
+      "bank_subject": "Mathematics"
     },
     {
       "topic_id": "P4-SC-01",
@@ -862,10 +820,7 @@ window.GARDEN_DATA = {
           "text_zh": "实践：用合适仪器测量质量和体积"
         }
       ],
-      "source": {
-        "file": "primary/P_Science_P3-P6_updated_Jan2026.pdf",
-        "page": "49"
-      }
+      "bank_subject": "Science"
     },
     {
       "topic_id": "P4-SC-04",
@@ -884,7 +839,7 @@ window.GARDEN_DATA = {
       "learning_outcomes": [
         {
           "topic_id": "P4-SC-04",
-          "text_en": "Identify the human systems in the body and state their functions (digestive, respiratory, circulatory, skeletal and muscular). (Note: This learning outcome introduces students to an overview of human systems in the body. Detailed knowledge of the muscular and skeletal systems (such as names of the bones/muscles in the body and descriptions of how they work) are not required.)",
+          "text_en": "Identify the human systems in the body and state their functions (digestive, respiratory, circulatory, skeletal and muscular).",
           "text_zh": "辨认人体系统并说明功能（消化、呼吸、循环、骨骼、肌肉）"
         },
         {
@@ -893,10 +848,7 @@ window.GARDEN_DATA = {
           "text_zh": "辨认消化系统的部分（口、食道、胃、小肠、大肠）并说明功能"
         }
       ],
-      "source": {
-        "file": "primary/P_Science_P3-P6_updated_Jan2026.pdf",
-        "page": "54"
-      }
+      "bank_subject": "Science"
     },
     {
       "topic_id": "P4-SC-06",
@@ -915,7 +867,7 @@ window.GARDEN_DATA = {
       "learning_outcomes": [
         {
           "topic_id": "P4-SC-06",
-          "text_en": "Identify the different parts of plants and state their functions.; Leaf; Stem; Root (Note: Food-carrying and water-carrying tubes in the plant transport system are introduced in the topic of Plant System (Respiratory and Circulatory Systems) in P5.)",
+          "text_en": "Identify the different parts of plants and state their functions.; Leaf; Stem; Root",
           "text_zh": "辨认植物不同部分并说明功能（叶、茎、根）"
         },
         {
@@ -924,10 +876,7 @@ window.GARDEN_DATA = {
           "text_zh": "实践：观察植物的部分"
         }
       ],
-      "source": {
-        "file": "primary/P_Science_P3-P6_updated_Jan2026.pdf",
-        "page": "57"
-      }
+      "bank_subject": "Science"
     },
     {
       "topic_id": "P4-SC-08",
@@ -946,7 +895,7 @@ window.GARDEN_DATA = {
       "learning_outcomes": [
         {
           "topic_id": "P4-SC-08",
-          "text_en": "Recognise that an object can be seen when it reflects light or when it is a source of light. (Note: The law of reflection is not required.)",
+          "text_en": "Recognise that an object can be seen when it reflects light or when it is a source of light.",
           "text_zh": "认识物体反射光或本身发光时才能被看见"
         },
         {
@@ -956,14 +905,11 @@ window.GARDEN_DATA = {
         },
         {
           "topic_id": "P4-SC-10",
-          "text_en": "Practice: Investigate the variables that affect shadows formed.; Shape, size and position of object(s); Distance between light source-object and object-screen (Note: The use of specific terms (transparent, translucent, opaque) is not required.)",
+          "text_en": "Practice: Investigate the variables that affect shadows formed.; Shape, size and position of object(s); Distance between light source-object and object-screen",
           "text_zh": "实践：探究影响影子的变量（形状、大小、位置、距离）"
         }
       ],
-      "source": {
-        "file": "primary/P_Science_P3-P6_updated_Jan2026.pdf",
-        "page": "76"
-      }
+      "bank_subject": "Science"
     },
     {
       "topic_id": "P4-SC-11",
@@ -1022,19 +968,158 @@ window.GARDEN_DATA = {
         },
         {
           "topic_id": "P4-SC-19",
-          "text_en": "Identify good and poor conductors of heat.; Good conductors: metals; Poor conductors: wood, plastics, air, rubber (Note: Recall of the rate of heat transfer of specific materials (such as different types of metals) is not required.)",
+          "text_en": "Identify good and poor conductors of heat.; Good conductors: metals; Poor conductors: wood, plastics, air, rubber",
           "text_zh": "辨认热的良导体和不良导体"
         }
       ],
-      "source": {
-        "file": "primary/P_Science_P3-P6_updated_Jan2026.pdf",
-        "page": "77"
-      }
+      "bank_subject": "Science"
+    },
+    {
+      "topic_id": "P3-SC-01",
+      "subject_id": "science",
+      "strand": "三年级复习",
+      "strand_zh": "三年级复习",
+      "syllabus_topic": "Review: Living and non-living things",
+      "name_en": "Review: Living and non-living things",
+      "name_zh": "复习：生物与非生物",
+      "short": "生物与非生物",
+      "group": "复习",
+      "flower": "daisy",
+      "status": "todo",
+      "stars": 0,
+      "strength": null,
+      "bank_subject": "Science",
+      "learning_outcomes": [
+        {
+          "topic_id": "P3-SC-01",
+          "text_en": "生物的特征",
+          "text_zh": "生物的特征"
+        },
+        {
+          "topic_id": "P3-SC-02",
+          "text_en": "生物的大类",
+          "text_zh": "生物的大类"
+        },
+        {
+          "topic_id": "P3-SC-03",
+          "text_en": "观察并推断生物和非生物",
+          "text_zh": "观察并推断生物和非生物"
+        },
+        {
+          "topic_id": "P3-SC-04",
+          "text_en": "把生物分类",
+          "text_zh": "把生物分类"
+        }
+      ]
+    },
+    {
+      "topic_id": "P3-SC-05",
+      "subject_id": "science",
+      "strand": "三年级复习",
+      "strand_zh": "三年级复习",
+      "syllabus_topic": "Review: Materials",
+      "name_en": "Review: Materials",
+      "name_zh": "复习：材料",
+      "short": "材料",
+      "group": "复习",
+      "flower": "fern",
+      "status": "todo",
+      "stars": 0,
+      "strength": null,
+      "bank_subject": "Science",
+      "learning_outcomes": [
+        {
+          "topic_id": "P3-SC-05",
+          "text_en": "材料的种类和用途",
+          "text_zh": "材料的种类和用途"
+        },
+        {
+          "topic_id": "P3-SC-06",
+          "text_en": "比较材料的性质",
+          "text_zh": "比较材料的性质"
+        }
+      ]
+    },
+    {
+      "topic_id": "P3-SC-07",
+      "subject_id": "science",
+      "strand": "三年级复习",
+      "strand_zh": "三年级复习",
+      "syllabus_topic": "Review: Life cycles",
+      "name_en": "Review: Life cycles",
+      "name_zh": "复习：生命周期",
+      "short": "生命周期",
+      "group": "复习",
+      "flower": "lily",
+      "status": "todo",
+      "stars": 0,
+      "strength": null,
+      "bank_subject": "Science",
+      "learning_outcomes": [
+        {
+          "topic_id": "P3-SC-07",
+          "text_en": "不同生物有不同的生命周期",
+          "text_zh": "不同生物有不同的生命周期"
+        },
+        {
+          "topic_id": "P3-SC-08",
+          "text_en": "植物的生命周期",
+          "text_zh": "植物的生命周期"
+        },
+        {
+          "topic_id": "P3-SC-09",
+          "text_en": "动物的生命周期",
+          "text_zh": "动物的生命周期"
+        }
+      ]
+    },
+    {
+      "topic_id": "P3-SC-10",
+      "subject_id": "science",
+      "strand": "三年级复习",
+      "strand_zh": "三年级复习",
+      "syllabus_topic": "Review: Magnets",
+      "name_en": "Review: Magnets",
+      "name_zh": "复习：磁铁",
+      "short": "磁铁",
+      "group": "复习",
+      "flower": "clover",
+      "status": "todo",
+      "stars": 0,
+      "strength": null,
+      "bank_subject": "Science",
+      "learning_outcomes": [
+        {
+          "topic_id": "P3-SC-10",
+          "text_en": "磁铁能推也能拉",
+          "text_zh": "磁铁能推也能拉"
+        },
+        {
+          "topic_id": "P3-SC-11",
+          "text_en": "磁铁的特性",
+          "text_zh": "磁铁的特性"
+        },
+        {
+          "topic_id": "P3-SC-12",
+          "text_en": "磁铁的用途",
+          "text_zh": "磁铁的用途"
+        },
+        {
+          "topic_id": "P3-SC-13",
+          "text_en": "磁性材料和非磁性材料",
+          "text_zh": "磁性材料和非磁性材料"
+        },
+        {
+          "topic_id": "P3-SC-14",
+          "text_en": "制作磁铁",
+          "text_zh": "制作磁铁"
+        }
+      ]
     },
     {
       "topic_id": "P4-EN-01",
       "subject_id": "english",
-      "strand": "GRAMMAR (Paper 2: Grammar MCQ / Grammar Cloze / Editing)",
+      "strand": "GRAMMAR",
       "strand_zh": "文法",
       "syllabus_topic": "Tenses — simple present / past / future, present & past continuous",
       "name_en": "Tenses",
@@ -1057,16 +1142,12 @@ window.GARDEN_DATA = {
           "text_en": "Tenses — present perfect / past perfect",
           "text_zh": "现在完成时和过去完成时"
         }
-      ],
-      "source": {
-        "file": "kb/topics.csv",
-        "page": ""
-      }
+      ]
     },
     {
       "topic_id": "P4-EN-03",
       "subject_id": "english",
-      "strand": "GRAMMAR (Paper 2: Grammar MCQ / Grammar Cloze / Editing)",
+      "strand": "GRAMMAR",
       "strand_zh": "文法",
       "syllabus_topic": "Subject–verb agreement",
       "name_en": "Subject–verb agreement",
@@ -1084,23 +1165,19 @@ window.GARDEN_DATA = {
           "text_en": "Subject–verb agreement",
           "text_zh": "主谓一致"
         }
-      ],
-      "source": {
-        "file": "kb/topics.csv",
-        "page": ""
-      }
+      ]
     },
     {
       "topic_id": "P4-EN-04",
       "subject_id": "english",
-      "strand": "GRAMMAR (Paper 2: Grammar MCQ / Grammar Cloze / Editing)",
+      "strand": "文法",
       "strand_zh": "文法",
-      "syllabus_topic": "Pronouns — personal, possessive, reflexive, indefinite",
+      "syllabus_topic": "Pronouns",
       "name_en": "Pronouns",
       "name_zh": "代词",
       "short": "代词",
       "group": "文法",
-      "flower": "tulip",
+      "flower": "marigold",
       "status": "todo",
       "stars": 0,
       "strength": null,
@@ -1108,24 +1185,15 @@ window.GARDEN_DATA = {
       "learning_outcomes": [
         {
           "topic_id": "P4-EN-04",
-          "text_en": "Pronouns — personal, possessive, reflexive, indefinite",
-          "text_zh": "人称、物主和反身代词"
-        },
-        {
-          "topic_id": "P4-EN-05",
-          "text_en": "Relative pronouns",
-          "text_zh": "关系代词"
+          "text_en": "人称、物主、反身和不定代词",
+          "text_zh": "人称、物主、反身和不定代词"
         }
-      ],
-      "source": {
-        "file": "kb/topics.csv",
-        "page": ""
-      }
+      ]
     },
     {
       "topic_id": "P4-EN-06",
       "subject_id": "english",
-      "strand": "GRAMMAR (Paper 2: Grammar MCQ / Grammar Cloze / Editing)",
+      "strand": "GRAMMAR",
       "strand_zh": "文法",
       "syllabus_topic": "Prepositions",
       "name_en": "Prepositions and conjunctions",
@@ -1148,16 +1216,12 @@ window.GARDEN_DATA = {
           "text_en": "Conjunctions / connectors",
           "text_zh": "连词"
         }
-      ],
-      "source": {
-        "file": "kb/topics.csv",
-        "page": ""
-      }
+      ]
     },
     {
       "topic_id": "P4-EN-10",
       "subject_id": "english",
-      "strand": "GRAMMAR (Paper 2: Grammar MCQ / Grammar Cloze / Editing)",
+      "strand": "GRAMMAR",
       "strand_zh": "文法",
       "syllabus_topic": "Nouns & quantifiers — countable / uncountable",
       "name_en": "Nouns, quantifiers and articles",
@@ -1180,16 +1244,12 @@ window.GARDEN_DATA = {
           "text_en": "Articles & determiners",
           "text_zh": "冠词"
         }
-      ],
-      "source": {
-        "file": "kb/topics.csv",
-        "page": ""
-      }
+      ]
     },
     {
       "topic_id": "P4-EN-12",
       "subject_id": "english",
-      "strand": "GRAMMAR (Paper 2: Grammar MCQ / Grammar Cloze / Editing)",
+      "strand": "GRAMMAR",
       "strand_zh": "文法",
       "syllabus_topic": "Adjectives & adverbs",
       "name_en": "Adjectives and adverbs",
@@ -1212,16 +1272,12 @@ window.GARDEN_DATA = {
           "text_en": "Word forms / word class",
           "text_zh": "词性转换"
         }
-      ],
-      "source": {
-        "file": "kb/topics.csv",
-        "page": ""
-      }
+      ]
     },
     {
       "topic_id": "P4-EN-13",
       "subject_id": "english",
-      "strand": "GRAMMAR (Paper 2: Grammar MCQ / Grammar Cloze / Editing)",
+      "strand": "GRAMMAR",
       "strand_zh": "文法",
       "syllabus_topic": "Gerunds & infinitives",
       "name_en": "Other verb patterns",
@@ -1259,16 +1315,12 @@ window.GARDEN_DATA = {
           "text_en": "Direct & reported speech",
           "text_zh": "直接引语和间接引语"
         }
-      ],
-      "source": {
-        "file": "kb/topics.csv",
-        "page": ""
-      }
+      ]
     },
     {
       "topic_id": "P4-EN-19",
       "subject_id": "english",
-      "strand": "VOCABULARY (Paper 2: Vocabulary MCQ / Vocabulary Cloze)",
+      "strand": "VOCABULARY",
       "strand_zh": "词汇",
       "syllabus_topic": "Vocabulary MCQ — word meaning in context",
       "name_en": "Vocabulary",
@@ -1296,21 +1348,17 @@ window.GARDEN_DATA = {
           "text_en": "Synonyms, antonyms & words in context",
           "text_zh": "近义词、反义词和语境"
         }
-      ],
-      "source": {
-        "file": "kb/topics.csv",
-        "page": ""
-      }
+      ]
     },
     {
       "topic_id": "P4-EN-22",
       "subject_id": "english",
-      "strand": "CLOZE & EDITING (Paper 2)",
+      "strand": "填空与改错",
       "strand_zh": "填空与改错",
-      "syllabus_topic": "Grammar cloze — word box",
-      "name_en": "Grammar cloze",
+      "syllabus_topic": "Grammar and comprehension cloze",
+      "name_en": "Grammar and comprehension cloze",
       "name_zh": "文法填空",
-      "short": "文法填空",
+      "short": "填空",
       "group": "填空与改错",
       "flower": "water",
       "status": "todo",
@@ -1320,24 +1368,25 @@ window.GARDEN_DATA = {
       "learning_outcomes": [
         {
           "topic_id": "P4-EN-22",
-          "text_en": "Grammar cloze — word box",
-          "text_zh": "文法填空（词框）"
+          "text_en": "词框文法填空",
+          "text_zh": "词框文法填空"
         },
         {
           "topic_id": "P4-EN-23",
-          "text_en": "Grammar cloze — bracket options / verb forms",
-          "text_zh": "文法填空（括号）"
+          "text_en": "括号选词填空",
+          "text_zh": "括号选词填空"
+        },
+        {
+          "topic_id": "P4-EN-26",
+          "text_en": "阅读填空（自己填词）",
+          "text_zh": "阅读填空（自己填词）"
         }
-      ],
-      "source": {
-        "file": "kb/topics.csv",
-        "page": ""
-      }
+      ]
     },
     {
       "topic_id": "P4-EN-24",
       "subject_id": "english",
-      "strand": "CLOZE & EDITING (Paper 2)",
+      "strand": "CLOZE & EDITING",
       "strand_zh": "填空与改错",
       "syllabus_topic": "Editing — spelling",
       "name_en": "Editing",
@@ -1360,43 +1409,12 @@ window.GARDEN_DATA = {
           "text_en": "Editing — grammar",
           "text_zh": "改错（文法）"
         }
-      ],
-      "source": {
-        "file": "kb/topics.csv",
-        "page": ""
-      }
-    },
-    {
-      "topic_id": "P4-EN-26",
-      "subject_id": "english",
-      "strand": "CLOZE & EDITING (Paper 2)",
-      "strand_zh": "填空与改错",
-      "syllabus_topic": "Comprehension cloze (open)",
-      "name_en": "Comprehension cloze",
-      "name_zh": "理解填空",
-      "short": "理解填空",
-      "group": "填空与改错",
-      "flower": "marigold",
-      "status": "todo",
-      "stars": 0,
-      "strength": null,
-      "bank_subject": "English",
-      "learning_outcomes": [
-        {
-          "topic_id": "P4-EN-26",
-          "text_en": "Comprehension cloze (open)",
-          "text_zh": "理解填空"
-        }
-      ],
-      "source": {
-        "file": "kb/topics.csv",
-        "page": ""
-      }
+      ]
     },
     {
       "topic_id": "P4-EN-27",
       "subject_id": "english",
-      "strand": "SYNTHESIS & TRANSFORMATION (Paper 2)",
+      "strand": "SYNTHESIS & TRANSFORMATION",
       "strand_zh": "造句",
       "syllabus_topic": "Combining with connectors",
       "name_en": "Synthesis and transformation",
@@ -1424,16 +1442,12 @@ window.GARDEN_DATA = {
           "text_en": "Sentence transformation",
           "text_zh": "句型转换"
         }
-      ],
-      "source": {
-        "file": "kb/topics.csv",
-        "page": ""
-      }
+      ]
     },
     {
       "topic_id": "P4-EN-30",
       "subject_id": "english",
-      "strand": "READING COMPREHENSION (Paper 2)",
+      "strand": "READING COMPREHENSION",
       "strand_zh": "阅读",
       "syllabus_topic": "Visual text comprehension (MCQ)",
       "name_en": "Visual text",
@@ -1451,16 +1465,12 @@ window.GARDEN_DATA = {
           "text_en": "Visual text comprehension (MCQ)",
           "text_zh": "图画理解"
         }
-      ],
-      "source": {
-        "file": "kb/topics.csv",
-        "page": ""
-      }
+      ]
     },
     {
       "topic_id": "P4-EN-31",
       "subject_id": "english",
-      "strand": "READING COMPREHENSION (Paper 2)",
+      "strand": "READING COMPREHENSION",
       "strand_zh": "阅读",
       "syllabus_topic": "Comprehension — literal (find information)",
       "name_en": "Reading comprehension",
@@ -1493,16 +1503,12 @@ window.GARDEN_DATA = {
           "text_en": "Comprehension — true/false with reason, sequencing, tick boxes",
           "text_zh": "判断、排序和勾选"
         }
-      ],
-      "source": {
-        "file": "kb/topics.csv",
-        "page": ""
-      }
+      ]
     },
     {
       "topic_id": "P4-HCL-17",
       "subject_id": "higher_chinese",
-      "strand": "语文知识与应用（试卷二）",
+      "strand": "语文知识与应用",
       "strand_zh": "语文应用",
       "syllabus_topic": "辨字（同音/形近字）",
       "name_en": "Choose the correct character",
@@ -1520,16 +1526,12 @@ window.GARDEN_DATA = {
           "text_en": "辨字（同音/形近字）",
           "text_zh": "辨字（同音/形近字）"
         }
-      ],
-      "source": {
-        "file": "kb/topics.csv",
-        "page": ""
-      }
+      ]
     },
     {
       "topic_id": "P4-HCL-18",
       "subject_id": "higher_chinese",
-      "strand": "语文知识与应用（试卷二）",
+      "strand": "语文知识与应用",
       "strand_zh": "语文应用",
       "syllabus_topic": "词语选择",
       "name_en": "Choose the correct word",
@@ -1547,16 +1549,12 @@ window.GARDEN_DATA = {
           "text_en": "词语选择",
           "text_zh": "词语选择"
         }
-      ],
-      "source": {
-        "file": "kb/topics.csv",
-        "page": ""
-      }
+      ]
     },
     {
       "topic_id": "P4-HCL-19",
       "subject_id": "higher_chinese",
-      "strand": "语文知识与应用（试卷二）",
+      "strand": "语文知识与应用",
       "strand_zh": "语文应用",
       "syllabus_topic": "词语搭配",
       "name_en": "Collocations",
@@ -1574,16 +1572,12 @@ window.GARDEN_DATA = {
           "text_en": "词语搭配",
           "text_zh": "词语搭配"
         }
-      ],
-      "source": {
-        "file": "kb/topics.csv",
-        "page": ""
-      }
+      ]
     },
     {
       "topic_id": "P4-HCL-20",
       "subject_id": "higher_chinese",
-      "strand": "语文知识与应用（试卷二）",
+      "strand": "语文知识与应用",
       "strand_zh": "语文应用",
       "syllabus_topic": "完成句子（关联词与句子衔接）",
       "name_en": "Complete the sentence",
@@ -1601,16 +1595,12 @@ window.GARDEN_DATA = {
           "text_en": "完成句子（关联词与句子衔接）",
           "text_zh": "完成句子（关联词与句子衔接）"
         }
-      ],
-      "source": {
-        "file": "kb/topics.csv",
-        "page": ""
-      }
+      ]
     },
     {
       "topic_id": "P4-HCL-21",
       "subject_id": "higher_chinese",
-      "strand": "语文知识与应用（试卷二）",
+      "strand": "语文知识与应用",
       "strand_zh": "语文应用",
       "syllabus_topic": "字词改正（错别字）",
       "name_en": "Correct the character",
@@ -1628,16 +1618,12 @@ window.GARDEN_DATA = {
           "text_en": "字词改正（错别字）",
           "text_zh": "字词改正（错别字）"
         }
-      ],
-      "source": {
-        "file": "kb/topics.csv",
-        "page": ""
-      }
+      ]
     },
     {
       "topic_id": "P4-HCL-22",
       "subject_id": "higher_chinese",
-      "strand": "语文知识与应用（试卷二）",
+      "strand": "语文知识与应用",
       "strand_zh": "语文应用",
       "syllabus_topic": "短文填空",
       "name_en": "Passage cloze",
@@ -1655,23 +1641,19 @@ window.GARDEN_DATA = {
           "text_en": "短文填空",
           "text_zh": "短文填空"
         }
-      ],
-      "source": {
-        "file": "kb/topics.csv",
-        "page": ""
-      }
+      ]
     },
     {
       "topic_id": "P4-HCL-23",
       "subject_id": "higher_chinese",
-      "strand": "语文知识与应用（试卷二）",
+      "strand": "语文应用",
       "strand_zh": "语文应用",
-      "syllabus_topic": "汉语拼音",
+      "syllabus_topic": "Hanyu Pinyin",
       "name_en": "Hanyu Pinyin",
       "name_zh": "汉语拼音",
       "short": "拼音",
       "group": "语文应用",
-      "flower": "tree",
+      "flower": "tulip",
       "status": "todo",
       "stars": 0,
       "strength": null,
@@ -1679,19 +1661,15 @@ window.GARDEN_DATA = {
       "learning_outcomes": [
         {
           "topic_id": "P4-CL-23",
-          "text_en": "汉语拼音",
-          "text_zh": "汉语拼音"
+          "text_en": "看词语选拼音",
+          "text_zh": "看词语选拼音"
         }
-      ],
-      "source": {
-        "file": "kb/topics.csv",
-        "page": ""
-      }
+      ]
     },
     {
       "topic_id": "P4-HCL-25",
       "subject_id": "higher_chinese",
-      "strand": "阅读理解（试卷二）",
+      "strand": "阅读理解",
       "strand_zh": "阅读",
       "syllabus_topic": "阅读理解一：实用文（广告/通知/书信）选择题",
       "name_en": "Practical text comprehension",
@@ -1709,16 +1687,12 @@ window.GARDEN_DATA = {
           "text_en": "阅读理解一：实用文（广告/通知/书信）选择题",
           "text_zh": "阅读理解一：实用文（广告/通知/书信）选择题"
         }
-      ],
-      "source": {
-        "file": "kb/topics.csv",
-        "page": ""
-      }
+      ]
     },
     {
       "topic_id": "P4-HCL-26",
       "subject_id": "higher_chinese",
-      "strand": "阅读理解（试卷二）",
+      "strand": "阅读理解",
       "strand_zh": "阅读",
       "syllabus_topic": "阅读理解二：找词语（词义）",
       "name_en": "Passage comprehension",
@@ -1751,16 +1725,35 @@ window.GARDEN_DATA = {
           "text_en": "阅读理解二：人物看法与道理",
           "text_zh": "阅读理解二：人物看法与道理"
         }
-      ],
-      "source": {
-        "file": "kb/topics.csv",
-        "page": ""
-      }
+      ]
+    },
+    {
+      "topic_id": "P4-HCL-30",
+      "subject_id": "higher_chinese",
+      "strand": "写作",
+      "strand_zh": "写作",
+      "syllabus_topic": "Notes and emails",
+      "name_en": "Notes and emails",
+      "name_zh": "书面互动（便条、电邮）",
+      "short": "书面互动",
+      "group": "写作",
+      "flower": "clover",
+      "status": "todo",
+      "stars": 0,
+      "strength": null,
+      "bank_subject": "Higher Chinese",
+      "learning_outcomes": [
+        {
+          "topic_id": "P4-CL-30",
+          "text_en": "按要求写便条或电邮，交代日期、时间、地点",
+          "text_zh": "按要求写便条或电邮，交代日期、时间、地点"
+        }
+      ]
     },
     {
       "topic_id": "P4-CL-17",
       "subject_id": "chinese",
-      "strand": "语文知识与应用（试卷二）",
+      "strand": "语文知识与应用",
       "strand_zh": "语文应用",
       "syllabus_topic": "辨字（同音/形近字）",
       "name_en": "Choose the correct character",
@@ -1778,16 +1771,12 @@ window.GARDEN_DATA = {
           "text_en": "辨字（同音/形近字）",
           "text_zh": "辨字（同音/形近字）"
         }
-      ],
-      "source": {
-        "file": "kb/topics.csv",
-        "page": ""
-      }
+      ]
     },
     {
       "topic_id": "P4-CL-18",
       "subject_id": "chinese",
-      "strand": "语文知识与应用（试卷二）",
+      "strand": "语文知识与应用",
       "strand_zh": "语文应用",
       "syllabus_topic": "词语选择",
       "name_en": "Choose the correct word",
@@ -1805,16 +1794,12 @@ window.GARDEN_DATA = {
           "text_en": "词语选择",
           "text_zh": "词语选择"
         }
-      ],
-      "source": {
-        "file": "kb/topics.csv",
-        "page": ""
-      }
+      ]
     },
     {
       "topic_id": "P4-CL-19",
       "subject_id": "chinese",
-      "strand": "语文知识与应用（试卷二）",
+      "strand": "语文知识与应用",
       "strand_zh": "语文应用",
       "syllabus_topic": "词语搭配",
       "name_en": "Collocations",
@@ -1832,23 +1817,19 @@ window.GARDEN_DATA = {
           "text_en": "词语搭配",
           "text_zh": "词语搭配"
         }
-      ],
-      "source": {
-        "file": "kb/topics.csv",
-        "page": ""
-      }
+      ]
     },
     {
       "topic_id": "P4-CL-20",
       "subject_id": "chinese",
-      "strand": "语文知识与应用（试卷二）",
+      "strand": "语文应用",
       "strand_zh": "语文应用",
-      "syllabus_topic": "完成句子（关联词与句子衔接）",
+      "syllabus_topic": "Complete the sentence",
       "name_en": "Complete the sentence",
-      "name_zh": "完成句子",
-      "short": "完成句子",
+      "name_zh": "完成句子（关联词）",
+      "short": "关联词",
       "group": "语文应用",
-      "flower": "tree",
+      "flower": "daisy",
       "status": "todo",
       "stars": 0,
       "strength": null,
@@ -1856,19 +1837,15 @@ window.GARDEN_DATA = {
       "learning_outcomes": [
         {
           "topic_id": "P4-CL-20",
-          "text_en": "完成句子（关联词与句子衔接）",
-          "text_zh": "完成句子（关联词与句子衔接）"
+          "text_en": "因为……所以、只要……就 等关联词",
+          "text_zh": "因为……所以、只要……就 等关联词"
         }
-      ],
-      "source": {
-        "file": "kb/topics.csv",
-        "page": ""
-      }
+      ]
     },
     {
       "topic_id": "P4-CL-22",
       "subject_id": "chinese",
-      "strand": "语文知识与应用（试卷二）",
+      "strand": "语文知识与应用",
       "strand_zh": "语文应用",
       "syllabus_topic": "短文填空",
       "name_en": "Passage cloze",
@@ -1886,16 +1863,12 @@ window.GARDEN_DATA = {
           "text_en": "短文填空",
           "text_zh": "短文填空"
         }
-      ],
-      "source": {
-        "file": "kb/topics.csv",
-        "page": ""
-      }
+      ]
     },
     {
       "topic_id": "P4-CL-25",
       "subject_id": "chinese",
-      "strand": "阅读理解（试卷二）",
+      "strand": "阅读理解",
       "strand_zh": "阅读",
       "syllabus_topic": "阅读理解一：实用文（广告/通知/书信）选择题",
       "name_en": "Practical text comprehension",
@@ -1913,16 +1886,12 @@ window.GARDEN_DATA = {
           "text_en": "阅读理解一：实用文（广告/通知/书信）选择题",
           "text_zh": "阅读理解一：实用文（广告/通知/书信）选择题"
         }
-      ],
-      "source": {
-        "file": "kb/topics.csv",
-        "page": ""
-      }
+      ]
     },
     {
       "topic_id": "P4-CL-26",
       "subject_id": "chinese",
-      "strand": "阅读理解（试卷二）",
+      "strand": "阅读理解",
       "strand_zh": "阅读",
       "syllabus_topic": "阅读理解二：找词语（词义）",
       "name_en": "Passage comprehension",
@@ -1955,597 +1924,34 @@ window.GARDEN_DATA = {
           "text_en": "阅读理解二：人物看法与道理",
           "text_zh": "阅读理解二：人物看法与道理"
         }
-      ],
-      "source": {
-        "file": "kb/topics.csv",
-        "page": ""
-      }
-    }
-  ],
-  "mastery_events": [],
-  "plan_items": [],
-  "countdown": {
-    "target_year": 2027,
-    "target_grade": "P5",
-    "target_label_zh": "小五（P5）考试安排",
-    "target_label_en": "P5 assessments (2027)",
-    "date": null,
-    "date_status": "待确认",
-    "date_confirmed": false,
-    "date_note": "学校预计大约在 2027 年 1 月公布小五评估计划。在学校通知之前，不要把任何 2027 年的具体日期当成已确认的考试日。",
-    "next_plan_expected": "2027-01",
-    "next_plan_expected_note": "约 2027 年 1 月，仅表示学校通常公布计划的时段，不是考试日。",
-    "reference": {
-      "label_zh": "可参考的去年安排（2026 小四年终考试）",
-      "label_en": "Reference only: 2026 P4 End-of-Year Examination",
-      "note": "2026 年南华小学小四年终考试的书面主卷在 10 月下旬（科学 10 月 27 日、数学 10 月 29 日），口试在 9 月下旬。这只是已经结束的去年安排，不是 2027 年的日期。",
-      "eye_timing": "late October",
-      "highlights": [
+      ]
+    },
+    {
+      "topic_id": "P4-CL-30",
+      "subject_id": "chinese",
+      "strand": "写作",
+      "strand_zh": "写作",
+      "syllabus_topic": "Notes and emails",
+      "name_en": "Notes and emails",
+      "name_zh": "书面互动（便条、电邮）",
+      "short": "书面互动",
+      "group": "写作",
+      "flower": "fern",
+      "status": "todo",
+      "stars": 0,
+      "strength": null,
+      "bank_subject": "Chinese",
+      "learning_outcomes": [
         {
-          "subject_id": "english",
-          "label": "英文口试",
-          "date": "2026-09-25"
-        },
-        {
-          "subject_id": "higher_chinese",
-          "label": "高级华文口试",
-          "date": "2026-09-28"
-        },
-        {
-          "subject_id": "english",
-          "label": "英文写作",
-          "date": "2026-10-05"
-        },
-        {
-          "subject_id": "higher_chinese",
-          "label": "高级华文写作",
-          "date": "2026-10-06"
-        },
-        {
-          "subject_id": "higher_chinese",
-          "label": "高级华文试卷二、听力",
-          "date": "2026-10-23"
-        },
-        {
-          "subject_id": "english",
-          "label": "英文试卷二、听力",
-          "date": "2026-10-26"
-        },
-        {
-          "subject_id": "science",
-          "label": "科学",
-          "date": "2026-10-27"
-        },
-        {
-          "subject_id": "math",
-          "label": "数学",
-          "date": "2026-10-29"
+          "topic_id": "P4-CL-30",
+          "text_en": "按要求写便条或电邮，交代日期、时间、地点",
+          "text_zh": "按要求写便条或电邮，交代日期、时间、地点"
         }
       ]
     }
-  },
-  "assessments": [
-    {
-      "assessment_id": "nhps-p4-2026-wa1",
-      "series": "WA1",
-      "term": 1,
-      "year": 2026,
-      "grade": "P4",
-      "subject_id": null,
-      "label_zh": "Term 1 加权测验（WA1）",
-      "label_en": "Term 1 Weighted Assessment (WA1)",
-      "weight_percent": 15,
-      "weight_note": "占该科全年成绩的 15%。本函只列出比重，没有给出日期和考查范围。",
-      "date": null,
-      "time_frame": null,
-      "date_confirmed": false,
-      "date_status": "未收录",
-      "status": "past",
-      "confirmation_note": "比重已由学校信函确认。具体日期和范围不在这份 Sem 2 信函里，故未填写。",
-      "scope": null,
-      "papers": [],
-      "source": {
-        "file": "sources/school/P4_Assessment_Plan_2026_Sem2.pdf",
-        "school": "Nan Hua Primary School",
-        "school_zh": "南华小学",
-        "letter_ref": "035/26/GEN",
-        "letter_date": "2026-07-10",
-        "title": "P4 Assessment Plan 2026 (Semester 2)",
-        "pages": [
-          1
-        ]
-      }
-    },
-    {
-      "assessment_id": "nhps-p4-2026-wa2",
-      "series": "WA2",
-      "term": 2,
-      "year": 2026,
-      "grade": "P4",
-      "subject_id": null,
-      "label_zh": "Term 2 加权测验（WA2）",
-      "label_en": "Term 2 Weighted Assessment (WA2)",
-      "weight_percent": 15,
-      "weight_note": "占该科全年成绩的 15%。本函只列出比重，没有给出日期和考查范围。",
-      "date": null,
-      "time_frame": null,
-      "date_confirmed": false,
-      "date_status": "未收录",
-      "status": "past",
-      "confirmation_note": "比重已由学校信函确认。具体日期和范围不在这份 Sem 2 信函里，故未填写。",
-      "scope": null,
-      "papers": [],
-      "source": {
-        "file": "sources/school/P4_Assessment_Plan_2026_Sem2.pdf",
-        "school": "Nan Hua Primary School",
-        "school_zh": "南华小学",
-        "letter_ref": "035/26/GEN",
-        "letter_date": "2026-07-10",
-        "title": "P4 Assessment Plan 2026 (Semester 2)",
-        "pages": [
-          1
-        ]
-      }
-    },
-    {
-      "assessment_id": "nhps-p4-2026-wa3-english",
-      "series": "WA3",
-      "term": 3,
-      "year": 2026,
-      "grade": "P4",
-      "subject_id": "english",
-      "label_zh": "Term 3 加权测验（英文）",
-      "label_en": "Term 3 Weighted Assessment (English)",
-      "weight_percent": 15,
-      "weight_note": "占该科全年成绩的 15%。",
-      "date": null,
-      "time_frame": "Week 5-6",
-      "date_confirmed": false,
-      "date_status": "未给日历日",
-      "status": "past",
-      "confirmation_note": "学校信函只写了 Week 5-6，没有写具体日历日。时间窗本身已由信函确认；不在此推算日期。",
-      "format": "Oracy",
-      "scope": {
-        "text_en": "Performance Task - Speaking",
-        "text_zh": "口语表现任务",
-        "chapters": []
-      },
-      "papers": [
-        {
-          "name_en": "Performance Task - Speaking",
-          "name_zh": "口语表现任务",
-          "date": null,
-          "time_frame": "Week 5-6",
-          "duration": null,
-          "time": "During Curriculum Time"
-        }
-      ],
-      "source": {
-        "file": "sources/school/P4_Assessment_Plan_2026_Sem2.pdf",
-        "school": "Nan Hua Primary School",
-        "school_zh": "南华小学",
-        "letter_ref": "035/26/GEN",
-        "letter_date": "2026-07-10",
-        "title": "P4 Assessment Plan 2026 (Semester 2)",
-        "pages": [
-          2
-        ]
-      }
-    },
-    {
-      "assessment_id": "nhps-p4-2026-wa3-higher-chinese",
-      "series": "WA3",
-      "term": 3,
-      "year": 2026,
-      "grade": "P4",
-      "subject_id": "higher_chinese",
-      "label_zh": "Term 3 加权测验（高级华文）",
-      "label_en": "Term 3 Weighted Assessment (Higher Chinese)",
-      "weight_percent": 15,
-      "weight_note": "占该科全年成绩的 15%。",
-      "date": "2026-08-05",
-      "time_frame": "Week 6",
-      "date_confirmed": true,
-      "date_status": "已确认（已结束）",
-      "status": "past",
-      "confirmation_note": "过去的安排，已由学校信函确认。",
-      "format": "看图作文",
-      "scope": {
-        "text_en": "Writing (picture composition)",
-        "text_zh": "写作：看图作文",
-        "chapters": []
-      },
-      "papers": [
-        {
-          "name_en": "Writing",
-          "name_zh": "看图作文",
-          "date": "2026-08-05",
-          "time_frame": "Week 6",
-          "duration": null,
-          "time": null
-        }
-      ],
-      "source": {
-        "file": "sources/school/P4_Assessment_Plan_2026_Sem2.pdf",
-        "school": "Nan Hua Primary School",
-        "school_zh": "南华小学",
-        "letter_ref": "035/26/GEN",
-        "letter_date": "2026-07-10",
-        "title": "P4 Assessment Plan 2026 (Semester 2)",
-        "pages": [
-          2
-        ]
-      }
-    },
-    {
-      "assessment_id": "nhps-p4-2026-wa3-mathematics",
-      "series": "WA3",
-      "term": 3,
-      "year": 2026,
-      "grade": "P4",
-      "subject_id": "math",
-      "label_zh": "Term 3 加权测验（数学）",
-      "label_en": "Term 3 Weighted Assessment (Mathematics)",
-      "weight_percent": 15,
-      "weight_note": "占该科全年成绩的 15%。",
-      "date": "2026-08-25",
-      "time_frame": "Week 9",
-      "date_confirmed": true,
-      "date_status": "已确认（已结束）",
-      "status": "past",
-      "confirmation_note": "过去的安排，已由学校信函确认。",
-      "format": "Multiple-choice, Short-answer and Long-answer questions",
-      "scope": {
-        "text_en": "Chapter 8: Rectangles and Squares; Chapter 9: Decimals; Chapter 10: Four Operations of Decimals; Heuristics: Equal Intervals",
-        "text_zh": "第 8 章长方形与正方形、第 9 章小数、第 10 章小数四则运算；启发式：等间隔（Equal Intervals）",
-        "chapters": [
-          {
-            "chapter": "8",
-            "title": "Rectangles and Squares",
-            "type": "textbook"
-          },
-          {
-            "chapter": "9",
-            "title": "Decimals",
-            "type": "textbook"
-          },
-          {
-            "chapter": "10",
-            "title": "Four Operations of Decimals",
-            "type": "textbook"
-          },
-          {
-            "chapter": null,
-            "title": "Heuristics: Equal Intervals",
-            "type": "heuristic"
-          }
-        ]
-      },
-      "papers": [
-        {
-          "name_en": "Mathematics",
-          "name_zh": "数学",
-          "date": "2026-08-25",
-          "time_frame": "Week 9",
-          "duration": null,
-          "time": null
-        }
-      ],
-      "source": {
-        "file": "sources/school/P4_Assessment_Plan_2026_Sem2.pdf",
-        "school": "Nan Hua Primary School",
-        "school_zh": "南华小学",
-        "letter_ref": "035/26/GEN",
-        "letter_date": "2026-07-10",
-        "title": "P4 Assessment Plan 2026 (Semester 2)",
-        "pages": [
-          2
-        ]
-      }
-    },
-    {
-      "assessment_id": "nhps-p4-2026-wa3-science",
-      "series": "WA3",
-      "term": 3,
-      "year": 2026,
-      "grade": "P4",
-      "subject_id": "science",
-      "label_zh": "Term 3 加权测验（科学）",
-      "label_en": "Term 3 Weighted Assessment (Science)",
-      "weight_percent": 15,
-      "weight_note": "占该科全年成绩的 15%。",
-      "date": "2026-08-18",
-      "time_frame": "Week 8",
-      "date_confirmed": true,
-      "date_status": "已确认（已结束）",
-      "status": "past",
-      "confirmation_note": "过去的安排，已由学校信函确认。",
-      "format": "Multiple-choice and Structured questions",
-      "scope": {
-        "text_en": "Chapter 3: Matter; Chapter 4: Light; Chapter 5: Shadows",
-        "text_zh": "第 3 章物质、第 4 章光、第 5 章影子",
-        "chapters": [
-          {
-            "chapter": "3",
-            "title": "Matter",
-            "type": "textbook"
-          },
-          {
-            "chapter": "4",
-            "title": "Light",
-            "type": "textbook"
-          },
-          {
-            "chapter": "5",
-            "title": "Shadows",
-            "type": "textbook"
-          }
-        ]
-      },
-      "papers": [
-        {
-          "name_en": "Science",
-          "name_zh": "科学",
-          "date": "2026-08-18",
-          "time_frame": "Week 8",
-          "duration": null,
-          "time": null
-        }
-      ],
-      "source": {
-        "file": "sources/school/P4_Assessment_Plan_2026_Sem2.pdf",
-        "school": "Nan Hua Primary School",
-        "school_zh": "南华小学",
-        "letter_ref": "035/26/GEN",
-        "letter_date": "2026-07-10",
-        "title": "P4 Assessment Plan 2026 (Semester 2)",
-        "pages": [
-          2
-        ]
-      }
-    },
-    {
-      "assessment_id": "nhps-p4-2026-eye-english",
-      "series": "EYE",
-      "term": 4,
-      "year": 2026,
-      "grade": "P4",
-      "subject_id": "english",
-      "label_zh": "年终考试（英文）",
-      "label_en": "End-of-Year Examination (English)",
-      "weight_percent": 55,
-      "weight_note": "占该科全年成绩的 55%。",
-      "date": "2026-10-26",
-      "date_note": "书面主卷日期取试卷二、听力日（10 月 26 日）；写作在 10 月 5 日，口试在 9 月 25 日。各分卷日期见 papers。",
-      "date_confirmed": true,
-      "date_status": "已确认（已结束）",
-      "status": "past",
-      "confirmation_note": "过去的安排，已由学校信函确认。",
-      "scope": {
-        "text_en": "Unit 1-8",
-        "text_zh": "Unit 1–8",
-        "units": "1-8",
-        "chapters": []
-      },
-      "papers": [
-        {
-          "name_en": "Paper 4 Oral",
-          "name_zh": "试卷四 口试",
-          "date": "2026-09-25",
-          "duration": null,
-          "time": "During Curriculum Time",
-          "format": "Reading Aloud; Stimulus-Based Conversation"
-        },
-        {
-          "name_en": "Paper 1 Writing",
-          "name_zh": "试卷一 写作",
-          "date": "2026-10-05",
-          "duration": "50 min",
-          "time": "7.50 a.m. - 8.40 a.m.",
-          "format": "Continuous Writing"
-        },
-        {
-          "name_en": "Oral Make-up",
-          "name_zh": "口试补考",
-          "date": "2026-10-07",
-          "duration": null,
-          "time": "During Curriculum Time"
-        },
-        {
-          "name_en": "Paper 2 Language Use and Comprehension",
-          "name_zh": "试卷二 语文应用与理解",
-          "date": "2026-10-26",
-          "duration": "1 h 15 min",
-          "time": "7.50 a.m. - 9.05 a.m.",
-          "format": "Multiple-choice, Short-answer and Long-answer questions"
-        },
-        {
-          "name_en": "Paper 3 Listening Comprehension",
-          "name_zh": "试卷三 听力",
-          "date": "2026-10-26",
-          "duration": "30 min",
-          "time": "11.15 a.m. - 11.45 a.m.",
-          "format": "Multiple-choice and Short-answer questions"
-        }
-      ],
-      "source": {
-        "file": "sources/school/P4_Assessment_Plan_2026_Sem2.pdf",
-        "school": "Nan Hua Primary School",
-        "school_zh": "南华小学",
-        "letter_ref": "035/26/GEN",
-        "letter_date": "2026-07-10",
-        "title": "P4 Assessment Plan 2026 (Semester 2)",
-        "pages": [
-          3,
-          4
-        ]
-      }
-    },
-    {
-      "assessment_id": "nhps-p4-2026-eye-higher-chinese",
-      "series": "EYE",
-      "term": 4,
-      "year": 2026,
-      "grade": "P4",
-      "subject_id": "higher_chinese",
-      "label_zh": "年终考试（高级华文）",
-      "label_en": "End-of-Year Examination (Higher Chinese)",
-      "weight_percent": 55,
-      "weight_note": "占该科全年成绩的 55%。",
-      "date": "2026-10-23",
-      "date_note": "书面主卷日期取试卷二、听力日（10 月 23 日）；写作在 10 月 6 日，口试在 9 月 28 日。各分卷日期见 papers。",
-      "date_confirmed": true,
-      "date_status": "已确认（已结束）",
-      "status": "past",
-      "confirmation_note": "过去的安排，已由学校信函确认。",
-      "scope": {
-        "text_en": "Primary 4 Higher Chinese textbook Lessons 1-16 (includes content from Primary 1-3)",
-        "text_zh": "四年级高华课本第 1–16 课（包含一到三年级所学内容）",
-        "lessons": "1-16",
-        "chapters": []
-      },
-      "papers": [
-        {
-          "name_en": "Paper 3 Oral",
-          "name_zh": "试卷四 / Paper 3 口试",
-          "date": "2026-09-28",
-          "duration": null,
-          "time": "During Curriculum Time",
-          "format": "朗读篇章和会话"
-        },
-        {
-          "name_en": "Paper 1 Writing",
-          "name_zh": "试卷一 看图作文",
-          "date": "2026-10-06",
-          "duration": "50 min",
-          "time": "7.50 a.m. - 8.40 a.m."
-        },
-        {
-          "name_en": "Oral Make-up",
-          "name_zh": "口试补考",
-          "date": "2026-10-07",
-          "duration": null,
-          "time": "During Curriculum Time"
-        },
-        {
-          "name_en": "Paper 2 Language Use and Comprehension",
-          "name_zh": "试卷二 语文理解与应用",
-          "date": "2026-10-23",
-          "duration": "1 h 20 min",
-          "time": "7.50 a.m. - 9.10 a.m.",
-          "format": "选择题和理解问答题"
-        },
-        {
-          "name_en": "Paper 3 Listening Comprehension",
-          "name_zh": "试卷三 听力",
-          "date": "2026-10-23",
-          "duration": "30 min",
-          "time": "11.15 a.m. - 11.45 a.m.",
-          "format": "选择题"
-        }
-      ],
-      "source": {
-        "file": "sources/school/P4_Assessment_Plan_2026_Sem2.pdf",
-        "school": "Nan Hua Primary School",
-        "school_zh": "南华小学",
-        "letter_ref": "035/26/GEN",
-        "letter_date": "2026-07-10",
-        "title": "P4 Assessment Plan 2026 (Semester 2)",
-        "pages": [
-          3,
-          4
-        ]
-      }
-    },
-    {
-      "assessment_id": "nhps-p4-2026-eye-science",
-      "series": "EYE",
-      "term": 4,
-      "year": 2026,
-      "grade": "P4",
-      "subject_id": "science",
-      "label_zh": "年终考试（科学）",
-      "label_en": "End-of-Year Examination (Science)",
-      "weight_percent": 55,
-      "weight_note": "占该科全年成绩的 55%。",
-      "date": "2026-10-27",
-      "date_confirmed": true,
-      "date_status": "已确认（已结束）",
-      "status": "past",
-      "confirmation_note": "过去的安排，已由学校信函确认。",
-      "format": "Booklet A: Multiple-choice questions; Booklet B: Structured questions",
-      "scope": {
-        "text_en": "All Primary 3 and Primary 4 topics.",
-        "text_zh": "全部小三、小四课题。",
-        "chapters": []
-      },
-      "papers": [
-        {
-          "name_en": "Science",
-          "name_zh": "科学",
-          "date": "2026-10-27",
-          "duration": "1 h 45 min",
-          "time": "7.50 a.m. - 9.35 a.m."
-        }
-      ],
-      "source": {
-        "file": "sources/school/P4_Assessment_Plan_2026_Sem2.pdf",
-        "school": "Nan Hua Primary School",
-        "school_zh": "南华小学",
-        "letter_ref": "035/26/GEN",
-        "letter_date": "2026-07-10",
-        "title": "P4 Assessment Plan 2026 (Semester 2)",
-        "pages": [
-          3,
-          4
-        ]
-      }
-    },
-    {
-      "assessment_id": "nhps-p4-2026-eye-mathematics",
-      "series": "EYE",
-      "term": 4,
-      "year": 2026,
-      "grade": "P4",
-      "subject_id": "math",
-      "label_zh": "年终考试（数学）",
-      "label_en": "End-of-Year Examination (Mathematics)",
-      "weight_percent": 55,
-      "weight_note": "占该科全年成绩的 55%。",
-      "date": "2026-10-29",
-      "date_confirmed": true,
-      "date_status": "已确认（已结束）",
-      "status": "past",
-      "confirmation_note": "过去的安排，已由学校信函确认。",
-      "format": "Section A: Multiple-choice; Section B: Short-answer; Section C: Long-answer questions",
-      "scope": {
-        "text_en": "All topics from Primary 3 and Primary 4 Textbook & Practice Book. All school-based materials.",
-        "text_zh": "小三和小四课本及练习册的全部课题，以及学校印发的材料。",
-        "chapters": []
-      },
-      "papers": [
-        {
-          "name_en": "Mathematics",
-          "name_zh": "数学",
-          "date": "2026-10-29",
-          "duration": "1 h 30 min",
-          "time": "7.50 a.m. - 9.20 a.m."
-        }
-      ],
-      "source": {
-        "file": "sources/school/P4_Assessment_Plan_2026_Sem2.pdf",
-        "school": "Nan Hua Primary School",
-        "school_zh": "南华小学",
-        "letter_ref": "035/26/GEN",
-        "letter_date": "2026-07-10",
-        "title": "P4 Assessment Plan 2026 (Semester 2)",
-        "pages": [
-          3,
-          4
-        ]
-      }
-    }
-  ]
+  ],
+  "mastery_events": [],
+  "plan_items": []
 };
 </script>
 <script>
@@ -2629,6 +2035,9 @@ function treeSVG(pct){
    我学会了 forces 100%. 做错了 on a question that was right lowers it again.
    Overall 学会了 is the average of topic percents. 还没开花 counts topics under 100%. */
 const PROGRESS_KEY = "anna-garden.progress.v1";
+// Progress saved before the original question bank (any record without this tag) is copied once to OLD_PROGRESS_KEY and the garden starts from zero.
+const BANK_EPOCH = "original-1";
+const OLD_PROGRESS_KEY = "anna-garden.progress.v1.before-original";
 const MASTER_GOAL = 5;
 let DATA = null;
 let current = "math";
@@ -2636,42 +2045,61 @@ let store = { version:1, savedAt:null, topics:{} };
 let toastTimer = null;
 let confirmResolver = null;
 
-function emptyStore(){ return { version:1, savedAt:null, topics:{} }; }
+function emptyStore(){ return { version:1, bank:BANK_EPOCH, savedAt:null, topics:{}, open:{} }; }
+function knownQ(qid){ const b = window.PRACTICE_BANK; return !!(b && b.idIndex && Object.prototype.hasOwnProperty.call(b.idIndex, qid)); }
 function knownTopic(id){
   return !!(DATA && DATA.topics && DATA.topics.some(t => t.topic_id === id));
 }
 function sanitizeStore(obj){
   if(!obj || typeof obj !== "object" || Array.isArray(obj)) throw new Error("bad");
   if(obj.version !== 1) throw new Error("version");
+  if(obj.bank !== BANK_EPOCH) throw new Error("old-bank");
   if(!obj.topics || typeof obj.topics !== "object" || Array.isArray(obj.topics)) throw new Error("topics");
+  const BAD = ["__proto__", "constructor", "prototype"];
   const topics = {};
+  // Entries from the earlier question bank (unknown question ids or flowers) are kept untouched but ignored by every count.
   Object.keys(obj.topics).forEach(id => {
-    if(id === "__proto__" || id === "constructor" || id === "prototype") return;
-    if(!knownTopic(id)) return;
+    if(BAD.includes(id)) return;
     const rec = obj.topics[id];
     if(!rec || typeof rec !== "object" || Array.isArray(rec)) return;
     const marks = {};
     const src = rec.marks && typeof rec.marks === "object" && !Array.isArray(rec.marks) ? rec.marks : {};
     Object.keys(src).forEach(qid => {
-      if(qid === "__proto__" || qid === "constructor" || qid === "prototype") return;
-      if(src[qid] === "right" || src[qid] === "wrong") marks[qid] = src[qid];
+      if(BAD.includes(qid)) return;
+      if(src[qid] === "right" || src[qid] === "wrong" || src[qid] === "partial") marks[qid] = src[qid];
     });
     topics[id] = { marks, mastered: rec.mastered === true };
+  });
+  const open = {};
+  const so = obj.open && typeof obj.open === "object" && !Array.isArray(obj.open) ? obj.open : {};
+  Object.keys(so).forEach(qid => {
+    if(BAD.includes(qid) || !knownQ(qid)) return;
+    const r = so[qid];
+    if(!r || typeof r !== "object" || typeof r.text !== "string" || !knownTopic(r.topic)) return;
+    const st = ["pending", "right", "partial", "wrong"].includes(r.status) ? r.status : "pending";
+    open[qid] = { topic:r.topic, text:r.text.slice(0, 4000), status:st,
+      at: typeof r.at === "string" ? r.at : null, checkedAt: typeof r.checkedAt === "string" ? r.checkedAt : null };
   });
   let savedAt = null;
   if(typeof obj.savedAt === "string" && !Number.isNaN(Date.parse(obj.savedAt))){
     savedAt = new Date(obj.savedAt).toISOString();
   }
-  return { version:1, savedAt, topics };
+  return { version:1, bank:BANK_EPOCH, savedAt, topics, open };
 }
 function readStore(){
-  try{
-    const raw = localStorage.getItem(PROGRESS_KEY);
-    if(!raw) return emptyStore();
-    return sanitizeStore(JSON.parse(raw));
-  }catch(e){
-    return emptyStore();
+  let raw = null;
+  try{ raw = localStorage.getItem(PROGRESS_KEY); }catch(e){ return emptyStore(); }
+  if(!raw) return emptyStore();
+  let obj = null;
+  try{ obj = JSON.parse(raw); }catch(e){ obj = null; }
+  if(!obj || obj.bank !== BANK_EPOCH){
+    // earlier question bank: keep one copy aside, then start the new garden from zero (old 我学会了 flags included)
+    try{ if(!localStorage.getItem(OLD_PROGRESS_KEY)) localStorage.setItem(OLD_PROGRESS_KEY, raw); }catch(e){}
+    const fresh = emptyStore();
+    try{ localStorage.setItem(PROGRESS_KEY, JSON.stringify(fresh)); }catch(e){}
+    return fresh;
   }
+  try{ return sanitizeStore(obj); }catch(e){ return emptyStore(); }
 }
 function stampParts(iso){
   const parts = new Intl.DateTimeFormat("en-GB", {
@@ -2705,6 +2133,7 @@ function toast(message){
 function writeStore(opts){
   opts = opts || {};
   store.version = 1;
+  store.bank = BANK_EPOCH;
   if(!opts.keepSavedAt || !store.savedAt) store.savedAt = new Date().toISOString();
   try{
     localStorage.setItem(PROGRESS_KEY, JSON.stringify(store));
@@ -2749,7 +2178,8 @@ function goalFor(topicId){
 function rightCount(topicId){
   const rec = store.topics[topicId];
   if(!rec || !rec.marks) return 0;
-  return Object.keys(rec.marks).reduce((n, id) => n + (rec.marks[id] === "right" ? 1 : 0), 0);
+  // 对 = 1, 部分对 = 0.5, 不对 = 0
+  return Object.keys(rec.marks).reduce((n, id) => n + (!knownQ(id) ? 0 : rec.marks[id] === "right" ? 1 : rec.marks[id] === "partial" ? 0.5 : 0), 0);
 }
 function percentFor(topicId){
   const rec = store.topics[topicId];
@@ -2789,12 +2219,50 @@ function decorate(t){
 }
 function markQuestion(topicId, qid, result){
   if((result !== "right" && result !== "wrong") || !qid || !knownTopic(topicId)) return percentFor(topicId);
+  const bq = bankQ(String(qid));
+  if(bq && bq.mode === "parent") return percentFor(topicId); // open-ended answers are only marked in 家长确认
   const rec = ensureRec(topicId);
   rec.marks[String(qid)] = result;
   if(result === "wrong") rec.mastered = false;
   writeStore();
   render();
   return percentFor(topicId);
+}
+function nowIso(){ return new Date().toISOString(); }
+function getOpen(qid){ return (store.open && store.open[qid]) || null; }
+function submitOpen(topicId, qid, text){
+  if(!knownTopic(topicId) || !knownQ(qid)) return;
+  if(!store.open) store.open = {};
+  store.open[qid] = { topic:topicId, text:String(text).slice(0, 4000), status:"pending", at:nowIso(), checkedAt:null };
+  const rec = ensureRec(topicId); delete rec.marks[qid];
+  writeStore(); render();
+}
+function withdrawOpen(qid){
+  const r = getOpen(qid); if(!r) return;
+  delete store.open[qid];
+  if(store.topics[r.topic] && store.topics[r.topic].marks) delete store.topics[r.topic].marks[qid];
+  writeStore(); render();
+}
+function confirmOpen(qid, result){
+  if(!isParentUnlocked()) return false;
+  const r = getOpen(qid); if(!r) return false;
+  const rec = ensureRec(r.topic);
+  if(result === "pending"){ r.status = "pending"; r.checkedAt = null; delete rec.marks[qid]; }
+  else if(result === "right" || result === "partial" || result === "wrong"){
+    r.status = result; r.checkedAt = nowIso(); rec.marks[qid] = result;
+    if(result === "wrong") rec.mastered = false;
+  } else return;
+  writeStore(); render();
+}
+function openList(){
+  const o = store.open || {};
+  return Object.keys(o).map(qid => Object.assign({ qid }, o[qid]))
+    .sort((a, b) => String(b.checkedAt || b.at || "").localeCompare(String(a.checkedAt || a.at || "")));
+}
+function updateParentBadge(){
+  const el = document.getElementById("parent-badge"); if(!el) return;
+  const n = openList().filter(x => x.status === "pending").length;
+  el.textContent = String(n); el.hidden = n === 0;
 }
 function setMastered(topicId, yes){
   if(!knownTopic(topicId)) return;
@@ -2851,9 +2319,9 @@ function openModal(id){
       <p class="modal-lead">这一关你会：</p>
       <ul class="modal-los">${t.learning_outcomes.map(x=>`<li>${x.text_zh}</li>`).join("")}</ul>
       <button class="btn-practice" type="button" id="btn-practice" ${canPractice?"":"disabled"}>
-        ${canPractice? "练习真题": "先通关前面的知识点"}
+        ${canPractice? "练习题": "先通关前面的知识点"}
       </button>
-      <p class="practice-note" hidden>题库正在整理中，稍后就能在这里练习对应的真题啦。</p>
+      <p class="practice-note" hidden>题库正在整理中，稍后就能在这里练习对应的练习题啦。</p>
       ${masterBtn}
     </div>`;
   box.hidden = false;
@@ -2961,6 +2429,7 @@ function renderSide(sid){
 }
 
 function render(){
+  updateParentBadge();
   const stu = DATA.student;
   $("#page-title").textContent = `${stu.display_name}的知识花园`;
   $("#grade-line").textContent = `${stu.grade_zh} · ${stu.grade}`;
@@ -2970,7 +2439,7 @@ function render(){
     renderVitals(s);
     $("#garden").style.display = "none";
     $("#garden").innerHTML = "";
-    $("#side").innerHTML = `<div class="coming-soon-card"><div class="cs-badge">即将开放</div><h3>${s.name_zh} · ${s.name_en}</h3><p>这一科的知识点页面还在准备中，先专心把数学和科学的花园照料好吧。</p></div>`;
+    $("#side").innerHTML = `<div class="coming-soon-card"><div class="cs-badge">即将开放</div><h3>${s.name_zh} · ${s.name_en}</h3><p>这一科的知识点页面还在准备中，先去别的花园看看吧。</p></div>`;
     return;
   }
   $("#garden").style.display = "";
@@ -3006,8 +2475,10 @@ function exportProgress(){
   const payload = {
     version:1,
     app:"anna-garden",
+    bank:BANK_EPOCH,
     savedAt: store.savedAt,
-    topics: store.topics
+    topics: store.topics,
+    open: store.open || {}
   };
   const blob = new Blob([JSON.stringify(payload, null, 2)], { type:"application/json" });
   const url = URL.createObjectURL(blob);
@@ -3032,7 +2503,7 @@ function importProgress(file){
       render();
       toast("进度已经导入 · " + formatClock(store.savedAt));
     }catch(e){
-      toast("这个文件读不出来，花园没有改。");
+      toast(e && e.message === "old-bank" ? "这是旧题库的进度文件，新花园从零开始，不能导入。" : "这个文件读不出来，花园没有改。");
     }
   };
   reader.onerror = () => toast("这个文件读不出来，花园没有改。");
@@ -3040,8 +2511,13 @@ function importProgress(file){
 }
 function bindSaveBar(){
   $("#btn-save").addEventListener("click", () => writeStore({ toast:true }));
+  $("#btn-parent").addEventListener("click", () => { if(window.openParentReview) window.openParentReview(); });
   $("#btn-export").addEventListener("click", exportProgress);
-  $("#btn-import").addEventListener("click", () => $("#import-file").click());
+  // importing can bring in parent-checked marks, so it needs the parent PIN once one is set
+  $("#btn-import").addEventListener("click", () => {
+    if(hasPin() && window.withParentPin) window.withParentPin(() => $("#import-file").click(), "导入进度");
+    else $("#import-file").click();
+  });
   $("#import-file").addEventListener("change", (e) => {
     const file = e.target.files && e.target.files[0];
     e.target.value = "";
@@ -3066,7 +2542,105 @@ function bootGarden(){
     if(main) main.innerHTML = `<div class="load-error"><p>数据没有加载出来。</p><p>${err.message}</p></div>`;
   }
 }
-window.AnnaProgress = { markQuestion, getMark, percentFor, setMastered, goalFor };
+/* ---------- parent PIN (家长确认) ----------
+   The PIN is chosen by the parent on this device. Only a salted, repeated SHA-256 hash is kept in localStorage.
+   Marking open-ended answers (confirmOpen) only works while the parent view is unlocked. */
+const PARENT_KEY = "anna-garden.parent.v1";
+const PARENT_PHRASE = "我是家长";
+const PIN_ROUNDS = 4000;
+let parentUnlocked = false;
+let pinFails = 0;
+let pinWaitUntil = 0;
+function sha256hex(str){
+  const K = [0x428a2f98,0x71374491,0xb5c0fbcf,0xe9b5dba5,0x3956c25b,0x59f111f1,0x923f82a4,0xab1c5ed5,0xd807aa98,0x12835b01,0x243185be,0x550c7dc3,
+    0x72be5d74,0x80deb1fe,0x9bdc06a7,0xc19bf174,0xe49b69c1,0xefbe4786,0x0fc19dc6,0x240ca1cc,0x2de92c6f,0x4a7484aa,0x5cb0a9dc,0x76f988da,0x983e5152,
+    0xa831c66d,0xb00327c8,0xbf597fc7,0xc6e00bf3,0xd5a79147,0x06ca6351,0x14292967,0x27b70a85,0x2e1b2138,0x4d2c6dfc,0x53380d13,0x650a7354,0x766a0abb,
+    0x81c2c92e,0x92722c85,0xa2bfe8a1,0xa81a664b,0xc24b8b70,0xc76c51a3,0xd192e819,0xd6990624,0xf40e3585,0x106aa070,0x19a4c116,0x1e376c08,0x2748774c,
+    0x34b0bcb5,0x391c0cb3,0x4ed8aa4a,0x5b9cca4f,0x682e6ff3,0x748f82ee,0x78a5636f,0x84c87814,0x8cc70208,0x90befffa,0xa4506ceb,0xbef9a3f7,0xc67178f2];
+  const bytes = Array.from(new TextEncoder().encode(str));
+  const bitLen = bytes.length * 8;
+  bytes.push(0x80);
+  while(bytes.length % 64 !== 56) bytes.push(0);
+  for(let i = 7; i >= 0; i--) bytes.push(i >= 4 ? 0 : (bitLen >>> (i * 8)) & 255);
+  const H = [0x6a09e667,0xbb67ae85,0x3c6ef372,0xa54ff53a,0x510e527f,0x9b05688c,0x1f83d9ab,0x5be0cd19];
+  const W = new Array(64);
+  const rotr = (x, n) => (x >>> n) | (x << (32 - n));
+  for(let off = 0; off < bytes.length; off += 64){
+    for(let i = 0; i < 16; i++) W[i] = (bytes[off + 4*i] << 24) | (bytes[off + 4*i + 1] << 16) | (bytes[off + 4*i + 2] << 8) | bytes[off + 4*i + 3];
+    for(let i = 16; i < 64; i++){
+      const s0 = rotr(W[i-15], 7) ^ rotr(W[i-15], 18) ^ (W[i-15] >>> 3);
+      const s1 = rotr(W[i-2], 17) ^ rotr(W[i-2], 19) ^ (W[i-2] >>> 10);
+      W[i] = (W[i-16] + s0 + W[i-7] + s1) | 0;
+    }
+    let [a, b, c, d, e, f, g, h] = H;
+    for(let i = 0; i < 64; i++){
+      const t1 = (h + (rotr(e, 6) ^ rotr(e, 11) ^ rotr(e, 25)) + ((e & f) ^ (~e & g)) + K[i] + W[i]) | 0;
+      const t2 = ((rotr(a, 2) ^ rotr(a, 13) ^ rotr(a, 22)) + ((a & b) ^ (a & c) ^ (b & c))) | 0;
+      h = g; g = f; f = e; e = (d + t1) | 0; d = c; c = b; b = a; a = (t1 + t2) | 0;
+    }
+    H[0] = (H[0] + a) | 0; H[1] = (H[1] + b) | 0; H[2] = (H[2] + c) | 0; H[3] = (H[3] + d) | 0;
+    H[4] = (H[4] + e) | 0; H[5] = (H[5] + f) | 0; H[6] = (H[6] + g) | 0; H[7] = (H[7] + h) | 0;
+  }
+  return H.map(x => (x >>> 0).toString(16).padStart(8, "0")).join("");
+}
+function pinHash(pin, salt){
+  let h = salt + "|" + pin;
+  for(let i = 0; i < PIN_ROUNDS; i++) h = sha256hex(salt + h);
+  return h;
+}
+function readParent(){
+  try{
+    const o = JSON.parse(localStorage.getItem(PARENT_KEY) || "null");
+    return o && typeof o.salt === "string" && typeof o.hash === "string" ? o : null;
+  }catch(e){ return null; }
+}
+function validPin(pin){ return /^\d{4}$/.test(String(pin || "")); }
+function newSalt(){
+  const a = new Uint8Array(16);
+  if(window.crypto && window.crypto.getRandomValues) window.crypto.getRandomValues(a);
+  else for(let i = 0; i < 16; i++) a[i] = Math.floor(Math.random() * 256);
+  return Array.from(a, x => x.toString(16).padStart(2, "0")).join("");
+}
+function savePin(pin){
+  const salt = newSalt();
+  try{ localStorage.setItem(PARENT_KEY, JSON.stringify({ v:1, salt, hash:pinHash(pin, salt), setAt:nowIso() })); }
+  catch(e){ return false; }
+  parentUnlocked = true; pinFails = 0; pinWaitUntil = 0;
+  return true;
+}
+function hasPin(){ return !!readParent(); }
+function isParentUnlocked(){ return parentUnlocked && hasPin(); }
+function lockParent(){ parentUnlocked = false; }
+/* first PIN on this device (or a new PIN while unlocked) */
+function setPin(pin, again){
+  if(hasPin() && !parentUnlocked) return { ok:false, why:"locked" };
+  if(!validPin(pin)) return { ok:false, why:"format" };
+  if(String(pin) !== String(again)) return { ok:false, why:"mismatch" };
+  return savePin(String(pin)) ? { ok:true } : { ok:false, why:"storage" };
+}
+function pinWaitSeconds(){ return Math.max(0, Math.ceil((pinWaitUntil - Date.now()) / 1000)); }
+function unlockParent(pin){
+  const rec = readParent();
+  if(!rec) return { ok:false, why:"nopin" };
+  if(pinWaitSeconds() > 0) return { ok:false, why:"wait", wait:pinWaitSeconds() };
+  if(validPin(pin) && pinHash(String(pin), rec.salt) === rec.hash){ parentUnlocked = true; pinFails = 0; return { ok:true }; }
+  pinFails += 1;
+  if(pinFails >= 5){ pinFails = 0; pinWaitUntil = Date.now() + 60000; return { ok:false, why:"wait", wait:60 }; }
+  return { ok:false, why:"wrong", left:5 - pinFails };
+}
+/* 忘记密码: type the parent phrase, then set a new PIN. Pending answers and earlier checks are kept. */
+function resetPin(phrase, pin, again){
+  if(String(phrase || "").replace(/\s+/g, "") !== PARENT_PHRASE) return { ok:false, why:"phrase" };
+  if(!validPin(pin)) return { ok:false, why:"format" };
+  if(String(pin) !== String(again)) return { ok:false, why:"mismatch" };
+  return savePin(String(pin)) ? { ok:true } : { ok:false, why:"storage" };
+}
+function bankQ(qid){
+  const b = window.PRACTICE_BANK;
+  if(!b || !b.idIndex || !Object.prototype.hasOwnProperty.call(b.idIndex, qid)) return null;
+  return b.questions[b.idIndex[qid]] || null;
+}
+window.AnnaProgress = { markQuestion, getMark, percentFor, setMastered, goalFor, getOpen, submitOpen, withdrawOpen, confirmOpen, openList, hasPin, setPin, unlockParent, lockParent, isParentUnlocked, resetPin, pinWaitSeconds };
 window.bootGarden = bootGarden;
 </script>
 <!-- garden-practice-js:start -->

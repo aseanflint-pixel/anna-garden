@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 292" width="360" height="292" font-family="Noto Sans CJK SC, sans-serif">
+<rect x="4" y="4" width="352" height="284" rx="12" fill="#fffef7" stroke="#1d4e89" stroke-width="3"/>
+<rect x="4" y="4" width="352" height="50" rx="12" fill="#1d4e89"/>
+<text x="180.0" y="38" text-anchor="middle" font-size="21" font-weight="bold" fill="#fff">儿童游泳班</text>
+<text x="16" y="80" font-size="15" fill="#222">学游泳，身体好！</text>
+<text x="16" y="104" font-size="15" fill="#222">日期：3月14日至4月18日（逢星期六）</text>
+<text x="16" y="128" font-size="15" fill="#222">时间：上午9时至10时</text>
+<text x="16" y="152" font-size="15" fill="#222">地点：社区游泳池</text>
+<text x="16" y="176" font-size="15" fill="#222">对象：7至10岁的小朋友</text>
+<text x="16" y="200" font-size="15" fill="#222">费用：每人60元</text>
+<text x="16" y="224" font-size="15" fill="#222">请自备：泳衣、泳镜和毛巾</text>
+<text x="16" y="248" font-size="15" fill="#222">报名电话：6234 5678</text>
+</svg>
