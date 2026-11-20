@@ -188,3 +188,24 @@ textarea.part-in{resize:vertical}
 .pc-part{border-top:1px solid #f0e3c4;padding-top:8px;margin-top:8px}
 .pc-part-h{font-weight:800;color:#35582a}
 .pc-prompt{font-weight:600;color:#3d3a33}
+/* 2026-11-20 nav fix (Lu: 手机界面时，有时候点击不到右下角下一题):
+   the 上一题 / 第N道 / 下一题 bar sticks to the bottom of the practice card, above the iOS home indicator. */
+#modal,#modal button,#modal .opt,#modal summary{touch-action:manipulation}
+.modal-card.practice-mode{padding-bottom:0;scroll-padding-bottom:96px}
+.practice-nav{
+  position:sticky;bottom:0;z-index:4;
+  margin:14px -20px 0;padding:10px 20px calc(12px + env(safe-area-inset-bottom));
+  background:#fffef6;border-top:1px solid #e4efd4;box-shadow:0 -6px 14px rgba(53,88,42,.08);
+}
+.btn-nav{min-height:48px;touch-action:manipulation}
+.practice-mode .practice-empty{padding-bottom:calc(24px + env(safe-area-inset-bottom))}
+body.modal-open .toast{bottom:calc(96px + env(safe-area-inset-bottom))}
+.toast{pointer-events:none}
+@media (max-width:860px){
+  .modal-card.practice-mode{
+    margin:2vh auto 0;max-height:98vh;max-height:calc(100dvh - 2vh);
+    border-bottom-left-radius:0;border-bottom-right-radius:0;
+  }
+  .practice-nav{margin:14px -12px 0;padding:10px 12px calc(12px + env(safe-area-inset-bottom))}
+  .btn-nav{min-width:88px;padding:12px 10px}
+}
