@@ -544,7 +544,8 @@
     };
   }
   /* ---------- 家长密码 ---------- */
-  let afterUnlock = null;
+  let afterUnlock = null, resetCtx = false, ctxLabel = null;
+  function waitText(sec) { return T("pin.lockedLeft", { t: Math.floor(sec / 60) + ":" + ("0" + (sec % 60)).slice(-2) }); }
   function parentShell(title, body) {
     const box = document.querySelector("#modal");
     box.innerHTML = "<div class=\"modal-backdrop\" data-close=\"1\"></div><div class=\"modal-card practice-mode parent-mode pin-mode\" role=\"dialog\" aria-modal=\"true\" aria-labelledby=\"pc-title\">" +
@@ -562,7 +563,7 @@
   function renderPinSetup() {
     window.__modalRerender = renderPinSetup;
     const box = parentShell(T("pin.setTitle"),
-      "<p class=\"pin-note\">" + T("pin.setNote") + "</p>" +
+      "<p class=\"pin-note\">" + (resetCtx ? T("pin.setNoteReset", { label: T(ctxLabel) }) : T("pin.setNote")) + "</p>" +
       pinInput("pin", T("pin.new")) + pinInput("again", T("pin.again")) +
       "<p class=\"pin-note pin-phrase\">" + T("pin.phraseNote", { phrase: phrase() }) + "</p>" +
       "<p class=\"pin-err\" role=\"alert\"></p><button type=\"button\" class=\"btn-submit\" data-pin-save=\"1\">" + T("pin.save") + "</button>");
@@ -577,11 +578,12 @@
       "<p class=\"pin-note\">" + esc(needLabel ? T("pin.needs", { label: T(needLabel) }) : T("pin.enterWhy")) + "</p>" + pinInput("pin", T("pin.label")) +
       "<p class=\"pin-err\" role=\"alert\"></p><button type=\"button\" class=\"btn-submit\" data-pin-ok=\"1\">" + T("pin.ok") + "</button>" +
       "<button type=\"button\" class=\"pin-forgot\" data-pin-forgot=\"1\">" + T("pin.forgot") + "</button>");
+    if (api().pinWaitSeconds() > 0) showErr(box, waitText(api().pinWaitSeconds()));
     wirePin(box, function () {
       const r = api().unlockParent(val(box, "pin"));
       if (r.ok) { done(); return; }
       box.querySelector("[name=pin]").value = "";
-      showErr(box, r.why === "wait" ? T("pin.wait", { s: r.wait }) : (r.left ? T("pin.wrongLeft", { n: r.left }) : T("pin.wrong")));
+      showErr(box, r.why === "wait" ? waitText(r.wait) : (r.left ? T("pin.wrongLeft", { n: r.left }) : T("pin.wrong")));
     }, "[data-pin-ok]");
   }
   function renderPinForgot() {
@@ -594,7 +596,8 @@
       "<button type=\"button\" class=\"pin-forgot\" data-pin-back=\"1\">" + T("pin.remember") + "</button>");
     wirePin(box, function () {
       const r = api().resetPin(val(box, "phrase"), val(box, "pin"), val(box, "again"));
-      if (r.ok) { toast2(T("pin.newSet")); done(); } else showErr(box, why(r.why));
+      if (r.ok && resetCtx) { toast2(T("pin.newSetEnter")); renderPinEnter(ctxLabel); }   // 我是家长 never opens the reset gate: the new PIN must be typed
+      else if (r.ok) { toast2(T("pin.newSet")); done(); } else showErr(box, why(r.why));
     }, "[data-pin-reset]");
   }
   function val(box, name) { const el = box.querySelector("[name=\"" + name + "\"]"); return el ? el.value.trim() : ""; }
@@ -606,22 +609,22 @@
       if (e.target.dataset && e.target.dataset.close) { afterUnlock = null; closeModal(); return; }
       if (e.target.closest(sel)) { submit(); return; }
       if (e.target.closest("[data-pin-forgot]")) { renderPinForgot(); return; }
-      if (e.target.closest("[data-pin-back]")) { renderPinEnter(); return; }
+      if (e.target.closest("[data-pin-back]")) { renderPinEnter(ctxLabel); return; }
     };
     box.onkeydown = function (e) { if (e.key === "Enter" && e.target.classList.contains("pin-in")) { e.preventDefault(); submit(); } };
   }
-  function openParent(fn, needLabel) {
+  function openParent(fn, needLabel, opts) {
     const A = api(); if (!A) return;
-    afterUnlock = fn || null;
+    afterUnlock = fn || null; resetCtx = !!(opts && opts.reset); ctxLabel = resetCtx ? needLabel : null;
     if (!A.hasPin()) renderPinSetup();
     else if (!A.isParentUnlocked()) renderPinEnter(needLabel);
     else done();
   }
   window.openParentReview = function () { openParent(null); };
-  window.withParentPin = function (fn, label) {
-    openParent(function () { closeModal(); fn(); }, label || null);  // label = dictionary key of the action, e.g. "save.import"
+  window.withParentPin = function (fn, label, opts) {
+    openParent(function () { closeModal(); fn(); }, label || null, opts);  // label = dictionary key of the action, e.g. "save.import"
   };
-  document.addEventListener("visibilitychange", function () { if (document.hidden && api()) api().lockParent(); });
+  document.addEventListener("visibilitychange", function () { if (document.hidden && api()) api().onPageHidden(); });
 
   function enhancePracticeButton(id) {
     const box = document.querySelector("#modal");

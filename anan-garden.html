@@ -2526,8 +2526,14 @@ function render(){
   renderSide(current);
 }
 
-function askReset(){
+function askReset(kind){
   const box = $("#confirm");
+  kind = kind || "reset";
+  box.querySelector("h2").setAttribute("data-i18n", kind + ".title");
+  box.querySelector("p").setAttribute("data-i18n", kind + ".body");
+  box.querySelector('[data-confirm="no"]').setAttribute("data-i18n", kind + ".no");
+  box.querySelector('[data-confirm="yes"]').setAttribute("data-i18n", kind + ".yes");
+  if(window.GardenI18n.applyStatic) window.GardenI18n.applyStatic();
   box.hidden = false;
   return new Promise(resolve => {
     confirmResolver = resolve;
@@ -2542,11 +2548,21 @@ function askReset(){
   });
 }
 function resetProgress(){
+  // last line of defence: only an authorised reset may touch the progress data
+  if(!canResetProgress()) return false;
+  revokeReset(); lockParent();
   store = emptyStore();
   writeStore({ toast:false });
   closeModal();
   render();
   toast(T("toast.reset", { time: formatClock(store.savedAt) }));
+  return true;
+}
+/* Ask for the parent PIN before a destructive action (重置进度 / 导入进度). A fresh PIN entry is required every time. */
+function requireResetGate(label, then){
+  revokeReset(); lockParent();
+  if(!window.withParentPin) return;   // fail closed: no PIN screen, no reset
+  window.withParentPin(function(){ if(canResetProgress()) then(); }, label, { reset:true });
 }
 function exportProgress(){
   writeStore({ toast:false });
@@ -2571,10 +2587,14 @@ function exportProgress(){
 }
 function importProgress(file){
   const reader = new FileReader();
-  reader.onload = () => {
+  reader.onload = async () => {
     try{
       const data = JSON.parse(String(reader.result || ""));
-      store = sanitizeStore(data);
+      const incoming = sanitizeStore(data);      // checked first; the current progress is not touched yet
+      const yes = await askReset("import");      // final confirm, after the PIN
+      if(!yes || !canResetProgress()){ revokeReset(); return; }
+      revokeReset(); lockParent();
+      store = incoming;
       if(!store.savedAt) store.savedAt = new Date().toISOString();
       writeStore({ toast:false, keepSavedAt:true });
       closeModal();
@@ -2591,19 +2611,20 @@ function bindSaveBar(){
   $("#btn-save").addEventListener("click", () => writeStore({ toast:true }));
   $("#btn-parent").addEventListener("click", () => { if(window.openParentReview) window.openParentReview(); });
   $("#btn-export").addEventListener("click", exportProgress);
-  // importing can bring in parent-checked marks, so it needs the parent PIN once one is set
+  // loading a file overwrites all progress, so it needs the parent PIN first (set one first if there is none)
   $("#btn-import").addEventListener("click", () => {
-    if(hasPin() && window.withParentPin) window.withParentPin(() => $("#import-file").click(), "save.import");
-    else $("#import-file").click();
+    requireResetGate("save.import", () => { markPickerOpen(); $("#import-file").click(); });
   });
   $("#import-file").addEventListener("change", (e) => {
     const file = e.target.files && e.target.files[0];
     e.target.value = "";
-    if(file) importProgress(file);
+    if(file) importProgress(file); else revokeReset();
   });
-  $("#btn-reset").addEventListener("click", async () => {
-    const yes = await askReset();
-    if(yes) resetProgress();
+  $("#btn-reset").addEventListener("click", () => {
+    requireResetGate("save.reset", async () => {
+      const yes = await askReset("reset");
+      if(yes) resetProgress(); else revokeReset();
+    });
   });
 }
 function bootGarden(){
@@ -2633,8 +2654,24 @@ const PARENT_PHRASE = "我是家长";
 window.GARDEN_PARENT_PHRASE = PARENT_PHRASE;  // shown in the PIN screens (it is a Chinese phrase in both languages)
 const PIN_ROUNDS = 4000;
 let parentUnlocked = false;
-let pinFails = 0;
-let pinWaitUntil = 0;
+const LOCK_KEY = "anna-garden.pinlock.v1";   // wrong-PIN counter and lockout survive a page reload
+const PIN_MAX_FAILS = 5, PIN_LOCK_MS = 5 * 60 * 1000;
+function readLock(){
+  try{ const o = JSON.parse(localStorage.getItem(LOCK_KEY) || "null"); return { fails:Number(o && o.fails) || 0, until:Number(o && o.until) || 0 }; }
+  catch(e){ return { fails:0, until:0 }; }
+}
+function writeLock(fails, until){ try{ localStorage.setItem(LOCK_KEY, JSON.stringify({ fails, until })); }catch(e){} }
+/* ---- reset permission ----
+   FUTURE (not built yet): registration + login. Then canResetProgress() will check the signed-in account
+   (the account owner or a parent), and the PIN gate below goes away. Password change will then work by an email link sent
+   to the registered address, replacing the typed 我是家长 recovery. Nothing else needs to change: every reset/import path asks only this function. */
+let resetGrantUntil = 0, pickerUntil = 0;
+function canResetProgress(){
+  return hasPin() && Date.now() < resetGrantUntil;   // set only by a correct PIN (or by choosing the very first PIN), never by 我是家长
+}
+function grantReset(){ resetGrantUntil = Date.now() + 3 * 60 * 1000; }
+function revokeReset(){ resetGrantUntil = 0; pickerUntil = 0; }
+function markPickerOpen(){ pickerUntil = Date.now() + 3 * 60 * 1000; }  // the phone's file chooser may hide the page; keep the grant meanwhile
 function sha256hex(str){
   const K = [0x428a2f98,0x71374491,0xb5c0fbcf,0xe9b5dba5,0x3956c25b,0x59f111f1,0x923f82a4,0xab1c5ed5,0xd807aa98,0x12835b01,0x243185be,0x550c7dc3,
     0x72be5d74,0x80deb1fe,0x9bdc06a7,0xc19bf174,0xe49b69c1,0xefbe4786,0x0fc19dc6,0x240ca1cc,0x2de92c6f,0x4a7484aa,0x5cb0a9dc,0x76f988da,0x983e5152,
@@ -2689,34 +2726,41 @@ function savePin(pin){
   const salt = newSalt();
   try{ localStorage.setItem(PARENT_KEY, JSON.stringify({ v:1, salt, hash:pinHash(pin, salt), setAt:nowIso() })); }
   catch(e){ return false; }
-  parentUnlocked = true; pinFails = 0; pinWaitUntil = 0;
+  parentUnlocked = true; writeLock(0, 0);
   return true;
 }
 function hasPin(){ return !!readParent(); }
 function isParentUnlocked(){ return parentUnlocked && hasPin(); }
 function lockParent(){ parentUnlocked = false; }
+/* page hidden (tab switch, phone locked): close the parent view and the reset permission, except while the phone's file chooser is open */
+function onPageHidden(){ lockParent(); if(Date.now() >= pickerUntil) revokeReset(); }
 /* first PIN on this device (or a new PIN while unlocked) */
 function setPin(pin, again){
   if(hasPin() && !parentUnlocked) return { ok:false, why:"locked" };
   if(!validPin(pin)) return { ok:false, why:"format" };
   if(String(pin) !== String(again)) return { ok:false, why:"mismatch" };
-  return savePin(String(pin)) ? { ok:true } : { ok:false, why:"storage" };
+  const first = !hasPin();
+  if(!savePin(String(pin))) return { ok:false, why:"storage" };
+  if(first) grantReset();   // no PIN existed, so nobody else's PIN is being bypassed
+  return { ok:true };
 }
-function pinWaitSeconds(){ return Math.max(0, Math.ceil((pinWaitUntil - Date.now()) / 1000)); }
+function pinWaitSeconds(){ return Math.max(0, Math.ceil((readLock().until - Date.now()) / 1000)); }
 function unlockParent(pin){
   const rec = readParent();
   if(!rec) return { ok:false, why:"nopin" };
   if(pinWaitSeconds() > 0) return { ok:false, why:"wait", wait:pinWaitSeconds() };
-  if(validPin(pin) && pinHash(String(pin), rec.salt) === rec.hash){ parentUnlocked = true; pinFails = 0; return { ok:true }; }
-  pinFails += 1;
-  if(pinFails >= 5){ pinFails = 0; pinWaitUntil = Date.now() + 60000; return { ok:false, why:"wait", wait:60 }; }
-  return { ok:false, why:"wrong", left:5 - pinFails };
+  if(validPin(pin) && pinHash(String(pin), rec.salt) === rec.hash){ parentUnlocked = true; writeLock(0, 0); grantReset(); return { ok:true }; }
+  const fails = readLock().fails + 1;
+  if(fails >= PIN_MAX_FAILS){ writeLock(0, Date.now() + PIN_LOCK_MS); return { ok:false, why:"wait", wait:PIN_LOCK_MS / 1000 }; }
+  writeLock(fails, 0);
+  return { ok:false, why:"wrong", left:PIN_MAX_FAILS - fails };
 }
 /* 忘记密码: type the parent phrase, then set a new PIN. Pending answers and earlier checks are kept. */
 function resetPin(phrase, pin, again){
   if(String(phrase || "").replace(/\s+/g, "") !== PARENT_PHRASE) return { ok:false, why:"phrase" };
   if(!validPin(pin)) return { ok:false, why:"format" };
   if(String(pin) !== String(again)) return { ok:false, why:"mismatch" };
+  revokeReset();   // 我是家长 can only change the PIN: it never opens the reset gate and never touches progress
   return savePin(String(pin)) ? { ok:true } : { ok:false, why:"storage" };
 }
 function bankQ(qid){
@@ -2724,7 +2768,7 @@ function bankQ(qid){
   if(!b || !b.idIndex || !Object.prototype.hasOwnProperty.call(b.idIndex, qid)) return null;
   return b.questions[b.idIndex[qid]] || null;
 }
-window.AnnaProgress = { markQuestion, getMark, percentFor, setMastered, goalFor, getOpen, submitOpen, withdrawOpen, confirmOpen, openList, hasPin, setPin, unlockParent, lockParent, isParentUnlocked, resetPin, pinWaitSeconds, submitMulti, revealUnanswered };
+window.AnnaProgress = { markQuestion, getMark, percentFor, setMastered, goalFor, getOpen, submitOpen, withdrawOpen, confirmOpen, openList, hasPin, setPin, unlockParent, lockParent, onPageHidden, isParentUnlocked, resetPin, pinWaitSeconds, canResetProgress, submitMulti, revealUnanswered };
 window.bootGarden = bootGarden;
 </script>
 <!-- garden-practice-js:start -->

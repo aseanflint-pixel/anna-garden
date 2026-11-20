@@ -73,7 +73,12 @@
       "pin.wait": "试错太多次了，请 {s} 秒后再试。", "pin.wrong": "密码不对。", "pin.wrongLeft": "密码不对，还可以试 {n} 次。",
       "pin.resetTitle": "重设家长密码", "pin.resetNote": "请输入设密码时看到的<b>家长确认语</b>（四个字），再设一个新密码。已经交上来的答案和批改结果都会保留。",
       "pin.phraseLabel": "家长确认语", "pin.resetBtn": "重设密码", "pin.remember": "← 我想起来了", "pin.newSet": "新的家长密码已经设好",
-      "pin.needs": "「{label}」需要家长密码。"
+      "pin.needs": "「{label}」需要家长密码。",
+      "pin.setNoteReset": "还没有设过家长密码。要「{label}」，请爸爸妈妈先设一个 <b>4 位数字密码</b>。以后重置或导入进度都要先输入它，{name}自己不能操作。",
+      "pin.newSetEnter": "新密码设好了。请输入新密码继续。「我是家长」只能重设密码，不能用来重置进度。",
+      "pin.lockedLeft": "输错 5 次，已锁定。请 {t} 后再试。",
+      "import.title": "用这个文件覆盖现在的进度吗？", "import.body": "现在的进度会被文件里的进度替换，换了就找不回来。想留一份的话，先点「导出进度」。",
+      "import.no": "再想想", "import.yes": "确定覆盖",
     },
     en: {
       "lang.label": "Language", "lang.zh": "中文", "lang.en": "English", "lang.cnOnly": "华文页面只用中文",
@@ -141,7 +146,12 @@
       "pin.wait": "Too many tries. Please wait {s} seconds and try again.", "pin.wrong": "Wrong PIN.", "pin.wrongLeft": "Wrong PIN. {n} tries left.", "pin.wrongLeft_one": "Wrong PIN. 1 try left.",
       "pin.resetTitle": "Reset the parent PIN", "pin.resetNote": "Type the <b>parent phrase</b> you saw when you set the PIN (four Chinese characters), then choose a new PIN. Answers already sent in and marks you gave are kept.",
       "pin.phraseLabel": "Parent phrase", "pin.resetBtn": "Reset PIN", "pin.remember": "← I remember it now", "pin.newSet": "The new parent PIN is set",
-      "pin.needs": "\"{label}\" needs the parent PIN."
+      "pin.needs": "\"{label}\" needs the parent PIN.",
+      "pin.setNoteReset": "No parent PIN has been set yet. To use \"{label}\", a parent must first choose a <b>4-digit PIN</b>. You'll need it every time you start over or load progress, so {name} can't do it by accident.",
+      "pin.newSetEnter": "The new PIN is set. Please enter it to continue. The parent phrase can only change the PIN. It can't be used to start over.",
+      "pin.lockedLeft": "5 wrong tries. Locked. Please try again in {t}.",
+      "import.title": "Replace your progress with this file?", "import.body": "Your current progress will be replaced by what's in the file and can't be brought back. To keep a copy, tap \"Download progress\" first.",
+      "import.no": "Not now", "import.yes": "Yes, replace it",
     }
   };
   /* names that come with the syllabus data: subjects, question types, topic groups and strands (zh text → en) */
