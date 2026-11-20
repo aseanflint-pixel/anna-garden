@@ -209,3 +209,17 @@ body.modal-open .toast{bottom:calc(96px + env(safe-area-inset-bottom))}
   .practice-nav{margin:14px -12px 0;padding:10px 12px calc(12px + env(safe-area-inset-bottom))}
   .btn-nav{min-width:88px;padding:12px 10px}
 }
+/* 2026-11-20 中文 / English switch (Lu: 调整所有UI页面为可选语言，准备中文和英文两个界面即可。 但是中文科目的页面只能是中文) */
+.lang-toggle{display:inline-flex;align-items:center;gap:0;flex-wrap:wrap;row-gap:4px}
+.lang-toggle button{min-height:40px;padding:6px 11px;font-size:12.5px;font-weight:800;border-radius:0;touch-action:manipulation}
+.lang-toggle button:first-child{border-radius:999px 0 0 999px}
+.lang-toggle button:nth-child(2){border-radius:0 999px 999px 0}
+.lang-toggle .lang-note{margin-left:8px;font-size:11.5px;font-weight:800;opacity:.9}
+.save-bar .lang-slot{display:flex;align-items:center}
+.save-bar .lang-toggle button{background:rgba(255,255,255,.14);color:inherit;box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.45)}
+.save-bar .lang-toggle button[aria-pressed="true"]{background:#fff;color:#2f5a22}
+.modal-lang{margin:0 48px 10px 0}
+.modal-lang .lang-toggle button{background:#f3f1ee;color:#3d4a34;box-shadow:inset 0 0 0 1.5px #d9e3cc}
+.modal-lang .lang-toggle button[aria-pressed="true"]{background:#2f7a3c;color:#fff;box-shadow:none}
+.modal-lang .lang-note{color:#7a5a10}
+@media (max-width:860px){ .save-bar .lang-slot{flex:1 1 100%;justify-content:center} }

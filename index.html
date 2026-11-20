@@ -194,46 +194,48 @@ body.modal-open{overflow:hidden}
 </style>
 <!-- garden-practice-css:start -->
   <link rel="stylesheet" href="assets/practice.css">
+  <script src="assets/i18n.js"></script>
 <!-- garden-practice-css:end -->
 </head>
 <body>
   <div class="save-bar" id="save-bar">
-    <button type="button" class="primary" id="btn-save">保存进度</button>
-    <button type="button" id="btn-parent">家长确认<span class="btn-parent-badge" id="parent-badge" hidden>0</span></button>
-    <button type="button" id="btn-export">导出进度</button>
-    <button type="button" id="btn-import">导入进度</button>
-    <input id="import-file" class="sr-only" type="file" accept="application/json,.json" aria-label="选择进度文件">
-    <button type="button" class="danger" id="btn-reset">重置进度</button>
-    <span class="last-saved" id="last-saved">上次保存：还没有</span>
+    <div class="lang-slot" data-lang-slot="1"></div>
+    <button type="button" class="primary" id="btn-save" data-i18n="save.save"></button>
+    <button type="button" id="btn-parent" data-i18n="save.parent"><span class="btn-parent-badge" id="parent-badge" hidden>0</span></button>
+    <button type="button" id="btn-export" data-i18n="save.export"></button>
+    <button type="button" id="btn-import" data-i18n="save.import"></button>
+    <input id="import-file" class="sr-only" type="file" accept="application/json,.json" data-i18n-aria="aria.importFile">
+    <button type="button" class="danger" id="btn-reset" data-i18n="save.reset"></button>
+    <span class="last-saved" id="last-saved"></span>
   </div>
   <header class="app-header">
     <div class="header-row">
       <div class="sign">
-        <div class="eyebrow" id="grade-line">小学四年级 · P4</div>
-        <h1 id="page-title">安安的知识花园</h1>
+        <div class="eyebrow" id="grade-line"></div>
+        <h1 id="page-title"></h1>
       </div>
-      <nav class="subject-tabs" id="tabs" aria-label="学科"></nav>
+      <nav class="subject-tabs" id="tabs" data-i18n-aria="aria.tabs"></nav>
     </div>
     <div class="vitals" id="vitals"></div>
   </header>
   <main class="layout" id="main">
-    <section class="garden" id="garden" aria-label="知识花园"></section>
+    <section class="garden" id="garden" data-i18n-aria="aria.garden"></section>
     <aside class="side" id="side"></aside>
   </main>
   <footer class="page-foot">
-    <span>知识点名称来自新加坡小学数学、科学、英文和华文大纲。</span>
-    <span>练习题都是为安安原创的。进度保存在这台设备的浏览器里，每做一题自动保存。</span>
+    <span data-i18n="foot.syllabus"></span>
+    <span data-i18n="foot.saved"></span>
   </footer>
   <div id="modal" hidden></div>
   <div id="toast" class="toast" hidden role="status" aria-live="polite"></div>
   <div id="confirm" class="confirm" hidden>
     <div class="confirm-backdrop" data-confirm="no"></div>
     <div class="confirm-card" role="alertdialog" aria-modal="true" aria-labelledby="confirm-title">
-      <h2 id="confirm-title">要把进度清零吗？</h2>
-      <p>所有花朵都会变回种子。想留一份备份的话，先点「导出进度」。</p>
+      <h2 id="confirm-title" data-i18n="reset.title"></h2>
+      <p data-i18n="reset.body"></p>
       <div class="confirm-actions">
-        <button type="button" data-confirm="no">再想想</button>
-        <button type="button" class="danger" data-confirm="yes">确定清零</button>
+        <button type="button" data-confirm="no" data-i18n="reset.no"></button>
+        <button type="button" class="danger" data-confirm="yes" data-i18n="reset.yes"></button>
       </div>
     </div>
   </div>
@@ -992,22 +994,22 @@ window.GARDEN_DATA = {
       "learning_outcomes": [
         {
           "topic_id": "P3-SC-01",
-          "text_en": "生物的特征",
+          "text_en": "Characteristics of living things",
           "text_zh": "生物的特征"
         },
         {
           "topic_id": "P3-SC-02",
-          "text_en": "生物的大类",
+          "text_en": "Main groups of living things",
           "text_zh": "生物的大类"
         },
         {
           "topic_id": "P3-SC-03",
-          "text_en": "观察并推断生物和非生物",
+          "text_en": "Observe and tell living from non-living things",
           "text_zh": "观察并推断生物和非生物"
         },
         {
           "topic_id": "P3-SC-04",
-          "text_en": "把生物分类",
+          "text_en": "Classify living things",
           "text_zh": "把生物分类"
         }
       ]
@@ -1030,12 +1032,12 @@ window.GARDEN_DATA = {
       "learning_outcomes": [
         {
           "topic_id": "P3-SC-05",
-          "text_en": "材料的种类和用途",
+          "text_en": "Kinds of materials and their uses",
           "text_zh": "材料的种类和用途"
         },
         {
           "topic_id": "P3-SC-06",
-          "text_en": "比较材料的性质",
+          "text_en": "Compare the properties of materials",
           "text_zh": "比较材料的性质"
         }
       ]
@@ -1058,17 +1060,17 @@ window.GARDEN_DATA = {
       "learning_outcomes": [
         {
           "topic_id": "P3-SC-07",
-          "text_en": "不同生物有不同的生命周期",
+          "text_en": "Different living things have different life cycles",
           "text_zh": "不同生物有不同的生命周期"
         },
         {
           "topic_id": "P3-SC-08",
-          "text_en": "植物的生命周期",
+          "text_en": "Life cycles of plants",
           "text_zh": "植物的生命周期"
         },
         {
           "topic_id": "P3-SC-09",
-          "text_en": "动物的生命周期",
+          "text_en": "Life cycles of animals",
           "text_zh": "动物的生命周期"
         }
       ]
@@ -1091,27 +1093,27 @@ window.GARDEN_DATA = {
       "learning_outcomes": [
         {
           "topic_id": "P3-SC-10",
-          "text_en": "磁铁能推也能拉",
+          "text_en": "Magnets can push and pull",
           "text_zh": "磁铁能推也能拉"
         },
         {
           "topic_id": "P3-SC-11",
-          "text_en": "磁铁的特性",
+          "text_en": "Properties of magnets",
           "text_zh": "磁铁的特性"
         },
         {
           "topic_id": "P3-SC-12",
-          "text_en": "磁铁的用途",
+          "text_en": "Uses of magnets",
           "text_zh": "磁铁的用途"
         },
         {
           "topic_id": "P3-SC-13",
-          "text_en": "磁性材料和非磁性材料",
+          "text_en": "Magnetic and non-magnetic materials",
           "text_zh": "磁性材料和非磁性材料"
         },
         {
           "topic_id": "P3-SC-14",
-          "text_en": "制作磁铁",
+          "text_en": "Making a magnet",
           "text_zh": "制作磁铁"
         }
       ]
@@ -1185,7 +1187,7 @@ window.GARDEN_DATA = {
       "learning_outcomes": [
         {
           "topic_id": "P4-EN-04",
-          "text_en": "人称、物主、反身和不定代词",
+          "text_en": "Personal, possessive, reflexive and indefinite pronouns",
           "text_zh": "人称、物主、反身和不定代词"
         }
       ]
@@ -1368,17 +1370,17 @@ window.GARDEN_DATA = {
       "learning_outcomes": [
         {
           "topic_id": "P4-EN-22",
-          "text_en": "词框文法填空",
+          "text_en": "Grammar cloze with a word box",
           "text_zh": "词框文法填空"
         },
         {
           "topic_id": "P4-EN-23",
-          "text_en": "括号选词填空",
+          "text_en": "Grammar cloze: choose the word in brackets",
           "text_zh": "括号选词填空"
         },
         {
           "topic_id": "P4-EN-26",
-          "text_en": "阅读填空（自己填词）",
+          "text_en": "Comprehension cloze (fill in your own words)",
           "text_zh": "阅读填空（自己填词）"
         }
       ]
@@ -1955,12 +1957,15 @@ window.GARDEN_DATA = {
 };
 </script>
 <script>
-const STATUS = {
-  conquered: { label:"已攻克" },
-  progress:  { label:"进行中" },
-  todo:      { label:"未开始" },
-  locked:    { label:"未解锁" }
-};
+/* UI text: T(key, vars) and term(kind, value) from assets/i18n.js (one zh/en dictionary). Chinese-subject pages are always Chinese. */
+const I18N = window.GardenI18n;
+function T(key, vars){ return I18N.T(key, vars); }
+function term(kind, value){ return I18N.term(kind, value); }
+function isEn(){ return I18N.ui() === "en"; }
+/* topic / subject names in the language on screen (zh mode keeps the English name as a small second line, except on Chinese-subject pages) */
+function tName(t){ return isEn() ? t.name_en : t.name_zh; }
+function tSub(t){ return (isEn() || I18N.isCn(t.subject_id)) ? "" : t.name_en; }
+function sName(s){ return term("subject", s.subject_id); }
 function $(sel, root=document){ return root.querySelector(sel); }
 function starsHTML(n){
   return [1,2,3].map(i => `<span class="star ${i<=n?"on":""}" aria-hidden="true">★</span>`).join("");
@@ -2121,9 +2126,8 @@ function stampParts(iso){
   return { month:get("month"), day:get("day"), hour:get("hour"), minute:get("minute") };
 }
 function formatSaved(iso){
-  if(!iso) return "还没有";
-  const p = stampParts(iso);
-  return p.month + "月" + p.day + "日 " + p.hour + ":" + p.minute;
+  if(!iso) return T("save.never");
+  return I18N.dateText(stampParts(iso));
 }
 function formatClock(iso){
   const p = stampParts(iso);
@@ -2131,7 +2135,7 @@ function formatClock(iso){
 }
 function updateSavedLabel(){
   const el = $("#last-saved");
-  if(el) el.textContent = "上次保存：" + formatSaved(store.savedAt);
+  if(el) el.textContent = T("save.last", { when: formatSaved(store.savedAt) });
 }
 function toast(message){
   const el = $("#toast");
@@ -2150,11 +2154,11 @@ function writeStore(opts){
     localStorage.setItem(PROGRESS_KEY, JSON.stringify(store));
   }catch(e){
     updateSavedLabel();
-    toast("这台设备暂时存不住进度");
+    toast(T("toast.storage"));
     return false;
   }
   updateSavedLabel();
-  if(opts.toast) toast("已经保存啦 · " + formatClock(store.savedAt));
+  if(opts.toast) toast(T("toast.saved", { time: formatClock(store.savedAt) }));
   return true;
 }
 function ensureRec(topicId){
@@ -2220,9 +2224,9 @@ function starsFor(pct){
   return 0;
 }
 function statusText(t){
-  if(t.percent >= 100) return "已攻克";
-  if(t.percent > 0) return "进行中 " + t.percent + "%";
-  return "未开始";
+  if(t.percent >= 100) return T("status.conquered");
+  if(t.percent > 0) return T("status.progress", { p: t.percent });
+  return T("status.todo");
 }
 function decorate(t){
   const percent = percentFor(t.topic_id);
@@ -2357,32 +2361,35 @@ function openModal(id){
   const canPractice = t.status !== "locked";
   const flagged = isMastered(t.topic_id);
   const goal = goalFor(t.topic_id);
-  let help = "做对 " + goal + " 道不同的题，花就会开。也可以直接点「我学会了」。";
-  if(flagged) help = "这是你点的「我学会了」。想再练练，就点下面。";
-  else if(t.percent >= 100) help = "做对的题已经够了，这朵花开啦。";
-  else if(goal <= 0) help = "这里还没有题目，学会了可以点下面的按钮。";
+  I18N.setPage(t.subject_id);
+  let help = T("topic.helpGoal", { n: goal });
+  if(flagged) help = T("topic.helpFlagged");
+  else if(t.percent >= 100) help = T("topic.helpDone");
+  else if(goal <= 0) help = T("topic.helpNone");
   const masterBtn = flagged
-    ? `<button class="btn-master is-on" type="button" id="btn-master">还要再练练</button>`
-    : (t.percent >= 100 ? "" : `<button class="btn-master" type="button" id="btn-master">我学会了</button>`);
+    ? `<button class="btn-master is-on" type="button" id="btn-master">${T("topic.more")}</button>`
+    : (t.percent >= 100 ? "" : `<button class="btn-master" type="button" id="btn-master">${T("topic.gotIt")}</button>`);
+  const sub = tSub(t);
   const box = $("#modal");
   box.innerHTML = `
     <div class="modal-backdrop" data-close="1"></div>
     <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="md-title">
-      <button class="modal-x" type="button" data-close="1" aria-label="关闭">×</button>
-      <div class="modal-kicker">${t.strand_zh} · ${t.group} · ${t.topic_id}</div>
-      <h2 id="md-title">${t.name_zh}</h2>
-      <p class="modal-en">${t.name_en}</p>
+      <button class="modal-x" type="button" data-close="1" aria-label="${T("aria.close")}">×</button>
+      <div class="modal-lang">${I18N.toggleHTML(t.subject_id)}</div>
+      <div class="modal-kicker">${term("strand", t.strand_zh)} · ${term("group", t.group)} · ${t.topic_id}</div>
+      <h2 id="md-title">${tName(t)}</h2>
+      ${sub ? `<p class="modal-en">${sub}</p>` : ""}
       <div class="modal-status status-${t.status}">
         <span class="pill">${statusText(t)}</span>
-        <span class="stars" aria-label="${t.stars} 颗星">${starsHTML(t.stars)}</span>
+        <span class="stars" aria-label="${T("aria.stars", { n: t.stars })}">${starsHTML(t.stars)}</span>
       </div>
-      <p class="topic-meter">这朵花现在 <b>${t.percent}%</b>。${help}</p>
-      <p class="modal-lead">这一关你会：</p>
-      <ul class="modal-los">${t.learning_outcomes.map(x=>`<li>${x.text_zh}</li>`).join("")}</ul>
+      <p class="topic-meter">${T("topic.meter", { p: t.percent })}${help}</p>
+      <p class="modal-lead">${T("topic.lead")}</p>
+      <ul class="modal-los">${t.learning_outcomes.map(x=>`<li>${isEn() ? x.text_en : x.text_zh}</li>`).join("")}</ul>
       <button class="btn-practice" type="button" id="btn-practice" ${canPractice?"":"disabled"}>
-        ${canPractice? "练习题": "先通关前面的知识点"}
+        ${canPractice? T("topic.practice"): T("topic.lockedFirst")}
       </button>
-      <p class="practice-note" hidden>题库正在整理中，稍后就能在这里练习对应的练习题啦。</p>
+      <p class="practice-note" hidden>${T("topic.bankSoon")}</p>
       ${masterBtn}
     </div>`;
   box.hidden = false;
@@ -2396,11 +2403,14 @@ function openModal(id){
     master.addEventListener("click", () => setMastered(t.topic_id, !isMastered(t.topic_id)));
   }
   box.onclick = (e) => { if(e.target.dataset.close) closeModal(); };
+  window.__modalRerender = () => openModal(id);
 }
 function closeModal(){
   const box = $("#modal");
   box.hidden = true; box.innerHTML = "";
   document.body.classList.remove("modal-open");
+  window.__modalRerender = null;
+  I18N.setPage(current);
 }
 document.addEventListener("keydown", (e) => {
   if(e.key !== "Escape") return;
@@ -2418,13 +2428,14 @@ function renderTabs(){
   tabs.innerHTML = DATA.subjects.map(s => {
     const soon = s.coming_soon ? "is-soon" : "";
     const sel = current===s.subject_id ? "true" : "false";
-    const extra = s.coming_soon ? "<small>即将开放</small>" : "";
-    return `<button type="button" class="${soon}" aria-selected="${sel}" data-id="${s.subject_id}">${s.name_zh}${extra}</button>`;
+    const extra = s.coming_soon ? `<small>${T("tabs.soon")}</small>` : "";
+    return `<button type="button" class="${soon}" aria-selected="${sel}" data-id="${s.subject_id}">${sName(s)}${extra}</button>`;
   }).join("");
   tabs.onclick = (e) => {
     const b = e.target.closest("button");
     if(!b) return;
     current = b.dataset.id;
+    const tt = $("#toast"); if(tt) tt.hidden = true;  // a message from the previous page is not carried over (it may be in the other language)
     render();
   };
 }
@@ -2434,13 +2445,13 @@ function renderVitals(s){
   $("#vitals").style.display="";
   const st = statsOf(DATA, s.subject_id);
   const inProg = st.unfinished.find(t => t.status==="progress");
-  const hint = inProg ? `今天可以先给「${inProg.name_zh}」浇浇水` : (st.unfinished[0] ? `下一株可以种「${st.unfinished[0].name_zh}」` : "这一科的花都开齐啦！");
+  const hint = inProg ? T("vitals.water", { name: tName(inProg) }) : (st.unfinished[0] ? T("vitals.next", { name: tName(st.unfinished[0]) }) : T("vitals.all"));
   $("#vitals").innerHTML = `
     <div class="tree-wrap">${treeSVG(st.donePct)}</div>
     <div class="stats-col">
-      <div class="stat done" data-stat="done"><div class="k">学会了</div><div class="v">${st.donePct}%</div><div class="unit">开花 ${st.done}/${st.total}</div></div>
-      <div class="stat remain" data-stat="remain"><div class="k">还剩</div><div class="v">${st.remainPct}%</div></div>
-      <div class="stat todo" data-stat="todo"><div class="k">还没开花</div><div class="v">${st.unfinished.length}</div><div class="unit">株</div></div>
+      <div class="stat done" data-stat="done"><div class="k">${T("vitals.learned")}</div><div class="v">${st.donePct}%</div><div class="unit">${T("vitals.bloomed", { a: st.done, b: st.total })}</div></div>
+      <div class="stat remain" data-stat="remain"><div class="k">${T("vitals.left")}</div><div class="v">${st.remainPct}%</div></div>
+      <div class="stat todo" data-stat="todo"><div class="k">${T("vitals.notYet")}</div><div class="v">${st.unfinished.length}</div><div class="unit">${T("vitals.plants", { n: st.unfinished.length })}</div></div>
       <div class="bar-wrap" aria-hidden="true"><span style="--p:${st.donePct}%"></span></div>
       <p class="hint">${hint}</p>
     </div>`;
@@ -2451,16 +2462,18 @@ function renderGarden(sid){
   const showBf = statsOf(DATA, sid).donePct >= 30;
   const plots = topics.map(t => {
     const kind = t.flower || "daisy";
-    return `<button class="plot ${t.status}" type="button" data-id="${t.topic_id}" data-percent="${t.percent}" data-status="${t.status}" aria-label="${t.name_zh}，${statusText(t)}">
+    const sub = tSub(t);
+    return `<button class="plot ${t.status}" type="button" data-id="${t.topic_id}" data-percent="${t.percent}" data-status="${t.status}" aria-label="${T("aria.plot", { name: tName(t), status: statusText(t) })}">
       <div class="plant">${flowerSVG(kind, t.status, t.percent)}</div>
       <div class="pot"><span class="soil"></span></div>
-      <div class="label-zh">${t.name_zh}</div>
-      <div class="label-en">${t.name_en}</div>
+      <div class="label-zh">${tName(t)}</div>
+      ${sub ? `<div class="label-en">${sub}</div>` : ""}
       <span class="tag">${statusText(t)}</span>
     </button>`;
   }).join("");
   const s = DATA.subjects.find(x => x.subject_id === sid);
-  const note = (s && s.note) ? `<p class="subject-note">${s.note}</p>` : "";
+  const noteText = s ? term("note", s.subject_id) : "";
+  const note = noteText ? `<p class="subject-note">${noteText}</p>` : "";
   $("#garden").innerHTML = `
     ${note}
     <div class="butterflies" aria-hidden="true">${showBf?`<span class="bf b1">🦋</span><span class="bf b2">🦋</span><span class="bf b3">🦋</span>`:""}</div>
@@ -2473,34 +2486,38 @@ function renderSide(sid){
   const list = statsOf(DATA, sid).unfinished;
   const ico = {progress:"🌿", todo:"🌱", locked:"🌰"};
   $("#side").innerHTML = `
-    <h2>还没开花的种子</h2>
-    <p class="sub">${s.name_zh}还有 ${list.length} 个知识点等你浇灌</p>
+    <h2>${T("side.title")}</h2>
+    <p class="sub">${T("side.sub", { subject: sName(s), n: list.length })}</p>
     ${list.map(t => `
       <button class="seed-item" type="button" data-id="${t.topic_id}">
         <span class="ico">${ico[t.status]}</span>
-        <span><span class="zh">${t.name_zh}</span><span class="en">${t.name_en}</span></span>
+        <span><span class="zh">${tName(t)}</span>${tSub(t) ? `<span class="en">${tSub(t)}</span>` : ""}</span>
         <span class="st">${statusText(t)}</span>
       </button>`).join("")}
     <div class="legend">
-      <span>🌼 已攻克（开花）</span>
-      <span>🌿 进行中（嫩芽会长高）</span>
-      <span>🌱 未开始（种子）</span>
+      <span>${T("legend.conquered")}</span>
+      <span>${T("legend.progress")}</span>
+      <span>${T("legend.todo")}</span>
     </div>`;
   $("#side").onclick = (e) => { const b=e.target.closest("[data-id]"); if(b) openModal(b.dataset.id); };
 }
 
 function render(){
+  I18N.setPage(current);  // every window opens from the subject tab on screen
+  I18N.applyStatic();
+  document.body.classList.toggle("ui-en", I18N.ui() === "en");
   updateParentBadge();
-  const stu = DATA.student;
-  $("#page-title").textContent = `${stu.display_name}的知识花园`;
-  $("#grade-line").textContent = `${stu.grade_zh} · ${stu.grade}`;
+  updateSavedLabel();
+  $("#page-title").textContent = T("page.title");
+  document.title = T("page.title");
+  $("#grade-line").textContent = T("page.grade");
   renderTabs();
   const s = DATA.subjects.find(x => x.subject_id===current);
   if(s.coming_soon){
     renderVitals(s);
     $("#garden").style.display = "none";
     $("#garden").innerHTML = "";
-    $("#side").innerHTML = `<div class="coming-soon-card"><div class="cs-badge">即将开放</div><h3>${s.name_zh} · ${s.name_en}</h3><p>这一科的知识点页面还在准备中，先去别的花园看看吧。</p></div>`;
+    $("#side").innerHTML = `<div class="coming-soon-card"><div class="cs-badge">${T("tabs.soon")}</div><h3>${sName(s)}</h3><p>${T("soon.body")}</p></div>`;
     return;
   }
   $("#garden").style.display = "";
@@ -2529,7 +2546,7 @@ function resetProgress(){
   writeStore({ toast:false });
   closeModal();
   render();
-  toast("进度已经清零 · " + formatClock(store.savedAt));
+  toast(T("toast.reset", { time: formatClock(store.savedAt) }));
 }
 function exportProgress(){
   writeStore({ toast:false });
@@ -2550,7 +2567,7 @@ function exportProgress(){
   a.click();
   a.remove();
   setTimeout(() => URL.revokeObjectURL(url), 1500);
-  toast("进度文件已经下载 · " + formatClock(store.savedAt));
+  toast(T("toast.exported", { time: formatClock(store.savedAt) }));
 }
 function importProgress(file){
   const reader = new FileReader();
@@ -2562,12 +2579,12 @@ function importProgress(file){
       writeStore({ toast:false, keepSavedAt:true });
       closeModal();
       render();
-      toast("进度已经导入 · " + formatClock(store.savedAt));
+      toast(T("toast.imported", { time: formatClock(store.savedAt) }));
     }catch(e){
-      toast(e && e.message === "old-bank" ? "这是旧题库的进度文件，新花园从零开始，不能导入。" : "这个文件读不出来，花园没有改。");
+      toast(e && e.message === "old-bank" ? T("toast.importOld") : T("toast.importBad"));
     }
   };
-  reader.onerror = () => toast("这个文件读不出来，花园没有改。");
+  reader.onerror = () => toast(T("toast.importBad"));
   reader.readAsText(file);
 }
 function bindSaveBar(){
@@ -2576,7 +2593,7 @@ function bindSaveBar(){
   $("#btn-export").addEventListener("click", exportProgress);
   // importing can bring in parent-checked marks, so it needs the parent PIN once one is set
   $("#btn-import").addEventListener("click", () => {
-    if(hasPin() && window.withParentPin) window.withParentPin(() => $("#import-file").click(), "导入进度");
+    if(hasPin() && window.withParentPin) window.withParentPin(() => $("#import-file").click(), "save.import");
     else $("#import-file").click();
   });
   $("#import-file").addEventListener("change", (e) => {
@@ -2592,15 +2609,20 @@ function bindSaveBar(){
 function bootGarden(){
   try{
     DATA = window.GARDEN_DATA;
-    if(!DATA || !DATA.topics) throw new Error("知识点没有加载出来");
+    if(!DATA || !DATA.topics) throw new Error(T("err.topics"));
     store = readStore();
     current = (DATA.subjects.find(s => !s.coming_soon) || DATA.subjects[0]).subject_id;
     bindSaveBar();
     updateSavedLabel();
     render();
+    // 中文 / English switch: redraw the page and whatever window is open (progress is untouched)
+    document.addEventListener("garden:lang", () => {
+      render();
+      if(!$("#modal").hidden && typeof window.__modalRerender === "function") window.__modalRerender();
+    });
   }catch(err){
     const main = document.querySelector("main");
-    if(main) main.innerHTML = `<div class="load-error"><p>数据没有加载出来。</p><p>${err.message}</p></div>`;
+    if(main) main.innerHTML = `<div class="load-error"><p>${T("err.data")}</p><p>${err.message}</p></div>`;
   }
 }
 /* ---------- parent PIN (家长确认) ----------
@@ -2608,6 +2630,7 @@ function bootGarden(){
    Marking open-ended answers (confirmOpen) only works while the parent view is unlocked. */
 const PARENT_KEY = "anna-garden.parent.v1";
 const PARENT_PHRASE = "我是家长";
+window.GARDEN_PARENT_PHRASE = PARENT_PHRASE;  // shown in the PIN screens (it is a Chinese phrase in both languages)
 const PIN_ROUNDS = 4000;
 let parentUnlocked = false;
 let pinFails = 0;
