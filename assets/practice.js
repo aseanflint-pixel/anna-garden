@@ -137,7 +137,7 @@
     }
     if ((q.accept || []).some(function (a) { return norm(a) === v; })) return "right";
     if (q.val) {
-      // Lu: 数值相等就算对，除非题目指定了形式
+      // 家长: 数值相等就算对，除非题目指定了形式
       const x = valOf(input);
       return x && valOk(q, x) ? "right" : "wrong";   // e.g. "10 r 2" is not a number of boxes
     }
@@ -227,13 +227,15 @@
     return String(text || "").replace(/\{\{o:(\d+)\}\}/g, function (_, k) { const pos = p.indexOf(Number(k)); return pos >= 0 ? "(" + (pos + 1) + ")" : ""; });
   }
   window.__gardenSession = { orders: orders, labelize: labelize }; // read by the headless tests only
+  // shared with the 摸底测试 (assets/diagnostic.js): the same answer checker (numerically equal = right) and the same question rendering
+  window.GardenCheck = { checkExact: checkExact, metaHTML: metaHTML, richText: richText, passageHTML: passageHTML };
 
   /* ---------- rendering ---------- */
-  // Lu 2026-11-18: 知识点筛选那一行拿掉 — practice always runs over every question of the flower
+  // 2026-11-18: 知识点筛选那一行拿掉 — practice always runs over every question of the flower
   function filtersHTML() { return ""; }
   const SUBJ_ID = { "Mathematics": "math", "Science": "science", "English": "english", "Higher Chinese": "higher_chinese", "Chinese": "chinese" };
   function metaHTML(q) {
-    // Lu 2026-11-18: only P4 · subject · question type (no marks, nothing else)
+    // 2026-11-18: only P4 · subject · question type (no marks, nothing else)
     return [q.level, I18N.term("subject", SUBJ_ID[q.subject] || q.subject_zh), I18N.term("qtype", q.type_zh)].filter(Boolean).map(function (c) { return "<span class=\"chip\">" + esc(c) + "</span>"; }).join("");
   }
   function answerBoxHTML(q, t) {

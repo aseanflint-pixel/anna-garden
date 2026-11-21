@@ -188,7 +188,7 @@ textarea.part-in{resize:vertical}
 .pc-part{border-top:1px solid #f0e3c4;padding-top:8px;margin-top:8px}
 .pc-part-h{font-weight:800;color:#35582a}
 .pc-prompt{font-weight:600;color:#3d3a33}
-/* 2026-11-20 nav fix (Lu: 手机界面时，有时候点击不到右下角下一题):
+/* 2026-11-20 nav fix (家长: 手机界面时，有时候点击不到右下角下一题):
    the 上一题 / 第N道 / 下一题 bar sticks to the bottom of the practice card, above the iOS home indicator. */
 #modal,#modal button,#modal .opt,#modal summary{touch-action:manipulation}
 .modal-card.practice-mode{padding-bottom:0;scroll-padding-bottom:96px}
@@ -209,7 +209,7 @@ body.modal-open .toast{bottom:calc(96px + env(safe-area-inset-bottom))}
   .practice-nav{margin:14px -12px 0;padding:10px 12px calc(12px + env(safe-area-inset-bottom))}
   .btn-nav{min-width:88px;padding:12px 10px}
 }
-/* 2026-11-20 中文 / English switch (Lu: 调整所有UI页面为可选语言，准备中文和英文两个界面即可。 但是中文科目的页面只能是中文) */
+/* 2026-11-20 中文 / English switch (家长: 调整所有UI页面为可选语言，准备中文和英文两个界面即可。 但是中文科目的页面只能是中文) */
 .lang-toggle{display:inline-flex;align-items:center;gap:0;flex-wrap:wrap;row-gap:4px}
 .lang-toggle button{min-height:40px;padding:6px 11px;font-size:12.5px;font-weight:800;border-radius:0;touch-action:manipulation}
 .lang-toggle button:first-child{border-radius:999px 0 0 999px}

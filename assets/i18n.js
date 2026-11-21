@@ -1,4 +1,4 @@
-/* UI language for 安安's knowledge garden (Lu 2026-11-20: 调整所有UI页面为可选语言，准备中文和英文两个界面即可。 但是中文科目的页面只能是中文).
+/* UI language for 安安's knowledge garden (2026-11-20: 调整所有UI页面为可选语言，准备中文和英文两个界面即可。 但是中文科目的页面只能是中文).
    - Every UI string lives in GARDEN_I18N below (zh + en). Page code calls T(key, vars) and never writes UI text itself.
    - The choice is kept in localStorage under LANG_KEY. It never reads or writes the progress key (anna-garden.progress.v1).
    - Chinese-subject pages (华文 / 高级华文) always show Chinese, whatever language is chosen.
