@@ -1,14 +1,16 @@
-/* 五年级 explainer videos: a 「看讲解」 / "Watch lesson" button on each flower that has a video, playing it in an in-page HTML5 player.
-   - Which videos exist comes from manifest.json on the videos site (window.GARDEN_VIDEO_BASES, first that answers wins), fetched once.
+/* Explainer videos (五年级 p5.html and 四年级 index.html): a 「看讲解」 / "Watch lesson" button on each flower that has a video, playing it in an in-page HTML5 player.
+   - Per page: window.GARDEN_VIDEO_MANIFEST (default "manifest.json"; P4 uses "manifest_p4.json") and window.GARDEN_WATCH_KEY (default the P5 key).
+   - Which videos exist comes from the manifest file (MANIFEST) in the videos folder (window.GARDEN_VIDEO_BASES, first that answers wins), fetched once.
      A flower without a video for the language on screen shows no button. New videos need only a videos-site push.
    - Language follows the 中文 / English switch; 华文 / 高级华文 flowers always use the Chinese video.
    - The <video> element is only created when the child taps the button (preload="none"), so the garden page stays light.
-   - "Watched" marks are kept on this device under WATCH_KEY (P5 only); they never touch the practice record. */
+   - "Watched" marks are kept on this device under WATCH_KEY (one key per grade); they never touch the practice record. */
 (function () {
   "use strict";
   const I = window.GardenI18n, DICT = window.GARDEN_I18N && window.GARDEN_I18N.dict;
   if (!I || !DICT || typeof window.openModal !== "function") return;
-  const WATCH_KEY = "anna-garden.p5.watched.v1";
+  const WATCH_KEY = window.GARDEN_WATCH_KEY || "anna-garden.p5.watched.v1";
+  const MANIFEST = window.GARDEN_VIDEO_MANIFEST || "manifest.json";
   Object.assign(DICT.zh, { "vid.watch": "▶ 看讲解", "vid.watched": "看过了", "vid.kicker": "讲解视频", "vid.back": "← 返回", "vid.min": "约 {m} 分钟",
     "vid.tip": "先看讲解，再去练习。画面上有字幕；也可以暂停、拖动进度条。", "vid.err": "视频暂时打不开。请检查网络，稍后再试。", "vid.practice": "去练习", "vid.mark": "看过讲解" });
   Object.assign(DICT.en, { "vid.watch": "▶ Watch lesson", "vid.watched": "Watched", "vid.kicker": "Lesson video", "vid.back": "← Back", "vid.min": "about {m} min",
@@ -23,7 +25,7 @@
     loading = (async () => {
       if (location.protocol === "file:") return null;   // a page opened from disk (local preview) has no videos site
       for (const b of BASES) {
-        try { const r = await fetch(b + "manifest.json", { cache: "no-cache" }); if (!r.ok) continue; const j = await r.json();
+        try { const r = await fetch(b + MANIFEST, { cache: "no-cache" }); if (!r.ok) continue; const j = await r.json();
           if (j && j.version === 1 && j.videos) { man = j; base = b + (j.base || ""); return man; } } catch (e) { /* try the next place */ }
       }
       return null;

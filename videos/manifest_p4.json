@@ -1,0 +1,277 @@
+{
+ "version": 1,
+ "built": "2026-11-28 01:33",
+ "base": "p4/",
+ "videos": {
+  "P4-MA-01": {
+   "en": {
+    "mp4": "P4-MA-01_en.mp4",
+    "vtt": "P4-MA-01_en.vtt",
+    "poster": "P4-MA-01_en.jpg",
+    "seconds": 239.5,
+    "bytes": 3503844,
+    "sha256": "e7c51a7da4f726f0caf3546eac56aaeb751985d8c86f2c2ae64592c3bdecb744"
+   },
+   "zh": {
+    "mp4": "P4-MA-01_zh.mp4",
+    "vtt": "P4-MA-01_zh.vtt",
+    "poster": "P4-MA-01_zh.jpg",
+    "seconds": 238.1,
+    "bytes": 3304713,
+    "sha256": "436f271c09f30905a65d3cfb73fa9859d640c671d7b24ecf349ac0aa3bf1fe75"
+   }
+  },
+  "P4-MA-07": {
+   "en": {
+    "mp4": "P4-MA-07_en.mp4",
+    "vtt": "P4-MA-07_en.vtt",
+    "poster": "P4-MA-07_en.jpg",
+    "seconds": 208.2,
+    "bytes": 3129904,
+    "sha256": "27d367b46f2c1ded0d48a556e0265ab219a48363e279140bdf9bc0ad68789f7b"
+   },
+   "zh": {
+    "mp4": "P4-MA-07_zh.mp4",
+    "vtt": "P4-MA-07_zh.vtt",
+    "poster": "P4-MA-07_zh.jpg",
+    "seconds": 215.1,
+    "bytes": 3093728,
+    "sha256": "de428cb552ebc1dcc2d70edb7e17129db848f6c985e3aebc3322a2a3633d3f30"
+   }
+  },
+  "P4-MA-12": {
+   "en": {
+    "mp4": "P4-MA-12_en.mp4",
+    "vtt": "P4-MA-12_en.vtt",
+    "poster": "P4-MA-12_en.jpg",
+    "seconds": 233.8,
+    "bytes": 3441691,
+    "sha256": "034995c1b69205c4071c8721efd8be37c92edc3c4842eb32656bcef8ad7013a8"
+   },
+   "zh": {
+    "mp4": "P4-MA-12_zh.mp4",
+    "vtt": "P4-MA-12_zh.vtt",
+    "poster": "P4-MA-12_zh.jpg",
+    "seconds": 220.0,
+    "bytes": 3114355,
+    "sha256": "e30f7a7bdcdfbf979c4ed2fdf7baf57e2b0b2595992556c8ac40344b17a3849d"
+   }
+  },
+  "P4-MA-14": {
+   "en": {
+    "mp4": "P4-MA-14_en.mp4",
+    "vtt": "P4-MA-14_en.vtt",
+    "poster": "P4-MA-14_en.jpg",
+    "seconds": 195.2,
+    "bytes": 3029916,
+    "sha256": "8ae81a6cc1d4c04a5c8bccdb0fb1ecf9d0a2b3c8666c999946ba472b30490958"
+   },
+   "zh": {
+    "mp4": "P4-MA-14_zh.mp4",
+    "vtt": "P4-MA-14_zh.vtt",
+    "poster": "P4-MA-14_zh.jpg",
+    "seconds": 200.1,
+    "bytes": 2882367,
+    "sha256": "f29c000262bdd088a8872974f0394d748658bde7350a224200e52ff84297dec2"
+   }
+  },
+  "P4-MA-15": {
+   "en": {
+    "mp4": "P4-MA-15_en.mp4",
+    "vtt": "P4-MA-15_en.vtt",
+    "poster": "P4-MA-15_en.jpg",
+    "seconds": 181.6,
+    "bytes": 2698482,
+    "sha256": "4eadb5f859e252950999995d8d416eb1b5db86236c6ec03ff61373c45977b60c"
+   },
+   "zh": {
+    "mp4": "P4-MA-15_zh.mp4",
+    "vtt": "P4-MA-15_zh.vtt",
+    "poster": "P4-MA-15_zh.jpg",
+    "seconds": 190.9,
+    "bytes": 2741222,
+    "sha256": "529c0f586fb6b646cf59af202d78dce281e9a07970cd31644561d424e52e3255"
+   }
+  },
+  "P4-MA-16": {
+   "en": {
+    "mp4": "P4-MA-16_en.mp4",
+    "vtt": "P4-MA-16_en.vtt",
+    "poster": "P4-MA-16_en.jpg",
+    "seconds": 182.6,
+    "bytes": 2797362,
+    "sha256": "342dd8ed18cdc8d5460f2dbc886f9a0868071d6bb59603010e0df930925fc9ce"
+   },
+   "zh": {
+    "mp4": "P4-MA-16_zh.mp4",
+    "vtt": "P4-MA-16_zh.vtt",
+    "poster": "P4-MA-16_zh.jpg",
+    "seconds": 203.0,
+    "bytes": 2894061,
+    "sha256": "ee5bf5b39fdfc0d5f45d458ebf5c77ba68deef915a7669c3ca550a6870b74ac7"
+   }
+  },
+  "P4-MA-17": {
+   "en": {
+    "mp4": "P4-MA-17_en.mp4",
+    "vtt": "P4-MA-17_en.vtt",
+    "poster": "P4-MA-17_en.jpg",
+    "seconds": 220.8,
+    "bytes": 3310759,
+    "sha256": "347f5395b9c3335ebeaa7bf94247a44e48720e9275820337bba1a409e4511b38"
+   },
+   "zh": {
+    "mp4": "P4-MA-17_zh.mp4",
+    "vtt": "P4-MA-17_zh.vtt",
+    "poster": "P4-MA-17_zh.jpg",
+    "seconds": 212.3,
+    "bytes": 3010114,
+    "sha256": "0c2a508b9f1f3cded660f739e5fb0f199f7807574740ddf014680effcab224d8"
+   }
+  },
+  "P4-MA-22": {
+   "en": {
+    "mp4": "P4-MA-22_en.mp4",
+    "vtt": "P4-MA-22_en.vtt",
+    "poster": "P4-MA-22_en.jpg",
+    "seconds": 208.5,
+    "bytes": 3114614,
+    "sha256": "a25c683316e6459f9debc982d0fb6780e1ef17511ce0bd137a461de13666a6b5"
+   },
+   "zh": {
+    "mp4": "P4-MA-22_zh.mp4",
+    "vtt": "P4-MA-22_zh.vtt",
+    "poster": "P4-MA-22_zh.jpg",
+    "seconds": 195.2,
+    "bytes": 2766960,
+    "sha256": "bae9976d4b4e99cd98e80aa1097eec41c586cf4e6ec40d95b276efbde2d34e36"
+   }
+  },
+  "P4-MA-23": {
+   "en": {
+    "mp4": "P4-MA-23_en.mp4",
+    "vtt": "P4-MA-23_en.vtt",
+    "poster": "P4-MA-23_en.jpg",
+    "seconds": 210.7,
+    "bytes": 3167730,
+    "sha256": "2a8a3cf2a740ec98c92a0d447f3588e2acb261d8a23e7ba7b64449f10f1e9bd8"
+   },
+   "zh": {
+    "mp4": "P4-MA-23_zh.mp4",
+    "vtt": "P4-MA-23_zh.vtt",
+    "poster": "P4-MA-23_zh.jpg",
+    "seconds": 202.2,
+    "bytes": 2921295,
+    "sha256": "c2374f78fc6ad5ddb30a7cc25f2769deb052e2609cc422608b0ba168e42ad5fc"
+   }
+  },
+  "P4-MA-26": {
+   "en": {
+    "mp4": "P4-MA-26_en.mp4",
+    "vtt": "P4-MA-26_en.vtt",
+    "poster": "P4-MA-26_en.jpg",
+    "seconds": 199.6,
+    "bytes": 3070947,
+    "sha256": "b25978bf12c032bd4b1576c407df4c11c6d08172d6ee0bcb0fb5b56e4dcc2878"
+   },
+   "zh": {
+    "mp4": "P4-MA-26_zh.mp4",
+    "vtt": "P4-MA-26_zh.vtt",
+    "poster": "P4-MA-26_zh.jpg",
+    "seconds": 210.7,
+    "bytes": 3045422,
+    "sha256": "8fdef0257d4703eaf46248962fbd1a7b3d4385fcf9ccb1e6d785d9183076a0a0"
+   }
+  },
+  "P4-MA-29": {
+   "en": {
+    "mp4": "P4-MA-29_en.mp4",
+    "vtt": "P4-MA-29_en.vtt",
+    "poster": "P4-MA-29_en.jpg",
+    "seconds": 183.5,
+    "bytes": 2784536,
+    "sha256": "b6d63b9665bdb27f9f9124902e1b6b142ffee60235d7be1c3e627641eb8b0d97"
+   },
+   "zh": {
+    "mp4": "P4-MA-29_zh.mp4",
+    "vtt": "P4-MA-29_zh.vtt",
+    "poster": "P4-MA-29_zh.jpg",
+    "seconds": 188.8,
+    "bytes": 2727793,
+    "sha256": "b456a6481f8616bf8b6f23edda49b6b22d5ebefaecf704910fe3f796546f6d6e"
+   }
+  },
+  "P4-MA-32": {
+   "en": {
+    "mp4": "P4-MA-32_en.mp4",
+    "vtt": "P4-MA-32_en.vtt",
+    "poster": "P4-MA-32_en.jpg",
+    "seconds": 180.8,
+    "bytes": 2810595,
+    "sha256": "9065577b4fcfec1eee97b2786c2cf1fbe090b0305e7e01b72348bbe2a0bb908d"
+   },
+   "zh": {
+    "mp4": "P4-MA-32_zh.mp4",
+    "vtt": "P4-MA-32_zh.vtt",
+    "poster": "P4-MA-32_zh.jpg",
+    "seconds": 194.1,
+    "bytes": 2805913,
+    "sha256": "df6c1f7067f25d8ef3249d47314a3cf6e48b3dbd47d9ab81bf9ab21f20590f34"
+   }
+  },
+  "P4-MA-34": {
+   "en": {
+    "mp4": "P4-MA-34_en.mp4",
+    "vtt": "P4-MA-34_en.vtt",
+    "poster": "P4-MA-34_en.jpg",
+    "seconds": 190.5,
+    "bytes": 2987976,
+    "sha256": "6e84c413e3fa98e4c057a87a7337cbde7849f63033873aa348f7735eeb078888"
+   },
+   "zh": {
+    "mp4": "P4-MA-34_zh.mp4",
+    "vtt": "P4-MA-34_zh.vtt",
+    "poster": "P4-MA-34_zh.jpg",
+    "seconds": 209.8,
+    "bytes": 3055524,
+    "sha256": "4a93777a6b8a0b35443bbf4a82d47121f9e1670ab4e1556456e958e6fa3f297e"
+   }
+  },
+  "P4-MA-37": {
+   "en": {
+    "mp4": "P4-MA-37_en.mp4",
+    "vtt": "P4-MA-37_en.vtt",
+    "poster": "P4-MA-37_en.jpg",
+    "seconds": 185.9,
+    "bytes": 2801293,
+    "sha256": "2db37ac0622c756d497ea3bc008002f34c2c68f9edc95d3ad50f4ec7ea4f1a58"
+   },
+   "zh": {
+    "mp4": "P4-MA-37_zh.mp4",
+    "vtt": "P4-MA-37_zh.vtt",
+    "poster": "P4-MA-37_zh.jpg",
+    "seconds": 199.9,
+    "bytes": 2895488,
+    "sha256": "6a2d4ef7bff611161e6ff91d6345f509cf07c96524440f7e84d1f4a2ceaa5629"
+   }
+  },
+  "P4-MA-41": {
+   "en": {
+    "mp4": "P4-MA-41_en.mp4",
+    "vtt": "P4-MA-41_en.vtt",
+    "poster": "P4-MA-41_en.jpg",
+    "seconds": 188.8,
+    "bytes": 2886214,
+    "sha256": "b2a0bbed2301eea4a2693766a03102db9f814d10a0993e762b679eb3cc6438b7"
+   },
+   "zh": {
+    "mp4": "P4-MA-41_zh.mp4",
+    "vtt": "P4-MA-41_zh.vtt",
+    "poster": "P4-MA-41_zh.jpg",
+    "seconds": 199.8,
+    "bytes": 2917345,
+    "sha256": "2df41701be294b82333dddbef153754c633124b5ee71a03973ab5444e1b9895f"
+   }
+  }
+ }
+}
