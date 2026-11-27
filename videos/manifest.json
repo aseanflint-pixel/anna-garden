@@ -1,0 +1,403 @@
+{
+ "version": 1,
+ "built": "2026-11-27 15:30",
+ "base": "p5/",
+ "videos": {
+  "P5-MA-101": {
+   "en": {
+    "mp4": "P5-MA-101_en.mp4",
+    "vtt": "P5-MA-101_en.vtt",
+    "poster": "P5-MA-101_en.jpg",
+    "seconds": 201.1,
+    "bytes": 3069557,
+    "sha256": "13ee340f706dac9d9a05394dbe1e4a686ccf282cfe614072d2035a8a8d1e3a26"
+   },
+   "zh": {
+    "mp4": "P5-MA-101_zh.mp4",
+    "vtt": "P5-MA-101_zh.vtt",
+    "poster": "P5-MA-101_zh.jpg",
+    "seconds": 191.0,
+    "bytes": 2728890,
+    "sha256": "3e64636025b65193810b581c60962e56b17e2fbbaf4c06a5f1505cef3535c7d1"
+   }
+  },
+  "P5-MA-102": {
+   "en": {
+    "mp4": "P5-MA-102_en.mp4",
+    "vtt": "P5-MA-102_en.vtt",
+    "poster": "P5-MA-102_en.jpg",
+    "seconds": 203.6,
+    "bytes": 3056519,
+    "sha256": "0bc93f1e360a917740f46147aad374c0237cb5be00cf9e982e0c3032d1987672"
+   },
+   "zh": {
+    "mp4": "P5-MA-102_zh.mp4",
+    "vtt": "P5-MA-102_zh.vtt",
+    "poster": "P5-MA-102_zh.jpg",
+    "seconds": 196.0,
+    "bytes": 2801996,
+    "sha256": "41d5c0dafe8fd2bd49a4c79f346cf0a88a2bd18a527f5c9aa5d18172eb3e157f"
+   }
+  },
+  "P5-MA-103": {
+   "en": {
+    "mp4": "P5-MA-103_en.mp4",
+    "vtt": "P5-MA-103_en.vtt",
+    "poster": "P5-MA-103_en.jpg",
+    "seconds": 190.2,
+    "bytes": 2802601,
+    "sha256": "d203372c27442cb759754770deac5ea3c2a044d82fc0aded2dcc6cad67a6bc9a"
+   },
+   "zh": {
+    "mp4": "P5-MA-103_zh.mp4",
+    "vtt": "P5-MA-103_zh.vtt",
+    "poster": "P5-MA-103_zh.jpg",
+    "seconds": 182.3,
+    "bytes": 2545934,
+    "sha256": "d64d5d5c520289d122fe8a3f8b7c01489ba3afc47820edd90c5b522bd599b3fd"
+   }
+  },
+  "P5-MA-104": {
+   "en": {
+    "mp4": "P5-MA-104_en.mp4",
+    "vtt": "P5-MA-104_en.vtt",
+    "poster": "P5-MA-104_en.jpg",
+    "seconds": 188.5,
+    "bytes": 2821562,
+    "sha256": "c47bba13841c6201bff87706ae07a853f4041b75c13cbbafb9086a77bd308bbf"
+   },
+   "zh": {
+    "mp4": "P5-MA-104_zh.mp4",
+    "vtt": "P5-MA-104_zh.vtt",
+    "poster": "P5-MA-104_zh.jpg",
+    "seconds": 188.1,
+    "bytes": 2705474,
+    "sha256": "622c07577b1eb302292d63b7b1b9b8750a6fdc618021b8f0374addf13e70a058"
+   }
+  },
+  "P5-MA-105": {
+   "en": {
+    "mp4": "P5-MA-105_en.mp4",
+    "vtt": "P5-MA-105_en.vtt",
+    "poster": "P5-MA-105_en.jpg",
+    "seconds": 199.8,
+    "bytes": 3067833,
+    "sha256": "181167ad32ec13b20a78773eea2b6dbb38c76aaff8d2f5b85fec83ad1e3a8243"
+   },
+   "zh": {
+    "mp4": "P5-MA-105_zh.mp4",
+    "vtt": "P5-MA-105_zh.vtt",
+    "poster": "P5-MA-105_zh.jpg",
+    "seconds": 212.5,
+    "bytes": 3034129,
+    "sha256": "bd364ef0fcac2bc4cbe5dc278f1004653a28d9a0acac0703f6e28a5e0494abf4"
+   }
+  },
+  "P5-MA-106": {
+   "en": {
+    "mp4": "P5-MA-106_en.mp4",
+    "vtt": "P5-MA-106_en.vtt",
+    "poster": "P5-MA-106_en.jpg",
+    "seconds": 186.5,
+    "bytes": 2839023,
+    "sha256": "c5cf8e44528cf1b82e6265c0704f6e082c553af68b860620169cc009521ff40b"
+   },
+   "zh": {
+    "mp4": "P5-MA-106_zh.mp4",
+    "vtt": "P5-MA-106_zh.vtt",
+    "poster": "P5-MA-106_zh.jpg",
+    "seconds": 190.8,
+    "bytes": 2760980,
+    "sha256": "d2fec75279dd6e128cf0e31d824e654e37bab095dd78365c79e819f29f9891a3"
+   }
+  },
+  "P5-MA-107": {
+   "en": {
+    "mp4": "P5-MA-107_en.mp4",
+    "vtt": "P5-MA-107_en.vtt",
+    "poster": "P5-MA-107_en.jpg",
+    "seconds": 185.0,
+    "bytes": 2763454,
+    "sha256": "8c76fc2fb4a08a8f829f9e2deb27354902750c3bc89e273864b062ad7a1772fa"
+   },
+   "zh": {
+    "mp4": "P5-MA-107_zh.mp4",
+    "vtt": "P5-MA-107_zh.vtt",
+    "poster": "P5-MA-107_zh.jpg",
+    "seconds": 193.5,
+    "bytes": 2767181,
+    "sha256": "395e50b58086f7767967310aa0ac6e5f70544fa3eef0b73deafd81556989b547"
+   }
+  },
+  "P5-MA-108": {
+   "en": {
+    "mp4": "P5-MA-108_en.mp4",
+    "vtt": "P5-MA-108_en.vtt",
+    "poster": "P5-MA-108_en.jpg",
+    "seconds": 190.8,
+    "bytes": 3046427,
+    "sha256": "41fec64a7f949ca4ccf71ed3ef62063f9fd833466e9b23bd7d1ad3100ddf24c5"
+   },
+   "zh": {
+    "mp4": "P5-MA-108_zh.mp4",
+    "vtt": "P5-MA-108_zh.vtt",
+    "poster": "P5-MA-108_zh.jpg",
+    "seconds": 203.2,
+    "bytes": 3034132,
+    "sha256": "a5024a14052e9c1705335f429f2874a1a8d0d6d7ea4439b49c0e42b0151673b4"
+   }
+  },
+  "P5-MA-109": {
+   "en": {
+    "mp4": "P5-MA-109_en.mp4",
+    "vtt": "P5-MA-109_en.vtt",
+    "poster": "P5-MA-109_en.jpg",
+    "seconds": 216.8,
+    "bytes": 3435262,
+    "sha256": "9ab0e1066e705aa0952f68285f299b486718a11de3e574c5fcc13a99656a3cd4"
+   },
+   "zh": {
+    "mp4": "P5-MA-109_zh.mp4",
+    "vtt": "P5-MA-109_zh.vtt",
+    "poster": "P5-MA-109_zh.jpg",
+    "seconds": 230.0,
+    "bytes": 3468299,
+    "sha256": "03616186533261b22e726a3c4149a320a46a3b0c44b30775944c8eec22cd4590"
+   }
+  },
+  "P5-MA-110": {
+   "en": {
+    "mp4": "P5-MA-110_en.mp4",
+    "vtt": "P5-MA-110_en.vtt",
+    "poster": "P5-MA-110_en.jpg",
+    "seconds": 195.1,
+    "bytes": 3081765,
+    "sha256": "b3e35b4a506760941d0ed830564cbea8e98c63001078dc67e7015c95d7e3e6ee"
+   },
+   "zh": {
+    "mp4": "P5-MA-110_zh.mp4",
+    "vtt": "P5-MA-110_zh.vtt",
+    "poster": "P5-MA-110_zh.jpg",
+    "seconds": 193.3,
+    "bytes": 2933879,
+    "sha256": "5e2224709cf2eb741af495516a4fa6f0cc4453b9ef4e7f0940c6a2ead4a6a133"
+   }
+  },
+  "P5-MA-111": {
+   "en": {
+    "mp4": "P5-MA-111_en.mp4",
+    "vtt": "P5-MA-111_en.vtt",
+    "poster": "P5-MA-111_en.jpg",
+    "seconds": 214.8,
+    "bytes": 3172175,
+    "sha256": "41a3bc79f1d122f669d9b63c8cd4fa01d3173b5a9e3ab233fb26b1e9e8ca9d0a"
+   },
+   "zh": {
+    "mp4": "P5-MA-111_zh.mp4",
+    "vtt": "P5-MA-111_zh.vtt",
+    "poster": "P5-MA-111_zh.jpg",
+    "seconds": 199.6,
+    "bytes": 2859912,
+    "sha256": "38a6ad40d24333d337ac0e3decfc75b3071017964a565c12cbdd06a57f68ec81"
+   }
+  },
+  "P5-MA-112": {
+   "en": {
+    "mp4": "P5-MA-112_en.mp4",
+    "vtt": "P5-MA-112_en.vtt",
+    "poster": "P5-MA-112_en.jpg",
+    "seconds": 220.0,
+    "bytes": 3257653,
+    "sha256": "d8f80d163a5da0784f7d0e28b2d75f523a95c2a57f5fa7cfb316908c5ea0edae"
+   },
+   "zh": {
+    "mp4": "P5-MA-112_zh.mp4",
+    "vtt": "P5-MA-112_zh.vtt",
+    "poster": "P5-MA-112_zh.jpg",
+    "seconds": 201.2,
+    "bytes": 2899625,
+    "sha256": "afd306d1bf8b8fbfb2b8f8ee7e7e6cb2898c2b2a755bd15f8beb1203d142502d"
+   }
+  },
+  "P5-MA-113": {
+   "en": {
+    "mp4": "P5-MA-113_en.mp4",
+    "vtt": "P5-MA-113_en.vtt",
+    "poster": "P5-MA-113_en.jpg",
+    "seconds": 192.1,
+    "bytes": 2787015,
+    "sha256": "12c0e9f805b3929015f410b087d6d847dbd7b3dc2fe2916c7c3e3f581f8e6bbf"
+   },
+   "zh": {
+    "mp4": "P5-MA-113_zh.mp4",
+    "vtt": "P5-MA-113_zh.vtt",
+    "poster": "P5-MA-113_zh.jpg",
+    "seconds": 194.9,
+    "bytes": 2728281,
+    "sha256": "f06e69836b01aa314f93cf23a361a9432e154e203e9ec4a4beeb5e46945b767c"
+   }
+  },
+  "P5-MA-114": {
+   "en": {
+    "mp4": "P5-MA-114_en.mp4",
+    "vtt": "P5-MA-114_en.vtt",
+    "poster": "P5-MA-114_en.jpg",
+    "seconds": 181.1,
+    "bytes": 2712384,
+    "sha256": "7719cde6af29819a9b89d166475a55247318af4c342b61fd6ea7b07262b9fbb3"
+   },
+   "zh": {
+    "mp4": "P5-MA-114_zh.mp4",
+    "vtt": "P5-MA-114_zh.vtt",
+    "poster": "P5-MA-114_zh.jpg",
+    "seconds": 195.8,
+    "bytes": 2817829,
+    "sha256": "88a5e2b45bba4aa4b3c5ddaf699055d267cec2fa4677cb40d85c7025f5ec2a29"
+   }
+  },
+  "P5-MA-115": {
+   "en": {
+    "mp4": "P5-MA-115_en.mp4",
+    "vtt": "P5-MA-115_en.vtt",
+    "poster": "P5-MA-115_en.jpg",
+    "seconds": 185.2,
+    "bytes": 2833732,
+    "sha256": "806671500fa622943c3e6b478ce311c59bb0c2a1c0a6e79ee4f0e4162e42fe2d"
+   },
+   "zh": {
+    "mp4": "P5-MA-115_zh.mp4",
+    "vtt": "P5-MA-115_zh.vtt",
+    "poster": "P5-MA-115_zh.jpg",
+    "seconds": 184.5,
+    "bytes": 2700313,
+    "sha256": "54d638b516e08bf2e9c924c0c7e8017b5fd8ab3110734d4d727c10532ff0d0b9"
+   }
+  },
+  "P5-MA-116": {
+   "en": {
+    "mp4": "P5-MA-116_en.mp4",
+    "vtt": "P5-MA-116_en.vtt",
+    "poster": "P5-MA-116_en.jpg",
+    "seconds": 187.0,
+    "bytes": 2787876,
+    "sha256": "27622198cde528f9e78d90cbcbaa76e9a870d0ba3bf7dc3e65275a1a1792cb9e"
+   },
+   "zh": {
+    "mp4": "P5-MA-116_zh.mp4",
+    "vtt": "P5-MA-116_zh.vtt",
+    "poster": "P5-MA-116_zh.jpg",
+    "seconds": 181.7,
+    "bytes": 2609365,
+    "sha256": "a6f3c4ad7ef161cfd2eb90495d3ac76193e37e3628c6a322585decf5d495f709"
+   }
+  },
+  "P5-MA-117": {
+   "en": {
+    "mp4": "P5-MA-117_en.mp4",
+    "vtt": "P5-MA-117_en.vtt",
+    "poster": "P5-MA-117_en.jpg",
+    "seconds": 198.4,
+    "bytes": 3079396,
+    "sha256": "330b76dd3a29d7e4b238cd8d10388286b12d41e465b4a76420be221660e25179"
+   },
+   "zh": {
+    "mp4": "P5-MA-117_zh.mp4",
+    "vtt": "P5-MA-117_zh.vtt",
+    "poster": "P5-MA-117_zh.jpg",
+    "seconds": 205.8,
+    "bytes": 3015442,
+    "sha256": "10f60998435eaec7c7b9f359d422e6d543d1cba47bd849bc424b73d7a36efff9"
+   }
+  },
+  "P5-MA-118": {
+   "en": {
+    "mp4": "P5-MA-118_en.mp4",
+    "vtt": "P5-MA-118_en.vtt",
+    "poster": "P5-MA-118_en.jpg",
+    "seconds": 185.5,
+    "bytes": 2843240,
+    "sha256": "f0e6313bf57fe5a4602cca28ca3407cbc389f2101b056433aab8384afbbb143b"
+   },
+   "zh": {
+    "mp4": "P5-MA-118_zh.mp4",
+    "vtt": "P5-MA-118_zh.vtt",
+    "poster": "P5-MA-118_zh.jpg",
+    "seconds": 182.8,
+    "bytes": 2694001,
+    "sha256": "9a06c6c7909fe3c04130289fc74405cc10d0ef5521c8f9578a5015f8c7b14efe"
+   }
+  },
+  "P5-MA-119": {
+   "en": {
+    "mp4": "P5-MA-119_en.mp4",
+    "vtt": "P5-MA-119_en.vtt",
+    "poster": "P5-MA-119_en.jpg",
+    "seconds": 204.2,
+    "bytes": 3205387,
+    "sha256": "d629a3b72cd1911e1d0e5381f904ef92d51ad82bf9ce099d1d32269c4b524567"
+   },
+   "zh": {
+    "mp4": "P5-MA-119_zh.mp4",
+    "vtt": "P5-MA-119_zh.vtt",
+    "poster": "P5-MA-119_zh.jpg",
+    "seconds": 190.4,
+    "bytes": 2913192,
+    "sha256": "736ff420d6e85b26c5421360dab7137153854ccb915bf9abf71846cb603e0828"
+   }
+  },
+  "P5-MA-120": {
+   "en": {
+    "mp4": "P5-MA-120_en.mp4",
+    "vtt": "P5-MA-120_en.vtt",
+    "poster": "P5-MA-120_en.jpg",
+    "seconds": 209.0,
+    "bytes": 3229943,
+    "sha256": "6b3cc64c00145b075acc84fedccf768717db21ab0793788657b8a85c9be220ab"
+   },
+   "zh": {
+    "mp4": "P5-MA-120_zh.mp4",
+    "vtt": "P5-MA-120_zh.vtt",
+    "poster": "P5-MA-120_zh.jpg",
+    "seconds": 201.5,
+    "bytes": 2939603,
+    "sha256": "2c941c56a65bf89a080d492951c55053292f919415cd879a9d154c038a1bdc7b"
+   }
+  },
+  "P5-MA-121": {
+   "en": {
+    "mp4": "P5-MA-121_en.mp4",
+    "vtt": "P5-MA-121_en.vtt",
+    "poster": "P5-MA-121_en.jpg",
+    "seconds": 192.2,
+    "bytes": 2929773,
+    "sha256": "bb0f1a81f588824af8b5d4f60c665bd0b6a9202fedce2fe899f3e3ff8292fc51"
+   },
+   "zh": {
+    "mp4": "P5-MA-121_zh.mp4",
+    "vtt": "P5-MA-121_zh.vtt",
+    "poster": "P5-MA-121_zh.jpg",
+    "seconds": 184.5,
+    "bytes": 2671464,
+    "sha256": "45a73270ac40c6d1a9a91c77457d2e41812a32f019c9b67fd0ffb6f063a03ac4"
+   }
+  },
+  "P5-MA-122": {
+   "en": {
+    "mp4": "P5-MA-122_en.mp4",
+    "vtt": "P5-MA-122_en.vtt",
+    "poster": "P5-MA-122_en.jpg",
+    "seconds": 201.8,
+    "bytes": 3197625,
+    "sha256": "ec6c3522eff08b248ccc2a9e155809827e3c3801c5ffbdbc923bd17c124f8b60"
+   },
+   "zh": {
+    "mp4": "P5-MA-122_zh.mp4",
+    "vtt": "P5-MA-122_zh.vtt",
+    "poster": "P5-MA-122_zh.jpg",
+    "seconds": 188.6,
+    "bytes": 2861065,
+    "sha256": "dd634d865a6be0a0bb6b5894de9d58f0185d731bf25f3399c800d253fd8010af"
+   }
+  }
+ }
+}

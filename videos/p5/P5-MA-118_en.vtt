@@ -1,0 +1,86 @@
+WEBVTT
+
+1
+00:00:00.600 --> 00:00:10.578
+Hi! Counting cubes one by one is slow. Today we'll learn a formula to find the volume of cuboids and cubes quickly.
+
+2
+00:00:10.728 --> 00:00:17.370
+This planter box is 5 centimetres long, 3 centimetres wide and 4 centimetres high.
+
+3
+00:00:17.520 --> 00:00:25.434
+Imagine filling it with 1 centimetre cubes. The bottom layer holds 5 times 3, which is 15 cubes.
+
+4
+00:00:25.584 --> 00:00:32.322
+It's 4 centimetres high, so there are 4 layers. 15 times 4 is 60 cubes.
+
+5
+00:00:32.472 --> 00:00:41.778
+So volume equals length times breadth times height. 5 times 3 times 4 is 60 cubic centimetres.
+
+6
+00:00:41.928 --> 00:00:47.946
+In a cube, the length, breadth and height are all the same. We call each one an edge.
+
+7
+00:00:48.096 --> 00:01:01.050
+So the volume of a cube is edge times edge times edge. With 6 centimetre edges, the volume is 6 times 6 times 6, which is 216 cubic centimetres.
+
+8
+00:01:01.200 --> 00:01:12.378
+One more: a cuboid has a volume of 120 cubic centimetres. Its length is 6 centimetres and its breadth is 5 centimetres. What is its height?
+
+9
+00:01:12.528 --> 00:01:16.554
+First the bottom layer: 6 times 5 is 30.
+
+10
+00:01:16.704 --> 00:01:23.274
+The height is 120 divided by 30, which is 4 centimetres.
+
+11
+00:01:23.424 --> 00:01:30.258
+Watch out! Some pupils add the length, breadth and height, and get 12. That is wrong!
+
+12
+00:01:30.408 --> 00:01:37.386
+For volume, we multiply all three: 5 times 3 times 4 is 60 cubic centimetres.
+
+13
+00:01:37.536 --> 00:01:47.994
+Check the unit too. Volume is in cubic centimetres, with a small 3. Area is in square centimetres, with a small 2.
+
+14
+00:01:48.144 --> 00:01:58.362
+Your turn! A cube has edges of 5 centimetres. What is its volume? Pause and think.
+
+15
+00:01:58.512 --> 00:02:06.738
+5 times 5 times 5 is 125 cubic centimetres. Did you get it right?
+
+16
+00:02:06.888 --> 00:02:20.130
+Another one! A cuboid is 9 centimetres long, 4 centimetres wide and 5 centimetres high. What is its volume? Pause and think.
+
+17
+00:02:20.280 --> 00:02:28.074
+9 times 4 times 5 is 180 cubic centimetres. Did you get it right?
+
+18
+00:02:28.224 --> 00:02:41.274
+Last one! A cuboid is 8 cm long, 5 cm wide and 2 cm high. What is its volume? Pause and think.
+
+19
+00:02:41.424 --> 00:02:49.506
+8 times 5 is 40, and 40 times 2 is 80 cubic centimetres. Did you get it right?
+
+20
+00:02:49.656 --> 00:03:00.498
+Remember: the volume of a cuboid is length times breadth times height. For a cube, it's edge times edge times edge. The unit is cubic centimetres.
+
+21
+00:03:00.648 --> 00:03:04.842
+Now go and practise in your garden!
+
