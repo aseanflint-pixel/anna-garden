@@ -1,8 +1,318 @@
 {
  "version": 1,
- "built": "2026-11-27 16:45",
+ "built": "2026-11-27 16:52",
  "base": "p5/",
  "videos": {
+  "P5-CL-101": {
+   "zh": {
+    "mp4": "P5-CL-101_zh.mp4",
+    "vtt": "P5-CL-101_zh.vtt",
+    "poster": "P5-CL-101_zh.jpg",
+    "seconds": 210.3,
+    "bytes": 3334592,
+    "sha256": "1ebbbf3958f664b9f95ebcdc62ff6a6588458e4416e028a013a4a8222a185131"
+   }
+  },
+  "P5-CL-102": {
+   "zh": {
+    "mp4": "P5-CL-102_zh.mp4",
+    "vtt": "P5-CL-102_zh.vtt",
+    "poster": "P5-CL-102_zh.jpg",
+    "seconds": 202.5,
+    "bytes": 3176252,
+    "sha256": "3c269dfc306ebd5f4077265a5ca483cd34a03d0d44b540d175276d53573bc73a"
+   }
+  },
+  "P5-CL-103": {
+   "zh": {
+    "mp4": "P5-CL-103_zh.mp4",
+    "vtt": "P5-CL-103_zh.vtt",
+    "poster": "P5-CL-103_zh.jpg",
+    "seconds": 204.3,
+    "bytes": 3223589,
+    "sha256": "5c94c34d019be604c9975be2e06680b51025cd493f74ce0440a6807fb475c218"
+   }
+  },
+  "P5-CL-104": {
+   "zh": {
+    "mp4": "P5-CL-104_zh.mp4",
+    "vtt": "P5-CL-104_zh.vtt",
+    "poster": "P5-CL-104_zh.jpg",
+    "seconds": 205.9,
+    "bytes": 3206794,
+    "sha256": "25372a9c7b8875c538623944f2edb614c76c762b0672edac913f739d3e525d78"
+   }
+  },
+  "P5-CL-105": {
+   "zh": {
+    "mp4": "P5-CL-105_zh.mp4",
+    "vtt": "P5-CL-105_zh.vtt",
+    "poster": "P5-CL-105_zh.jpg",
+    "seconds": 208.6,
+    "bytes": 3294087,
+    "sha256": "4f19fc5beead06fbe184e14d05db80a56126a5f01ef0897ca873b904d53baf11"
+   }
+  },
+  "P5-CL-106": {
+   "zh": {
+    "mp4": "P5-CL-106_zh.mp4",
+    "vtt": "P5-CL-106_zh.vtt",
+    "poster": "P5-CL-106_zh.jpg",
+    "seconds": 196.0,
+    "bytes": 3035393,
+    "sha256": "063110068924825c8362f90131021290a6749ad2a24995f66bac52494cfd1fad"
+   }
+  },
+  "P5-CL-107": {
+   "zh": {
+    "mp4": "P5-CL-107_zh.mp4",
+    "vtt": "P5-CL-107_zh.vtt",
+    "poster": "P5-CL-107_zh.jpg",
+    "seconds": 206.1,
+    "bytes": 3227066,
+    "sha256": "f98d493dc2be1853e63a4230609d1198dabe38029dd5c49a6729a18037536a96"
+   }
+  },
+  "P5-CL-108": {
+   "zh": {
+    "mp4": "P5-CL-108_zh.mp4",
+    "vtt": "P5-CL-108_zh.vtt",
+    "poster": "P5-CL-108_zh.jpg",
+    "seconds": 203.9,
+    "bytes": 3181383,
+    "sha256": "0947d57318a2462da00d623863aa1559290bc42de541f5517d182393583a6099"
+   }
+  },
+  "P5-CL-109": {
+   "zh": {
+    "mp4": "P5-CL-109_zh.mp4",
+    "vtt": "P5-CL-109_zh.vtt",
+    "poster": "P5-CL-109_zh.jpg",
+    "seconds": 195.9,
+    "bytes": 3066982,
+    "sha256": "3bba5c19456ac52921e221cfb0f91ab293b1ba5765c27fcc7ccc9e8d7325116e"
+   }
+  },
+  "P5-CL-110": {
+   "zh": {
+    "mp4": "P5-CL-110_zh.mp4",
+    "vtt": "P5-CL-110_zh.vtt",
+    "poster": "P5-CL-110_zh.jpg",
+    "seconds": 196.0,
+    "bytes": 3064288,
+    "sha256": "bb22b8f3fb64df9a5ec0af0642c0f2ddb991d7654f2d0afd3aa1199feb45a357"
+   }
+  },
+  "P5-CL-111": {
+   "zh": {
+    "mp4": "P5-CL-111_zh.mp4",
+    "vtt": "P5-CL-111_zh.vtt",
+    "poster": "P5-CL-111_zh.jpg",
+    "seconds": 198.2,
+    "bytes": 3130451,
+    "sha256": "a2001dbab588e2e346d1e1d81d5450c633caf7a16f3ae9a9026680265991ae09"
+   }
+  },
+  "P5-CL-112": {
+   "zh": {
+    "mp4": "P5-CL-112_zh.mp4",
+    "vtt": "P5-CL-112_zh.vtt",
+    "poster": "P5-CL-112_zh.jpg",
+    "seconds": 197.6,
+    "bytes": 3124201,
+    "sha256": "d886a1a63ef5c81649bf3784435a0b0022f117aa03ee2e82c14e4cdc5bdade0b"
+   }
+  },
+  "P5-CL-113": {
+   "zh": {
+    "mp4": "P5-CL-113_zh.mp4",
+    "vtt": "P5-CL-113_zh.vtt",
+    "poster": "P5-CL-113_zh.jpg",
+    "seconds": 202.2,
+    "bytes": 3201959,
+    "sha256": "ff7348d598b1093b475ea9a3c71e9de14cfe30847218d944346e7df49db711d8"
+   }
+  },
+  "P5-CL-114": {
+   "zh": {
+    "mp4": "P5-CL-114_zh.mp4",
+    "vtt": "P5-CL-114_zh.vtt",
+    "poster": "P5-CL-114_zh.jpg",
+    "seconds": 201.5,
+    "bytes": 3180084,
+    "sha256": "e38e9157629a8ce538a12a3f7ec449d70905bd0e1b3f2fea83912947a5df7099"
+   }
+  },
+  "P5-CL-115": {
+   "zh": {
+    "mp4": "P5-CL-115_zh.mp4",
+    "vtt": "P5-CL-115_zh.vtt",
+    "poster": "P5-CL-115_zh.jpg",
+    "seconds": 206.9,
+    "bytes": 3298720,
+    "sha256": "e4a31927e8ac5f0e9f1f92fb3e8ec5998739b4876c55941e9cdae859b14d9136"
+   }
+  },
+  "P5-CL-116": {
+   "zh": {
+    "mp4": "P5-CL-116_zh.mp4",
+    "vtt": "P5-CL-116_zh.vtt",
+    "poster": "P5-CL-116_zh.jpg",
+    "seconds": 180.9,
+    "bytes": 2808658,
+    "sha256": "df810efcbf613df3e87bd55a34db5523e2f883ec975394b5e6ae4449c3898676"
+   }
+  },
+  "P5-CL-117": {
+   "zh": {
+    "mp4": "P5-CL-117_zh.mp4",
+    "vtt": "P5-CL-117_zh.vtt",
+    "poster": "P5-CL-117_zh.jpg",
+    "seconds": 185.4,
+    "bytes": 2909444,
+    "sha256": "4e73d429576f3936573a0d30455d48763ca501090115d73a166f46f6ba6223bc"
+   }
+  },
+  "P5-CL-118": {
+   "zh": {
+    "mp4": "P5-CL-118_zh.mp4",
+    "vtt": "P5-CL-118_zh.vtt",
+    "poster": "P5-CL-118_zh.jpg",
+    "seconds": 205.2,
+    "bytes": 3329546,
+    "sha256": "71fc14c39227dcab647b6985b3f51a1c74694927e5d653c4cdc8b65425c225b1"
+   }
+  },
+  "P5-CL-119": {
+   "zh": {
+    "mp4": "P5-CL-119_zh.mp4",
+    "vtt": "P5-CL-119_zh.vtt",
+    "poster": "P5-CL-119_zh.jpg",
+    "seconds": 203.4,
+    "bytes": 3213209,
+    "sha256": "5ead3136d3f7aedadf81544ac05795d3c67533a4a3abccc105bee6b75e27679f"
+   }
+  },
+  "P5-CL-120": {
+   "zh": {
+    "mp4": "P5-CL-120_zh.mp4",
+    "vtt": "P5-CL-120_zh.vtt",
+    "poster": "P5-CL-120_zh.jpg",
+    "seconds": 198.8,
+    "bytes": 3019707,
+    "sha256": "7855759e2b1cd920f697f831ea99cc870f3689a2884144d801335b8078300f60"
+   }
+  },
+  "P5-CL-121": {
+   "zh": {
+    "mp4": "P5-CL-121_zh.mp4",
+    "vtt": "P5-CL-121_zh.vtt",
+    "poster": "P5-CL-121_zh.jpg",
+    "seconds": 191.9,
+    "bytes": 2949220,
+    "sha256": "e6f34934fe001793a6bac508abb9fe0d7c5f3b90ff8e42603f726b4c278ec227"
+   }
+  },
+  "P5-CL-122": {
+   "zh": {
+    "mp4": "P5-CL-122_zh.mp4",
+    "vtt": "P5-CL-122_zh.vtt",
+    "poster": "P5-CL-122_zh.jpg",
+    "seconds": 189.3,
+    "bytes": 2866737,
+    "sha256": "cae8b7806158c391be81722c60d3808ff743b29b57061e3cb0e4f12fbb6750bf"
+   }
+  },
+  "P5-CL-123": {
+   "zh": {
+    "mp4": "P5-CL-123_zh.mp4",
+    "vtt": "P5-CL-123_zh.vtt",
+    "poster": "P5-CL-123_zh.jpg",
+    "seconds": 188.3,
+    "bytes": 2855015,
+    "sha256": "d64334b2a4c267965302c5a4afbb26bbb6f0acf6b21630717b9478ee47db4626"
+   }
+  },
+  "P5-CL-124": {
+   "zh": {
+    "mp4": "P5-CL-124_zh.mp4",
+    "vtt": "P5-CL-124_zh.vtt",
+    "poster": "P5-CL-124_zh.jpg",
+    "seconds": 197.3,
+    "bytes": 2860538,
+    "sha256": "59bf815904b9eb5345a01fbe105d404b3ad378445007de6e46e7f3a9bf3eedd0"
+   }
+  },
+  "P5-CL-125": {
+   "zh": {
+    "mp4": "P5-CL-125_zh.mp4",
+    "vtt": "P5-CL-125_zh.vtt",
+    "poster": "P5-CL-125_zh.jpg",
+    "seconds": 197.8,
+    "bytes": 3570981,
+    "sha256": "62ed4766341b637bffda152f93b2249f0f07a10fd1877fb36851610c60443f99"
+   }
+  },
+  "P5-CL-126": {
+   "zh": {
+    "mp4": "P5-CL-126_zh.mp4",
+    "vtt": "P5-CL-126_zh.vtt",
+    "poster": "P5-CL-126_zh.jpg",
+    "seconds": 183.5,
+    "bytes": 3167547,
+    "sha256": "d6e6ac5c0b9585fbdd58eb7f5cc5abbd61f69854330afc20a56196cd12f63bd2"
+   }
+  },
+  "P5-CL-127": {
+   "zh": {
+    "mp4": "P5-CL-127_zh.mp4",
+    "vtt": "P5-CL-127_zh.vtt",
+    "poster": "P5-CL-127_zh.jpg",
+    "seconds": 180.1,
+    "bytes": 3171244,
+    "sha256": "203a3247fc3eb40f603c975775fc127bf938b88d1e51fb4b5983a96d0f96206c"
+   }
+  },
+  "P5-CL-128": {
+   "zh": {
+    "mp4": "P5-CL-128_zh.mp4",
+    "vtt": "P5-CL-128_zh.vtt",
+    "poster": "P5-CL-128_zh.jpg",
+    "seconds": 191.5,
+    "bytes": 3407491,
+    "sha256": "503dfbc65554abf97964b3f251e7670afae1fd4a3ef615595b7503d71f66270a"
+   }
+  },
+  "P5-CL-129": {
+   "zh": {
+    "mp4": "P5-CL-129_zh.mp4",
+    "vtt": "P5-CL-129_zh.vtt",
+    "poster": "P5-CL-129_zh.jpg",
+    "seconds": 181.9,
+    "bytes": 3172408,
+    "sha256": "353c3f4a2e69885d1c4b3359274b5104c002c91b069eab4742e30b44680822c7"
+   }
+  },
+  "P5-CL-130": {
+   "zh": {
+    "mp4": "P5-CL-130_zh.mp4",
+    "vtt": "P5-CL-130_zh.vtt",
+    "poster": "P5-CL-130_zh.jpg",
+    "seconds": 190.5,
+    "bytes": 2929072,
+    "sha256": "ef21c1c5f30b16a0989b7f0de638773a5d26b07b3fb58f3dd361025cdc811d3f"
+   }
+  },
+  "P5-CL-131": {
+   "zh": {
+    "mp4": "P5-CL-131_zh.mp4",
+    "vtt": "P5-CL-131_zh.vtt",
+    "poster": "P5-CL-131_zh.jpg",
+    "seconds": 186.9,
+    "bytes": 2818197,
+    "sha256": "230e53337acf986094785353171a065ffda10e3f8af6e2ee5c1e21b5148ed82b"
+   }
+  },
   "P5-EN-101": {
    "en": {
     "mp4": "P5-EN-101_en.mp4",
@@ -577,6 +887,46 @@
     "seconds": 221.7,
     "bytes": 3335797,
     "sha256": "53e90a3ac9fb11434e856abc01f0f28cc785aa91cf9287df02675982f86a3c36"
+   }
+  },
+  "P5-HCL-103": {
+   "zh": {
+    "mp4": "P5-HCL-103_zh.mp4",
+    "vtt": "P5-HCL-103_zh.vtt",
+    "poster": "P5-HCL-103_zh.jpg",
+    "seconds": 180.4,
+    "bytes": 2868671,
+    "sha256": "8df267841f84bf81edcb18859aa141c615a621b03c51d7daeac70c2a3ac6f046"
+   }
+  },
+  "P5-HCL-104": {
+   "zh": {
+    "mp4": "P5-HCL-104_zh.mp4",
+    "vtt": "P5-HCL-104_zh.vtt",
+    "poster": "P5-HCL-104_zh.jpg",
+    "seconds": 195.0,
+    "bytes": 3049955,
+    "sha256": "7d5f70f64caed19c124b394105a3fcd24aa95c626e6e4463d459157df8bfe4fb"
+   }
+  },
+  "P5-HCL-105": {
+   "zh": {
+    "mp4": "P5-HCL-105_zh.mp4",
+    "vtt": "P5-HCL-105_zh.vtt",
+    "poster": "P5-HCL-105_zh.jpg",
+    "seconds": 207.8,
+    "bytes": 3670623,
+    "sha256": "8e1493f0f7941011287ca51d26afd00b0af647287ce1566e52c60e85eebb48d4"
+   }
+  },
+  "P5-HCL-106": {
+   "zh": {
+    "mp4": "P5-HCL-106_zh.mp4",
+    "vtt": "P5-HCL-106_zh.vtt",
+    "poster": "P5-HCL-106_zh.jpg",
+    "seconds": 199.3,
+    "bytes": 2949312,
+    "sha256": "2fcf5b852fa5aa10dc7e13bff979aa33d6b86ac1c546011aa3d695886450a061"
    }
   },
   "P5-MA-101": {
