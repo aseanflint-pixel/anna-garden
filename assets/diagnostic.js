@@ -12,7 +12,7 @@
      (anna-garden.progress.v1): two questions are a snapshot, so the test does not grow or wilt any flower. 华文 / 高级华文 stay Chinese. */
 (function () {
   "use strict";
-  const DIAG_KEY = "anna-garden.diag.v1", MAX_HIST = 30;
+  const DIAG_KEY = window.GARDEN_DIAG_KEY || "anna-garden.diag.v1", MAX_HIST = 30;   // the 五年级 page sets its own key
   const I = window.GardenI18n, DICT = window.GARDEN_I18N && window.GARDEN_I18N.dict;
   if (!I || !DICT) return;
   Object.assign(DICT.zh, {
@@ -27,7 +27,7 @@
     "dg.r.right": "对", "dg.r.partial": "部分对", "dg.r.wrong": "不对", "dg.r.blank": "没写", "dg.r.waiting": "等家长", "dg.r.parentFlag": "家长批改题", "dg.r.sameFlag": "两题难度相近",
     "dg.r.print": "打印 / 存成 PDF", "dg.r.save": "下载报告文件", "dg.r.back": "← 摸底测试", "dg.r.mark": "家长批改", "dg.pmLabel": "批改摸底测试", "dg.r.marking": "批改中：点「对 / 部分对 / 不对」",
     "dg.r.rule": "怎么选题：每朵花从题库里选 2 题。按分数、答题框数量、题目长度和是否家长批改算出难度分（同分时字数多的算难一些），最低的三分之一里选简单题，最高的三分之一里选难题。只能自动批改的题不够时，加家长批改题。体检结果和练习进度分开保存，不会改变花朵。",
-    "dg.ov.title": "所有科目一起看", "dg.ov.none": "还没有做过体检。", "dg.ov.row": "{s}：{p}%（{d}）"
+    "dg.r.ruleTag": "怎么选题：每朵花从题库里选 2 题。题库标了难度（简单 / 中等 / 难），先从最简单的一档里随机选简单题，最难的一档里随机选难题；没有标记差别时按分数、答题框数量、题目长度算难度分。只能自动批改的题不够时，加家长批改题。体检结果和练习进度分开保存，不会改变花朵。", "dg.ov.title": "所有科目一起看", "dg.ov.none": "还没有做过体检。", "dg.ov.row": "{s}：{p}%（{d}）"
   });
   Object.assign(DICT.en, {
     "save.diag": "🌱 Check-up test", "dg.kicker": "Check-up test", "dg.title": "{name}'s garden check-up", "dg.lead": "Pick a subject. Every flower gets 2 questions: one easier, one harder. You won't see right or wrong while you work; the report comes at the end. The check-up doesn't change any flower.",
@@ -41,7 +41,7 @@
     "dg.r.right": "Right", "dg.r.partial": "Partly right", "dg.r.wrong": "Not right", "dg.r.blank": "No answer", "dg.r.waiting": "Parent to mark", "dg.r.parentFlag": "Parent-marked", "dg.r.sameFlag": "Similar difficulty",
     "dg.r.print": "Print / save as PDF", "dg.r.save": "Download the report", "dg.r.back": "← Check-up test", "dg.r.mark": "Parent marking", "dg.pmLabel": "Mark the check-up", "dg.r.marking": "Marking: tap Right / Partly right / Not right",
     "dg.r.rule": "How questions are chosen: 2 per flower from the question bank. A score from marks, answer boxes, question length and parent marking decides (on a tie, the longer question counts as harder): the lowest third gives the easier question, the highest third the harder one. Parent-marked questions are added when there aren't enough auto-marked ones. Results are kept apart from practice progress and don't change any flower.",
-    "dg.ov.title": "All subjects together", "dg.ov.none": "No check-ups yet.", "dg.ov.row": "{s}: {p}% ({d})"
+    "dg.r.ruleTag": "How questions are chosen: 2 per flower from the question bank. The bank marks each question easy, medium or hard: the easier question is drawn from the easiest level, the harder one from the hardest level; without a difference in levels a score from marks, answer boxes and question length decides. Parent-marked questions are added when there aren't enough auto-marked ones. Results are kept apart from practice progress and don't change any flower.", "dg.ov.title": "All subjects together", "dg.ov.none": "No check-ups yet.", "dg.ov.row": "{s}: {p}% ({d})"
   });
   const T = (k, v) => I.T(k, v);
   const G = () => window.GardenCheck;
@@ -73,9 +73,18 @@
   const textLen = q => String(q.stem || "").length + (q.options || []).join("").length + (q.parts || []).map(p => p.prompt || "").join("").length;
   const score = q => base(q) + Math.min(9999, textLen(q)) / 1e5;
   const splitOf = (lo, hi) => base(lo) < base(hi) ? "score" : score(lo) < score(hi) ? "length" : "same";
+  // banks with difficulty tags (五年级): easier = from the easiest tag present, harder = from the hardest tag present (auto-marked first)
+  const LV = { easy: 0, medium: 1, hard: 2 }, lvOf = q => (q && Object.prototype.hasOwnProperty.call(LV, q.diff)) ? LV[q.diff] : null;
+  function pickTagged(pool) {
+    if (pool.length < 2 || pool.some(q => lvOf(q) === null)) return null;
+    const lo = Math.min.apply(null, pool.map(lvOf)), hi = Math.max.apply(null, pool.map(lvOf)); if (lo === hi) return null;
+    const E = pool.filter(q => lvOf(q) === lo), H = pool.filter(q => lvOf(q) === hi), e = E[rnd(E.length)], h = H[rnd(H.length)];
+    return [{ q: e.id, lv: "easy", split: "tag", flag: !isAuto(e) }, { q: h.id, lv: "hard", split: "tag", flag: !isAuto(h) }];
+  }
   function pickTwo(qs) {
     const auto = qs.filter(isAuto);
     if (!qs.length) return [];
+    const tagged = auto.length >= 2 ? pickTagged(auto) : null; if (tagged) return tagged;
     if (qs.length === 1) return [{ q: qs[0].id, lv: "only", split: "single", flag: !isAuto(qs[0]) }];
     if (auto.length === 1) {
       const a1 = auto[0], par = qs.filter(q => !isAuto(q)), diff = par.filter(q => score(q) !== score(a1)), p1 = (diff.length ? diff : par)[rnd((diff.length ? diff : par).length)];
@@ -218,7 +227,7 @@
     m.kps.forEach(k => { const t = topicOf(k.kp), g = I.term("strand", t.strand_zh); if (!groups[g]) { groups[g] = []; gorder.push(g); } groups[g].push(k); });
     h += "<h3 class=\"dg-h3\">" + T("dg.r.all") + "</h3>" + gorder.map(g => "<div class=\"dg-g\"><div class=\"dg-gh\">" + esc(g) + "</div>" + groups[g].map(k => "<div class=\"dg-kp c-" + k.cat + "\"><div class=\"dg-kh\">" + CAT_ICON[k.cat] + " <span class=\"dg-fn\">" + esc(tName(topicOf(k.kp))) + "</span> <small>" + T("dg.cat." + k.cat) + (k.single ? T("dg.cat.single") : "") + "</small></div>" +
       k.items.slice().sort((x, y) => (x.lv === "easy" ? 0 : 1) - (y.lv === "easy" ? 0 : 1)).map(it => itemHTML(it, a.items.indexOf(it))).join("") + "</div>").join("") + "</div>").join("");
-    h += "<p class=\"dg-note dg-rule\">" + T("dg.r.rule") + "</p><div class=\"dg-actions\"><button type=\"button\" class=\"btn-submit\" data-dg=\"print\">" + T("dg.r.print") + "</button><button type=\"button\" class=\"dg-link\" data-dg=\"download\">" + T("dg.r.save") + "</button></div>";
+    h += "<p class=\"dg-note dg-rule\">" + (window.GARDEN_DIAG_KEY ? T("dg.r.ruleTag") : T("dg.r.rule")) + "</p><div class=\"dg-actions\"><button type=\"button\" class=\"btn-submit\" data-dg=\"print\">" + T("dg.r.print") + "</button><button type=\"button\" class=\"dg-link\" data-dg=\"download\">" + T("dg.r.save") + "</button></div>";
     shell(a.subj, T("dg.kicker"), T("dg.r.title", { s: esc(sName(a.subj)) }), h, "data-dg=\"home\"");
     box().querySelector(".dg-card").classList.toggle("pm-on", pmOn);
   }
