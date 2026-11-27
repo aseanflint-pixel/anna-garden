@@ -51,7 +51,10 @@
     orig(id); lastId = id;
     if (man) addButton(id); else load().then(() => { if (lastId === id && document.querySelector("#modal:not([hidden]) #btn-practice")) addButton(id); });
   };
-  /* ---------- the player (inside the same #modal) ---------- */
+  /* ---------- the player (inside the same #modal) ----------
+     NOTE: never put a data-lang attribute on anything in the player except the 中文/English buttons. i18n.js has a page-wide click
+     handler for closest("[data-lang]") that cancels the click and switches language, which re-draws the window: a tap on a
+     <video data-lang> therefore never played (fixed 2026-11-27 19:xx, the video now uses data-vlang). */
   function player(id) {
     const t = topicOf(id), v = videoFor(id), box = document.querySelector("#modal");
     if (!t || !v) { window.openModal(id); return; }
@@ -61,7 +64,7 @@
     box.innerHTML = "<div class=\"modal-backdrop\" data-close=\"1\"></div><div class=\"modal-card practice-mode lesson-card\" role=\"dialog\" aria-modal=\"true\" aria-labelledby=\"md-title\">" +
       "<button class=\"modal-x\" type=\"button\" data-close=\"1\" aria-label=\"" + esc(T("aria.close")) + "\">×</button><div class=\"modal-lang\">" + I.toggleHTML(t.subject_id) + "</div>" +
       "<div class=\"practice-head\"><button class=\"practice-back\" type=\"button\" data-lesson-back=\"1\">" + esc(T("vid.back")) + "</button><div class=\"titles\"><div class=\"kicker\">" + esc(T("vid.kicker")) + "</div><h2 id=\"md-title\">" + esc(name) + "</h2></div></div>" +
-      "<div class=\"lesson-frame\"><video class=\"lesson-video\" controls playsinline preload=\"none\" poster=\"" + esc(base + v.poster) + "\" data-kp=\"" + esc(id) + "\" data-lang=\"" + lang + "\">" +
+      "<div class=\"lesson-frame\"><video class=\"lesson-video\" controls playsinline webkit-playsinline preload=\"none\" poster=\"" + esc(base + v.poster) + "\" data-kp=\"" + esc(id) + "\" data-vlang=\"" + lang + "\">" +
       "<source src=\"" + esc(base + v.mp4) + "\" type=\"video/mp4\"><track kind=\"subtitles\" srclang=\"" + (lang === "en" ? "en" : "zh-Hans") + "\" label=\"" + (lang === "en" ? "English" : "中文") + "\" src=\"" + esc(base + v.vtt) + "\"></video></div>" +
       "<p class=\"lesson-tip\">" + esc(T("vid.tip")) + "</p><p class=\"lesson-err\" hidden>" + esc(T("vid.err")) + "</p>" +
       "<button class=\"btn-practice\" type=\"button\" data-lesson-practice=\"1\">" + esc(T("vid.practice")) + "</button></div>";
