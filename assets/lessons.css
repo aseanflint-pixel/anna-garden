@@ -1,0 +1,12 @@
+/* 五年级 explainer videos (garden style) */
+.btn-lesson{display:block;width:100%;margin:0 0 10px;padding:13px 18px;border-radius:16px;background:#f0c43a;color:#3d2a04;font-weight:800;font-size:1rem;box-shadow:0 6px 0 #c49216;text-align:center}
+.btn-lesson small{font-weight:700;font-size:.8rem;opacity:.8;white-space:nowrap}
+.btn-lesson:hover{filter:brightness(1.05)}
+.btn-lesson:active{transform:translateY(2px);box-shadow:0 4px 0 #c49216}
+.lesson-card{width:min(860px,calc(100% - 24px));max-height:none}
+.lesson-frame{margin:6px 0 10px;border-radius:18px;overflow:hidden;background:#1d3d18;box-shadow:0 6px 0 #c9dc9a;aspect-ratio:16/9}
+.lesson-video{display:block;width:100%;height:100%;background:#1d3d18}
+.lesson-tip{font-weight:700;color:#35582a;line-height:1.45;margin:0 0 12px}
+.lesson-err{font-weight:800;color:#9a3b00;margin:0 0 12px}
+.lesson-mark{display:inline-block;margin-top:4px;padding:2px 8px;border-radius:999px;background:#fff6d6;color:#6b4423;font-size:11px;font-weight:800}
+@media (max-width:520px){.lesson-card{padding:22px 14px 18px;margin-top:4vh}}
