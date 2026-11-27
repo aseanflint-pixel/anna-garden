@@ -1,6 +1,6 @@
 {
  "version": 1,
- "built": "2026-11-28 02:32",
+ "built": "2026-11-28 02:36",
  "base": "p4/",
  "videos": {
   "P3-SC-01": {
@@ -73,6 +73,86 @@
     "seconds": 211.2,
     "bytes": 3123218,
     "sha256": "4e4efade4632e87abff3ebb7fcf882c3ac7d2db61df0ac0383f35ecfa0019cdd"
+   }
+  },
+  "P4-CL-17": {
+   "zh": {
+    "mp4": "P4-CL-17_zh.mp4",
+    "vtt": "P4-CL-17_zh.vtt",
+    "poster": "P4-CL-17_zh.jpg",
+    "seconds": 209.7,
+    "bytes": 3090610,
+    "sha256": "2f2f98717e178d7fc68dfab9a6a890e54ee10a6c597cd55042e76663ec2e9454"
+   }
+  },
+  "P4-CL-18": {
+   "zh": {
+    "mp4": "P4-CL-18_zh.mp4",
+    "vtt": "P4-CL-18_zh.vtt",
+    "poster": "P4-CL-18_zh.jpg",
+    "seconds": 220.4,
+    "bytes": 3348166,
+    "sha256": "a0f7fdb119685e25d2c677ad9f6dff5fea02c0bb95d2511e2b145722f0e0deb6"
+   }
+  },
+  "P4-CL-19": {
+   "zh": {
+    "mp4": "P4-CL-19_zh.mp4",
+    "vtt": "P4-CL-19_zh.vtt",
+    "poster": "P4-CL-19_zh.jpg",
+    "seconds": 201.8,
+    "bytes": 2904275,
+    "sha256": "aaa5252b23591c06d961b97614fa2be6fa4feefed028eacdcd65c8b28a142ba1"
+   }
+  },
+  "P4-CL-20": {
+   "zh": {
+    "mp4": "P4-CL-20_zh.mp4",
+    "vtt": "P4-CL-20_zh.vtt",
+    "poster": "P4-CL-20_zh.jpg",
+    "seconds": 219.2,
+    "bytes": 3303293,
+    "sha256": "0d636cf60225b94145edf918b57ab088fed1ce7e8e1c119d359d2db80bdcf3b0"
+   }
+  },
+  "P4-CL-22": {
+   "zh": {
+    "mp4": "P4-CL-22_zh.mp4",
+    "vtt": "P4-CL-22_zh.vtt",
+    "poster": "P4-CL-22_zh.jpg",
+    "seconds": 195.7,
+    "bytes": 3235695,
+    "sha256": "71c3b79a90b2c2f298e88c5081657778c140450deaf1fe487ca0a34d27775c91"
+   }
+  },
+  "P4-CL-25": {
+   "zh": {
+    "mp4": "P4-CL-25_zh.mp4",
+    "vtt": "P4-CL-25_zh.vtt",
+    "poster": "P4-CL-25_zh.jpg",
+    "seconds": 207.6,
+    "bytes": 3457329,
+    "sha256": "c838fa0eda212bc2005e75441249a56c02e3a57be1df3c0273d1e57999448656"
+   }
+  },
+  "P4-CL-26": {
+   "zh": {
+    "mp4": "P4-CL-26_zh.mp4",
+    "vtt": "P4-CL-26_zh.vtt",
+    "poster": "P4-CL-26_zh.jpg",
+    "seconds": 207.7,
+    "bytes": 3978424,
+    "sha256": "7fc13277e4875b8175d0562cd7ecc6d3158008c4e30294b99e698585821e0b9f"
+   }
+  },
+  "P4-CL-30": {
+   "zh": {
+    "mp4": "P4-CL-30_zh.mp4",
+    "vtt": "P4-CL-30_zh.vtt",
+    "poster": "P4-CL-30_zh.jpg",
+    "seconds": 196.2,
+    "bytes": 3115018,
+    "sha256": "171a78980c2dc712c5214b20f599eb95519cccb120babf9d89949a5f5433116e"
    }
   },
   "P4-EN-01": {
