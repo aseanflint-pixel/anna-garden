@@ -1,6 +1,6 @@
 {
  "version": 1,
- "built": "2026-11-28 02:36",
+ "built": "2026-11-28 02:48",
  "base": "p4/",
  "videos": {
   "P3-SC-01": {
@@ -387,6 +387,106 @@
     "seconds": 217.2,
     "bytes": 3822310,
     "sha256": "4097f566786059de8a335b7dc27047135605d04a5d734ef853dcebe1b2ed2ea2"
+   }
+  },
+  "P4-HCL-17": {
+   "zh": {
+    "mp4": "P4-HCL-17_zh.mp4",
+    "vtt": "P4-HCL-17_zh.vtt",
+    "poster": "P4-HCL-17_zh.jpg",
+    "seconds": 210.5,
+    "bytes": 3142281,
+    "sha256": "302d2c0821e7e5120b5ad010a814aeeb0f8f77383c16f7f4aa8515ae37c5d74c"
+   }
+  },
+  "P4-HCL-18": {
+   "zh": {
+    "mp4": "P4-HCL-18_zh.mp4",
+    "vtt": "P4-HCL-18_zh.vtt",
+    "poster": "P4-HCL-18_zh.jpg",
+    "seconds": 196.2,
+    "bytes": 3007089,
+    "sha256": "4304e4be3f3e600b02a66e90edc553d7d900979c9edebc951aa7caffa6d03eaa"
+   }
+  },
+  "P4-HCL-19": {
+   "zh": {
+    "mp4": "P4-HCL-19_zh.mp4",
+    "vtt": "P4-HCL-19_zh.vtt",
+    "poster": "P4-HCL-19_zh.jpg",
+    "seconds": 199.1,
+    "bytes": 2938981,
+    "sha256": "485ff39eac536fd460cfaf9456de1fa057f02248d70ab461c0b30ff69bfcb68d"
+   }
+  },
+  "P4-HCL-20": {
+   "zh": {
+    "mp4": "P4-HCL-20_zh.mp4",
+    "vtt": "P4-HCL-20_zh.vtt",
+    "poster": "P4-HCL-20_zh.jpg",
+    "seconds": 216.4,
+    "bytes": 3234630,
+    "sha256": "1989fcf9576896edc69effddf8f3ea8581868c978db95cc20263e95499e472cd"
+   }
+  },
+  "P4-HCL-21": {
+   "zh": {
+    "mp4": "P4-HCL-21_zh.mp4",
+    "vtt": "P4-HCL-21_zh.vtt",
+    "poster": "P4-HCL-21_zh.jpg",
+    "seconds": 204.6,
+    "bytes": 2995630,
+    "sha256": "3e678f7d018997859dfd21ab2215e95119dd411f427e724d60aa98e313f340a4"
+   }
+  },
+  "P4-HCL-22": {
+   "zh": {
+    "mp4": "P4-HCL-22_zh.mp4",
+    "vtt": "P4-HCL-22_zh.vtt",
+    "poster": "P4-HCL-22_zh.jpg",
+    "seconds": 194.4,
+    "bytes": 3375850,
+    "sha256": "5c8942b19deade94d01fb9f3738faf5792ccdad1e60087b62190d01d3d2b138b"
+   }
+  },
+  "P4-HCL-23": {
+   "zh": {
+    "mp4": "P4-HCL-23_zh.mp4",
+    "vtt": "P4-HCL-23_zh.vtt",
+    "poster": "P4-HCL-23_zh.jpg",
+    "seconds": 223.2,
+    "bytes": 3361653,
+    "sha256": "db70d0dfaf2f44be863fc042fedf2ace3bc108e497178849b08c47da21a09b0a"
+   }
+  },
+  "P4-HCL-25": {
+   "zh": {
+    "mp4": "P4-HCL-25_zh.mp4",
+    "vtt": "P4-HCL-25_zh.vtt",
+    "poster": "P4-HCL-25_zh.jpg",
+    "seconds": 228.3,
+    "bytes": 3953413,
+    "sha256": "b1ce1047e9bacb1ae071e54c20676811dd42d0429c064d1ca5fea1bc29e8ae36"
+   }
+  },
+  "P4-HCL-26": {
+   "zh": {
+    "mp4": "P4-HCL-26_zh.mp4",
+    "vtt": "P4-HCL-26_zh.vtt",
+    "poster": "P4-HCL-26_zh.jpg",
+    "seconds": 205.4,
+    "bytes": 3575332,
+    "sha256": "83316605af4a52f930550dd86e1c249e35437b0b5623a10971806d8ac16fc0b4"
+   }
+  },
+  "P4-HCL-30": {
+   "zh": {
+    "mp4": "P4-HCL-30_zh.mp4",
+    "vtt": "P4-HCL-30_zh.vtt",
+    "poster": "P4-HCL-30_zh.jpg",
+    "seconds": 190.0,
+    "bytes": 3107189,
+    "sha256": "b81b0b576ecb450a1771edc7e629c0f732d68cb13c1364da0133e352d7fadb74"
    }
   },
   "P4-MA-01": {
