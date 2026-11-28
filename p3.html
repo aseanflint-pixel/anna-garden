@@ -198,14 +198,14 @@ body.modal-open{overflow:hidden}
 </style>
 <script>/* 四年级 / 五年级: remember the last grade on this device (own key; progress keys untouched) */
 (function(){ var K = "anna-garden.grade.v1", here = "P3";
-  try{ var P = {"P2": "p2.html", "P3": "p3.html", "P5": "p5.html"}, last = localStorage.getItem(K);
+  try{ var P = {"P1": "p1.html", "P2": "p2.html", "P3": "p3.html", "P5": "p5.html"}, last = localStorage.getItem(K);
     if(here === "P4" && P[last] && !/[?&]grade=4/.test(location.search)){ location.replace(P[last] + location.hash); return; } localStorage.setItem(K, here); }catch(e){}
   document.addEventListener("click", function(e){ var a = e.target.closest && e.target.closest(".grade-switch a"); if(a){ try{ localStorage.setItem(K, a.getAttribute("data-grade")); }catch(err){} } }, true);
 })();</script>
 <!-- garden-practice-css:start -->
   <link rel="stylesheet" href="assets/practice.css">
   <link rel="stylesheet" href="assets/lessons.css?v=20261127b">
-  <script src="assets/i18n.js?v=b5221c01"></script>
+  <script src="assets/i18n.js?v=e0f98b3d"></script>
 <!-- garden-practice-css:end -->
 </head>
 <body>
@@ -225,7 +225,7 @@ body.modal-open{overflow:hidden}
       <div class="sign">
         <div class="eyebrow" id="grade-line"></div>
         <h1 id="page-title"></h1>
-        <nav class="grade-switch" data-i18n-aria="aria.grade"><a href="p2.html" data-grade="P2" data-i18n="grade.p2"></a><a href="p3.html" data-grade="P3" data-i18n="grade.p3" aria-current="page"></a><a href="index.html" data-grade="P4" data-i18n="grade.p4"></a><a href="p5.html" data-grade="P5" data-i18n="grade.p5"></a></nav>
+        <nav class="grade-switch" data-i18n-aria="aria.grade"><a href="p1.html" data-grade="P1" data-i18n="grade.p1"></a><a href="p2.html" data-grade="P2" data-i18n="grade.p2"></a><a href="p3.html" data-grade="P3" data-i18n="grade.p3" aria-current="page"></a><a href="index.html" data-grade="P4" data-i18n="grade.p4"></a><a href="p5.html" data-grade="P5" data-i18n="grade.p5"></a></nav>
       </div>
       <nav class="subject-tabs" id="tabs" data-i18n-aria="aria.tabs"></nav>
     </div>

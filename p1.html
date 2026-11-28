@@ -1,0 +1,2504 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>安安的知识花园 · 一年级</title>
+<style>
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;padding:0}
+button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
+h1,h2,h3,p{margin:0}
+ul{margin:0;padding:0;list-style:none}
+:root{--ink:#2c3a2e;--soil:#8a5a32;--leaf:#3f8f4b;--paper:#fbf6ea;--wood:#6b4423;}
+html,body{
+  min-height:100%;
+  color:var(--ink);
+  font-family:"Nunito","Quicksand","Noto Sans CJK SC","Noto Sans SC","PingFang SC",sans-serif;
+  background:linear-gradient(180deg,#b9e4f8 0%,#e8f6c9 38%,#cfe8a0 70%,#b4d67a 100%);
+}
+body{display:flex;flex-direction:column;min-height:100vh;}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}
+.save-bar{
+  display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:8px;
+  padding:8px 12px;background:#35582a;color:#e8f6c9;position:relative;z-index:5;
+}
+.save-bar button{
+  min-height:44px;padding:8px 14px;border-radius:999px;font-weight:800;font-size:.88rem;
+  background:rgba(255,255,255,.14);color:#fffef6;
+}
+.save-bar button:hover{background:rgba(255,255,255,.24)}
+.save-bar button.primary{background:#f0c43a;color:#3d2a04}
+.save-bar button.primary:hover{filter:brightness(1.05)}
+.save-bar button.danger{background:transparent;box-shadow:inset 0 0 0 2px rgba(255,255,255,.4)}
+.save-bar .last-saved{font-size:12px;font-weight:800}
+.topic-meter{font-weight:800;margin:0 0 12px;color:#35582a;line-height:1.45}
+.btn-master{
+  display:block;width:100%;margin-top:10px;padding:12px 16px;border-radius:16px;
+  background:#f0c43a;color:#3d2a04;font-weight:800;font-size:1rem;
+  box-shadow:0 5px 0 #c49216;
+}
+.btn-master:hover{filter:brightness(1.05)}
+.btn-master:active{transform:translateY(2px);box-shadow:0 3px 0 #c49216}
+.btn-master.is-on{background:#e9f6e0;color:#1d3d18;box-shadow:0 5px 0 #b7d9a6}
+.toast{
+  position:fixed;left:50%;bottom:22px;transform:translateX(-50%);
+  max-width:min(440px, calc(100% - 24px));
+  background:#35582a;color:#fffef6;padding:12px 18px;border-radius:999px;
+  font-weight:800;z-index:95;box-shadow:0 10px 24px rgba(0,0,0,.22);text-align:center;
+}
+.toast[hidden]{display:none !important}
+.confirm{position:fixed;inset:0;z-index:110}
+.confirm[hidden]{display:none !important}
+.confirm-backdrop{position:absolute;inset:0;background:rgba(20,16,30,.45)}
+.confirm-card{
+  position:relative;z-index:1;margin:22vh auto 0;width:min(420px, calc(100% - 32px));
+  background:#fffef6;border-radius:24px;padding:22px 20px 18px;
+  box-shadow:0 24px 50px rgba(0,0,0,.25);
+}
+.confirm-card h2{font-size:1.25rem;margin-bottom:8px}
+.confirm-card p{font-weight:700;line-height:1.45;margin-bottom:16px}
+.confirm-actions{display:flex;gap:8px}
+.confirm-actions button{
+  flex:1;min-height:48px;border-radius:14px;font-weight:800;
+  background:#eef6e0;color:#35582a;
+}
+.confirm-actions button.danger{background:#9a3b00;color:#fff}
+
+.app-header{padding:12px 20px 8px;width:min(1180px,100%);margin:0 auto}
+.header-row{display:flex;align-items:flex-end;gap:16px;flex-wrap:wrap}
+.sign{
+  background:linear-gradient(180deg,#c9853a,#8c5520);color:#fff8e6;
+  border-radius:8px 8px 14px 14px;padding:12px 18px 14px;
+  box-shadow:0 8px 0 #5c3814,inset 0 2px 0 rgba(255,255,255,.25);
+  position:relative;min-width:240px;
+}
+.sign::before,.sign::after{content:"";position:absolute;top:-16px;width:10px;height:22px;background:#6b4423;border-radius:3px;box-shadow:inset 0 0 0 2px #5a3918}
+.sign::before{left:22px}.sign::after{right:22px}
+.sign .eyebrow{font-size:11px;letter-spacing:.12em;font-weight:800;opacity:.8}
+.sign h1{font-size:1.4rem;font-weight:800;letter-spacing:.02em}
+.subject-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-left:auto;padding-bottom:6px}
+.subject-tabs button{padding:8px 14px;border-radius:999px;font-weight:800;font-size:.92rem;background:#fffef6;border:2px solid #c9dc9a;color:#35582a}
+.subject-tabs button[aria-selected="true"]{background:#35582a;color:#fffef6;border-color:#35582a}
+.subject-tabs button.is-soon{opacity:.7}
+.subject-tabs button.is-soon small{display:block;font-size:9px}
+
+.vitals{
+  display:grid;grid-template-columns:180px 1fr;gap:16px;align-items:center;
+  margin:10px 0 0;background:rgba(255,254,246,.75);border-radius:24px;
+  padding:12px 16px;border:1px solid rgba(53,88,42,.08);
+}
+.tree-wrap{display:grid;place-items:center}
+.tree-wrap svg{width:150px;height:150px}
+.stats-col{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.stat{text-align:center;padding:6px 4px;overflow:visible}
+.stat .k{font-size:11px;font-weight:800;opacity:.6;letter-spacing:.04em}
+.stat .v{font-size:1.5rem;font-weight:800;line-height:1.25;overflow:visible}
+.stat .unit{display:block;margin-top:2px;font-size:12px;font-weight:800;font-family:"Noto Sans CJK SC","Noto Sans SC",sans-serif}
+.stat.done .v{color:#1d7a3a}
+.stat.remain .v{color:#b8610a}
+.stat.todo .v{color:#1d4e89}
+.bar-wrap{grid-column:1/-1;height:12px;background:#e4efd4;border-radius:999px;overflow:hidden}
+.bar-wrap span{display:block;height:100%;width:var(--p);background:linear-gradient(90deg,#3f8f4b,#f0c43a);border-radius:999px}
+.hint{grid-column:1/-1;font-size:13px;font-weight:700;color:#35582a;text-align:center;margin-top:2px}
+
+.layout{flex:1;width:min(1180px,100%);margin:0 auto;padding:8px 16px 28px;display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:16px;align-items:start}
+.garden{
+  background:linear-gradient(180deg,rgba(255,255,255,.25),rgba(255,255,255,.08));
+  border-radius:32px;padding:20px 16px 28px;border:1px solid rgba(255,255,255,.5);
+  box-shadow:0 16px 30px rgba(53,88,42,.1);position:relative;overflow:hidden;
+}
+.butterflies{position:absolute;inset:0;pointer-events:none}
+.bf{position:absolute;font-size:18px;animation:flit 7s ease-in-out infinite}
+.bf.b1{top:12%;left:10%;animation-delay:-1s}
+.bf.b2{top:22%;right:16%;animation-delay:-3s;font-size:14px}
+.bf.b3{top:6%;left:78%;animation-delay:-5s;font-size:16px}
+@keyframes flit{0%,100%{transform:translate(0,0) rotate(-8deg)}50%{transform:translate(18px,-12px) rotate(10deg)}}
+.plots{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:18px 14px;position:relative;z-index:1}
+.plot{background:transparent;text-align:center;padding:6px 4px 8px;border-radius:18px}
+.plot:hover .pot,.plot:focus-visible .pot{transform:translateY(-4px)}
+.plant{height:118px;display:grid;place-items:end center;position:relative}
+.plant svg{width:110px;height:118px;overflow:visible}
+.pot{width:78px;height:28px;margin:0 auto;background:linear-gradient(180deg,#d9a066,#b36b38);border-radius:0 0 18px 18px;box-shadow:0 6px 0 #8a4e24,inset 0 4px 0 #e8bc86;position:relative;z-index:1;transition:transform .15s ease}
+.pot::before{content:"";position:absolute;left:-6px;right:-6px;top:-8px;height:12px;background:#c9844a;border-radius:6px;box-shadow:inset 0 2px 0 rgba(255,255,255,.25)}
+.soil{position:absolute;left:10px;right:10px;top:-2px;height:8px;background:#6b4223;border-radius:8px;z-index:2}
+.plot.locked .pot{filter:grayscale(.6) brightness(.95)}
+.label-zh{font-weight:800;font-size:.92rem;margin-top:8px;line-height:1.25}
+.label-en{font-size:11px;opacity:.6;line-height:1.3;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;padding:0 4px}
+.tag{display:inline-block;margin-top:4px;font-size:10px;font-weight:800;padding:1px 8px;border-radius:999px;background:rgba(255,255,255,.75)}
+.plot.conquered .tag{background:#fff3a8;color:#7a4e00}
+.plot.progress .tag{background:#ffe1c4;color:#9a3b00}
+.plot.todo .tag{background:#d8ecff;color:#0a4f8a}
+.plot.locked .tag{background:#eceae6;color:#5c5c5c}
+
+.side{position:sticky;top:16px;background:#fffef6;border-radius:24px;padding:16px;box-shadow:0 10px 24px rgba(53,88,42,.1);border:1px solid rgba(53,88,42,.08);max-height:calc(100vh - 24px);overflow:auto}
+.side h2{font-size:1.05rem}
+.side .sub{font-size:12px;opacity:.65;margin:4px 0 12px}
+.seed-item{display:grid;grid-template-columns:28px 1fr auto;gap:8px;align-items:center;width:100%;text-align:left;padding:9px 8px;border-radius:14px;background:#f3efe0;margin-bottom:8px}
+.seed-item:hover{background:#efe4b8}
+.seed-item .ico{font-size:18px;text-align:center}
+.seed-item .zh{font-weight:800;font-size:.9rem;display:block}
+.seed-item .en{font-size:11px;opacity:.6}
+.seed-item .st{font-size:10px;font-weight:800;opacity:.7}
+.legend{display:flex;flex-wrap:wrap;gap:8px 12px;margin-top:8px;padding-top:10px;border-top:1px dashed #d7ccae;font-size:11px;font-weight:800;opacity:.8}
+.coming-soon-card{margin:8px;padding:28px;border-radius:24px;text-align:center;background:#fffef6}
+.cs-badge{display:inline-block;padding:4px 10px;border-radius:999px;font-size:12px;font-weight:800;margin-bottom:10px;background:#e8f6c9}
+
+#modal{position:fixed;inset:0;z-index:80}
+#modal[hidden]{display:none !important}
+.modal-backdrop{position:absolute;inset:0;background:rgba(20,16,30,.45);backdrop-filter:blur(4px)}
+.modal-card{position:relative;z-index:1;margin:8vh auto 0;width:min(520px,calc(100% - 32px));max-height:min(84vh,720px);overflow:auto;padding:28px 26px 24px;border-radius:28px;background:#fff;box-shadow:0 30px 60px rgba(0,0,0,.22);animation:pop .28s ease}
+@keyframes pop{from{transform:translateY(16px) scale(.97);opacity:0}to{transform:none;opacity:1}}
+.modal-x{position:absolute;top:12px;right:12px;z-index:3;width:40px;height:40px;border-radius:50%;font-size:26px;line-height:1;background:#f3f1ee;color:#444}
+.modal-kicker{font-size:12px;letter-spacing:.08em;text-transform:uppercase;opacity:.6;font-weight:700;margin-bottom:8px;padding-right:36px}
+.modal-card h2{font-size:1.55rem;line-height:1.25;margin-bottom:4px;padding-right:36px}
+.modal-en{opacity:.65;margin-bottom:12px;font-size:.95rem}
+.modal-status{display:flex;align-items:center;gap:10px;margin-bottom:16px}
+.pill{display:inline-flex;align-items:center;padding:4px 10px;border-radius:999px;font-size:12px;font-weight:700}
+.status-conquered .pill{background:#ffe8a3;color:#7a4e00}
+.status-progress .pill{background:#ffe1c4;color:#9a3b00}
+.status-todo .pill{background:#d8ecff;color:#0a4f8a}
+.status-locked .pill{background:#eceae6;color:#5c5c5c}
+.stars{letter-spacing:1px;font-size:16px}
+.star{color:#d9d3c8}.star.on{color:#f5b301}
+.modal-lead{font-weight:700;margin-bottom:8px}
+.modal-los{padding-left:18px;list-style:disc;display:grid;gap:6px;margin-bottom:18px;color:#333}
+.btn-practice{display:block;width:100%;padding:14px 18px;border-radius:16px;background:#1f6f5a;color:#fff;font-weight:800;font-size:1rem;box-shadow:0 6px 0 #155445}
+.btn-practice:hover{filter:brightness(1.05)}
+.btn-practice:active{transform:translateY(2px);box-shadow:0 4px 0 #155445}
+.btn-practice:disabled{background:#c9c4bb;color:#6a655e;box-shadow:none;cursor:not-allowed;filter:none}
+.practice-note{margin-top:10px;padding:10px 12px;border-radius:12px;background:#fff6d8;color:#6b4e00;font-size:.9rem}
+body.modal-open{overflow:hidden}
+.page-foot{width:min(1180px,100%);margin:0 auto;padding:0 16px 24px;font-size:12px;color:#35582a;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.page-foot a{color:#35582a;font-weight:800}
+
+@media (max-width:860px){
+  .layout{grid-template-columns:1fr;padding:8px 10px 24px}
+  .side{position:relative;top:auto;max-height:210px;order:-1}
+  .vitals{grid-template-columns:72px 1fr;padding:10px;gap:8px}
+  .tree-wrap svg{width:72px;height:72px}
+  .stats-col .v{font-size:1.15rem}
+  .plots{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px 8px}
+  .plant{height:100px}
+  .plant svg{width:90px;height:100px}
+  .header-row{align-items:stretch}
+  .subject-tabs{margin-left:0;width:100%}
+  .label-en{display:none}
+  .hint{font-size:12px}
+  .save-bar{gap:6px;padding:8px 8px 10px}
+  .save-bar button{font-size:.8rem;padding:8px 10px}
+  .save-bar .last-saved{flex:1 1 100%;text-align:center}
+  .confirm-card{margin:18vh auto 0}
+}
+.load-error{margin:40px auto;width:min(520px,90%);background:#fffef6;padding:24px;border-radius:20px;text-align:center}
+.grade-switch{display:inline-flex;flex-wrap:wrap;justify-content:center;gap:2px;margin-top:8px;padding:3px;border-radius:22px;background:rgba(61,38,20,.35)}
+.grade-switch a{display:inline-flex;align-items:center;min-height:40px;padding:6px 10px;border-radius:999px;font-weight:800;font-size:.9rem;color:#fff8e6;text-decoration:none}
+.grade-switch a[aria-current="page"]{background:#f0c43a;color:#3d2a04;box-shadow:0 2px 0 #c49216}
+.grade-switch a:focus-visible{outline:3px solid #fffef6;outline-offset:2px}
+</style>
+<script>/* 四年级 / 五年级: remember the last grade on this device (own key; progress keys untouched) */
+(function(){ var K = "anna-garden.grade.v1", here = "P1";
+  try{ var P = {"P1": "p1.html", "P2": "p2.html", "P3": "p3.html", "P5": "p5.html"}, last = localStorage.getItem(K);
+    if(here === "P4" && P[last] && !/[?&]grade=4/.test(location.search)){ location.replace(P[last] + location.hash); return; } localStorage.setItem(K, here); }catch(e){}
+  document.addEventListener("click", function(e){ var a = e.target.closest && e.target.closest(".grade-switch a"); if(a){ try{ localStorage.setItem(K, a.getAttribute("data-grade")); }catch(err){} } }, true);
+})();</script>
+<!-- garden-practice-css:start -->
+  <link rel="stylesheet" href="assets/practice.css">
+  <link rel="stylesheet" href="assets/lessons.css?v=20261127b">
+  <script src="assets/i18n.js?v=e0f98b3d"></script>
+<!-- garden-practice-css:end -->
+</head>
+<body>
+  <div class="save-bar" id="save-bar">
+    <div class="lang-slot" data-lang-slot="1"></div>
+    <button type="button" class="primary" id="btn-save" data-i18n="save.save"></button>
+    <button type="button" id="btn-diag" data-i18n="save.diag"></button>
+    <button type="button" id="btn-parent" data-i18n="save.parent"><span class="btn-parent-badge" id="parent-badge" hidden>0</span></button>
+    <button type="button" id="btn-export" data-i18n="save.export"></button>
+    <button type="button" id="btn-import" data-i18n="save.import"></button>
+    <input id="import-file" class="sr-only" type="file" accept="application/json,.json" data-i18n-aria="aria.importFile">
+    <button type="button" class="danger" id="btn-reset" data-i18n="save.reset"></button>
+    <span class="last-saved" id="last-saved"></span>
+  </div>
+  <header class="app-header">
+    <div class="header-row">
+      <div class="sign">
+        <div class="eyebrow" id="grade-line"></div>
+        <h1 id="page-title"></h1>
+        <nav class="grade-switch" data-i18n-aria="aria.grade"><a href="p1.html" data-grade="P1" data-i18n="grade.p1" aria-current="page"></a><a href="p2.html" data-grade="P2" data-i18n="grade.p2"></a><a href="p3.html" data-grade="P3" data-i18n="grade.p3"></a><a href="index.html" data-grade="P4" data-i18n="grade.p4"></a><a href="p5.html" data-grade="P5" data-i18n="grade.p5"></a></nav>
+      </div>
+      <nav class="subject-tabs" id="tabs" data-i18n-aria="aria.tabs"></nav>
+    </div>
+    <div class="vitals" id="vitals"></div>
+  </header>
+  <main class="layout" id="main">
+    <section class="garden" id="garden" data-i18n-aria="aria.garden"></section>
+    <aside class="side" id="side"></aside>
+  </main>
+  <footer class="page-foot">
+    <span data-i18n="foot.syllabus"></span>
+    <span data-i18n="foot.saved"></span>
+  </footer>
+  <div id="modal" hidden></div>
+  <div id="toast" class="toast" hidden role="status" aria-live="polite"></div>
+  <div id="confirm" class="confirm" hidden>
+    <div class="confirm-backdrop" data-confirm="no"></div>
+    <div class="confirm-card" role="alertdialog" aria-modal="true" aria-labelledby="confirm-title">
+      <h2 id="confirm-title" data-i18n="reset.title"></h2>
+      <p data-i18n="reset.body"></p>
+      <div class="confirm-actions">
+        <button type="button" data-confirm="no" data-i18n="reset.no"></button>
+        <button type="button" class="danger" data-confirm="yes" data-i18n="reset.yes"></button>
+      </div>
+    </div>
+  </div>
+<script>
+/* Syllabus embedded for GitHub Pages. Progress is stored in the browser, not in this file. */
+window.GARDEN_DATA = {
+  "meta": {
+    "schema_version": 2,
+    "is_demo": false,
+    "disclaimer": "",
+    "timezone": "Asia/Singapore",
+    "as_of": "2026-11-28",
+    "as_of_note": "进度保存在这台设备的浏览器里，也可以导出备份。",
+    "bank": "p1-original"
+  },
+  "student": {
+    "student_id": "stu-anan",
+    "display_name": "安安",
+    "grade": "P1",
+    "grade_zh": "小学一年级",
+    "school_year": ""
+  },
+  "subjects": [
+    {
+      "subject_id": "math",
+      "name_zh": "数学",
+      "name_en": "Mathematics",
+      "syllabus_subject": "Mathematics",
+      "coming_soon": false,
+      "accent": "#4c6fff",
+      "note": "这些都是为安安原创的练习题，每道题都有分步讲解。",
+      "bank_subject": "Mathematics"
+    },
+    {
+      "subject_id": "english",
+      "name_zh": "英文",
+      "name_en": "English",
+      "syllabus_subject": "English",
+      "coming_soon": false,
+      "accent": "#7b6bb0",
+      "bank_subject": "English",
+      "note": "Original practice questions with step-by-step explanations. 开放题由家长批改。"
+    },
+    {
+      "subject_id": "higher_chinese",
+      "name_zh": "高级华文",
+      "name_en": "Higher Chinese",
+      "syllabus_subject": "Higher Chinese Language",
+      "coming_soon": false,
+      "accent": "#c45a10",
+      "bank_subject": "Higher Chinese",
+      "note": "原创练习题，短文和通知都是新写的。开放题由家长批改。"
+    },
+    {
+      "subject_id": "chinese",
+      "name_zh": "华文",
+      "name_en": "Chinese",
+      "syllabus_subject": "Chinese Language",
+      "coming_soon": false,
+      "accent": "#b53d4a",
+      "bank_subject": "Chinese",
+      "note": "原创练习题，短文和通知都是新写的。开放题由家长批改。"
+    }
+  ],
+  "topics": [
+    {
+      "topic_id": "P1-MA-101",
+      "subject_id": "math",
+      "strand": "数与代数",
+      "strand_zh": "数与代数",
+      "syllabus_topic": "Numbers up to 10",
+      "name_en": "Numbers up to 10",
+      "name_zh": "10 以内的数",
+      "short": "10以内",
+      "group": "整数",
+      "flower": "sunflower",
+      "status": "todo",
+      "stars": 0,
+      "strength": null,
+      "bank_subject": "Mathematics",
+      "learning_outcomes": [
+        {
+          "topic_id": "P1-MA-101",
+          "text_en": "Numbers up to 10",
+          "text_zh": "10 以内的数"
+        }
+      ]
+    },
+    {
+      "topic_id": "P1-MA-102",
+      "subject_id": "math",
+      "strand": "数与代数",
+      "strand_zh": "数与代数",
+      "syllabus_topic": "Number bonds",
+      "name_en": "Number bonds",
+      "name_zh": "数的分与合（数字组合）",
+      "short": "分与合",
+      "group": "加法与减法",
+      "flower": "clover",
+      "status": "todo",
+      "stars": 0,
+      "strength": null,
+      "bank_subject": "Mathematics",
+      "learning_outcomes": [
+        {
+          "topic_id": "P1-MA-102",
+          "text_en": "Number bonds",
+          "text_zh": "数的分与合（数字组合）"
+        }
+      ]
+    },
+    {
+      "topic_id": "P1-MA-103",
+      "subject_id": "math",
+      "strand": "数与代数",
+      "strand_zh": "数与代数",
+      "syllabus_topic": "Addition within 10",
+      "name_en": "Addition within 10",
+      "name_zh": "10 以内的加法",
+      "short": "10以内加法",
+      "group": "加法与减法",
+      "flower": "tulip",
+      "status": "todo",
+      "stars": 0,
+      "strength": null,
+      "bank_subject": "Mathematics",
+      "learning_outcomes": [
+        {
+          "topic_id": "P1-MA-103",
+          "text_en": "Addition within 10",
+          "text_zh": "10 以内的加法"
+        }
+      ]
+    },
+    {
+      "topic_id": "P1-MA-104",
+      "subject_id": "math",
+      "strand": "数与代数",
+      "strand_zh": "数与代数",
+      "syllabus_topic": "Subtraction within 10",
+      "name_en": "Subtraction within 10",
+      "name_zh": "10 以内的减法",
+      "short": "10以内减法",
+      "group": "加法与减法",
+      "flower": "rose",
+      "status": "todo",
+      "stars": 0,
+      "strength": null,
+      "bank_subject": "Mathematics",
+      "learning_outcomes": [
+        {
+          "topic_id": "P1-MA-104",
+          "text_en": "Subtraction within 10",
+          "text_zh": "10 以内的减法"
+        }
+      ]
+    },
+    {
+      "topic_id": "P1-MA-105",
+      "subject_id": "math",
+      "strand": "测量与几何",
+      "strand_zh": "测量与几何",
+      "syllabus_topic": "2D shapes",
+      "name_en": "2D shapes",
+      "name_zh": "平面图形",
+      "short": "平面图形",
+      "group": "几何",
+      "flower": "daisy",
+      "status": "todo",
+      "stars": 0,
+      "strength": null,
+      "bank_subject": "Mathematics",
+      "learning_outcomes": [
+        {
+          "topic_id": "P1-MA-105",
+          "text_en": "2D shapes",
+          "text_zh": "平面图形"
+        }
+      ]
+    },
+    {
+      "topic_id": "P1-MA-106",
+      "subject_id": "math",
+      "strand": "数与代数",
+      "strand_zh": "数与代数",
+      "syllabus_topic": "Ordinal numbers",
+      "name_en": "Ordinal numbers",
+      "name_zh": "序数（第一到第十）",
+      "short": "序数",
+      "group": "整数",
+      "flower": "fern",
+      "status": "todo",
+      "stars": 0,
+      "strength": null,
+      "bank_subject": "Mathematics",
+      "learning_outcomes": [
+        {
+          "topic_id": "P1-MA-106",
+          "text_en": "Ordinal numbers",
+          "text_zh": "序数（第一到第十）"
+        }
+      ]
+    },
+    {
+      "topic_id": "P1-MA-107",
+      "subject_id": "math",
+      "strand": "数与代数",
+      "strand_zh": "数与代数",
+      "syllabus_topic": "Numbers up to 20",
+      "name_en": "Numbers up to 20",
+      "name_zh": "20 以内的数",
+      "short": "20以内",
+      "group": "整数",
+      "flower": "lily",
+      "status": "todo",
+      "stars": 0,
+      "strength": null,
+      "bank_subject": "Mathematics",
+      "learning_outcomes": [
+        {
+          "topic_id": "P1-MA-107",
+          "text_en": "Numbers up to 20",
+          "text_zh": "20 以内的数"
+        }
+      ]
+    },
+    {
+      "topic_id": "P1-MA-108",
+      "subject_id": "math",
+      "strand": "数与代数",
+      "strand_zh": "数与代数",
+      "syllabus_topic": "Addition and subtraction within 20",
+      "name_en": "Addition and subtraction within 20",
+      "name_zh": "20 以内的加法和减法",
+      "short": "20以内加减",
+      "group": "加法与减法",
+      "flower": "lavender",
+      "status": "todo",
+      "stars": 0,
+      "strength": null,
+      "bank_subject": "Mathematics",
+      "learning_outcomes": [
+        {
+          "topic_id": "P1-MA-108",
+          "text_en": "Addition and subtraction within 20",
+          "text_zh": "20 以内的加法和减法"
+        }
+      ]
+    },
+    {
+      "topic_id": "P1-MA-109",
+      "subject_id": "math",
+      "strand": "测量与几何",
+      "strand_zh": "测量与几何",
+      "syllabus_topic": "Length in centimetres",
+      "name_en": "Length in centimetres",
+      "name_zh": "长度（厘米）",
+      "short": "长度",
+      "group": "测量",
+      "flower": "marigold",
+      "status": "todo",
+      "stars": 0,
+      "strength": null,
+      "bank_subject": "Mathematics",
+      "learning_outcomes": [
+        {
+          "topic_id": "P1-MA-109",
+          "text_en": "Length in centimetres",
+          "text_zh": "长度（厘米）"
+        }
+      ]
+    },
+    {
+      "topic_id": "P1-MA-110",
+      "subject_id": "math",
+      "strand": "统计",
+      "strand_zh": "统计",
+      "syllabus_topic": "Picture graphs",
+      "name_en": "Picture graphs",
+      "name_zh": "象形图",
+      "short": "象形图",
+      "group": "统计",
+      "flower": "sunflower",
+      "status": "todo",
+      "stars": 0,
+      "strength": null,
+      "bank_subject": "Mathematics",
+      "learning_outcomes": [
+        {
+          "topic_id": "P1-MA-110",
+          "text_en": "Picture graphs",
+          "text_zh": "象形图"
+        }
+      ]
+    },
+    {
+      "topic_id": "P1-MA-111",
+      "subject_id": "math",
+      "strand": "数与代数",
+      "strand_zh": "数与代数",
+      "syllabus_topic": "Numbers up to 100",
+      "name_en": "Numbers up to 100",
+      "name_zh": "100 以内的数",
+      "short": "100以内",
+      "group": "整数",
+      "flower": "clover",
+      "status": "todo",
+      "stars": 0,
+      "strength": null,
+      "bank_subject": "Mathematics",
+      "learning_outcomes": [
+        {
+          "topic_id": "P1-MA-111",
+          "text_en": "Numbers up to 100",
+          "text_zh": "100 以内的数"
+        }
+      ]
+    },
+    {
+      "topic_id": "P1-MA-112",
+      "subject_id": "math",
+      "strand": "数与代数",
+      "strand_zh": "数与代数",
+      "syllabus_topic": "Addition and subtraction within 100",
+      "name_en": "Addition and subtraction within 100",
+      "name_zh": "100 以内的加法和减法",
+      "short": "100以内加减",
+      "group": "加法与减法",
+      "flower": "tulip",
+      "status": "todo",
+      "stars": 0,
+      "strength": null,
+      "bank_subject": "Mathematics",
+      "learning_outcomes": [
+        {
+          "topic_id": "P1-MA-112",
+          "text_en": "Addition and subtraction within 100",
+          "text_zh": "100 以内的加法和减法"
+        }
+      ]
+    },
+    {
+      "topic_id": "P1-MA-113",
+      "subject_id": "math",
+      "strand": "数与代数",
+      "strand_zh": "数与代数",
+      "syllabus_topic": "Multiplication within 40",
+      "name_en": "Multiplication within 40",
+      "name_zh": "乘法（40 以内）",
+      "short": "乘法",
+      "group": "乘法与除法",
+      "flower": "rose",
+      "status": "todo",
+      "stars": 0,
+      "strength": null,
+      "bank_subject": "Mathematics",
+      "learning_outcomes": [
+        {
+          "topic_id": "P1-MA-113",
+          "text_en": "Multiplication within 40",
+          "text_zh": "乘法（40 以内）"
+        }
+      ]
+    },
+    {
+      "topic_id": "P1-MA-114",
+      "subject_id": "math",
+      "strand": "数与代数",
+      "strand_zh": "数与代数",
+      "syllabus_topic": "Division within 20",
+      "name_en": "Division within 20",
+      "name_zh": "除法（20 以内）",
+      "short": "除法",
+      "group": "乘法与除法",
+      "flower": "daisy",
+      "status": "todo",
+      "stars": 0,
+      "strength": null,
+      "bank_subject": "Mathematics",
+      "learning_outcomes": [
+        {
+          "topic_id": "P1-MA-114",
+          "text_en": "Division within 20",
+          "text_zh": "除法（20 以内）"
+        }
+      ]
+    },
+    {
+      "topic_id": "P1-MA-115",
+      "subject_id": "math",
+      "strand": "测量与几何",
+      "strand_zh": "测量与几何",
+      "syllabus_topic": "Telling time to 5 minutes; am and pm",
+      "name_en": "Telling time to 5 minutes; am and pm",
+      "name_zh": "认识时间（5 分钟、上午和下午）",
+      "short": "时间",
+      "group": "时间",
+      "flower": "fern",
+      "status": "todo",
+      "stars": 0,
+      "strength": null,
+      "bank_subject": "Mathematics",
+      "learning_outcomes": [
+        {
+          "topic_id": "P1-MA-115",
+          "text_en": "Telling time to 5 minutes; am and pm",
+          "text_zh": "认识时间（5 分钟、上午和下午）"
+        }
+      ]
+    },
+    {
+      "topic_id": "P1-MA-116",
+      "subject_id": "math",
+      "strand": "数与代数",
+      "strand_zh": "数与代数",
+      "syllabus_topic": "Money: cents and dollars",
+      "name_en": "Money: cents and dollars",
+      "name_zh": "认识钱（分和元）",
+      "short": "钱",
+      "group": "钱",
+      "flower": "lily",
+      "status": "todo",
+      "stars": 0,
+      "strength": null,
+      "bank_subject": "Mathematics",
+      "learning_outcomes": [
+        {
+          "topic_id": "P1-MA-116",
+          "text_en": "Money: cents and dollars",
+          "text_zh": "认识钱（分和元）"
+        }
+      ]
+    },
+    {
+      "topic_id": "P1-EN-101",
+      "subject_id": "english",
+      "strand": "词汇",
+      "strand_zh": "词汇",
+      "syllabus_topic": "Letters and sounds",
+      "name_en": "Letters and sounds",
+      "name_zh": "字母与发音",
+      "short": "字母",
+      "group": "词汇",
+      "flower": "sunflower",
+      "status": "todo",
+      "stars": 0,
+      "strength": null,
+      "bank_subject": "English",
+      "learning_outcomes": [
+        {
+          "topic_id": "P1-EN-101",
+          "text_en": "Letters and sounds",
+          "text_zh": "字母与发音"
+        }
+      ]
+    },
+    {
+      "topic_id": "P1-EN-102",
+      "subject_id": "english",
+      "strand": "词汇",
+      "strand_zh": "词汇",
+      "syllabus_topic": "Spelling simple words and rhymes",
+      "name_en": "Spelling simple words and rhymes",
+      "name_zh": "拼读与押韵（CVC 词）",
+      "short": "拼读",
+      "group": "词汇",
+      "flower": "clover",
+      "status": "todo",
+      "stars": 0,
+      "strength": null,
+      "bank_subject": "English",
+      "learning_outcomes": [
+        {
+          "topic_id": "P1-EN-102",
+          "text_en": "Spelling simple words and rhymes",
+          "text_zh": "拼读与押韵（CVC 词）"
+        }
+      ]
+    },
+    {
+      "topic_id": "P1-EN-103",
+      "subject_id": "english",
+      "strand": "文法",
+      "strand_zh": "文法",
+      "syllabus_topic": "Nouns: a / an and plurals with -s",
+      "name_en": "Nouns: a / an and plurals with -s",
+      "name_zh": "名词：a / an 与复数 -s",
+      "short": "名词",
+      "group": "文法",
+      "flower": "tulip",
+      "status": "todo",
+      "stars": 0,
+      "strength": null,
+      "bank_subject": "English",
+      "learning_outcomes": [
+        {
+          "topic_id": "P1-EN-103",
+          "text_en": "Nouns: a / an and plurals with -s",
+          "text_zh": "名词：a / an 与复数 -s"
+        }
+      ]
+    },
+    {
+      "topic_id": "P1-EN-104",
+      "subject_id": "english",
+      "strand": "文法",
+      "strand_zh": "文法",
+      "syllabus_topic": "Pronouns: I, you, he, she, it, we, they",
+      "name_en": "Pronouns: I, you, he, she, it, we, they",
+      "name_zh": "代词：I, you, he, she, it, we, they",
+      "short": "代词",
+      "group": "文法",
+      "flower": "rose",
+      "status": "todo",
+      "stars": 0,
+      "strength": null,
+      "bank_subject": "English",
+      "learning_outcomes": [
+        {
+          "topic_id": "P1-EN-104",
+          "text_en": "Pronouns: I, you, he, she, it, we, they",
+          "text_zh": "代词：I, you, he, she, it, we, they"
+        }
+      ]
+    },
+    {
+      "topic_id": "P1-EN-105",
+      "subject_id": "english",
+      "strand": "文法",
+      "strand_zh": "文法",
+      "syllabus_topic": "is, am, are; has, have",
+      "name_en": "is, am, are; has, have",
+      "name_zh": "is / am / are 与 has / have",
+      "short": "be 动词",
+      "group": "文法",
+      "flower": "daisy",
+      "status": "todo",
+      "stars": 0,
+      "strength": null,
+      "bank_subject": "English",
+      "learning_outcomes": [
+        {
+          "topic_id": "P1-EN-105",
+          "text_en": "is, am, are; has, have",
+          "text_zh": "is / am / are 与 has / have"
+        }
+      ]
+    },
+    {
+      "topic_id": "P1-EN-106",
+      "subject_id": "english",
+      "strand": "文法",
+      "strand_zh": "文法",
+      "syllabus_topic": "Action words and the simple present",
+      "name_en": "Action words and the simple present",
+      "name_zh": "动作词与一般现在时",
+      "short": "动作词",
+      "group": "文法",
+      "flower": "fern",
+      "status": "todo",
+      "stars": 0,
+      "strength": null,
+      "bank_subject": "English",
+      "learning_outcomes": [
+        {
+          "topic_id": "P1-EN-106",
+          "text_en": "Action words and the simple present",
+          "text_zh": "动作词与一般现在时"
+        }
+      ]
+    },
+    {
+      "topic_id": "P1-EN-107",
+      "subject_id": "english",
+      "strand": "文法",
+      "strand_zh": "文法",
+      "syllabus_topic": "Prepositions: in, on, under, behind, next to",
+      "name_en": "Prepositions: in, on, under, behind, next to",
+      "name_zh": "介词：in, on, under, behind, next to",
+      "short": "介词",
+      "group": "文法",
+      "flower": "lily",
+      "status": "todo",
+      "stars": 0,
+      "strength": null,
+      "bank_subject": "English",
+      "learning_outcomes": [
+        {
+          "topic_id": "P1-EN-107",
+          "text_en": "Prepositions: in, on, under, behind, next to",
+          "text_zh": "介词：in, on, under, behind, next to"
+        }
+      ]
+    },
+    {
+      "topic_id": "P1-EN-108",
+      "subject_id": "english",
+      "strand": "词汇",
+      "strand_zh": "词汇",
+      "syllabus_topic": "Describing words: colour, size and opposites",
+      "name_en": "Describing words: colour, size and opposites",
+      "name_zh": "形容词：颜色、大小与反义词",
+      "short": "形容词",
+      "group": "词汇",
+      "flower": "lavender",
+      "status": "todo",
+      "stars": 0,
+      "strength": null,
+      "bank_subject": "English",
+      "learning_outcomes": [
+        {
+          "topic_id": "P1-EN-108",
+          "text_en": "Describing words: colour, size and opposites",
+          "text_zh": "形容词：颜色、大小与反义词"
+        }
+      ]
+    },
+    {
+      "topic_id": "P1-EN-109",
+      "subject_id": "english",
+      "strand": "填空与改错",
+      "strand_zh": "填空与改错",
+      "syllabus_topic": "Sentences: capital letters, full stops and question marks",
+      "name_en": "Sentences: capital letters, full stops and question marks",
+      "name_zh": "句子：大写字母、句号与问号",
+      "short": "句子",
+      "group": "填空与改错",
+      "flower": "marigold",
+      "status": "todo",
+      "stars": 0,
+      "strength": null,
+      "bank_subject": "English",
+      "learning_outcomes": [
+        {
+          "topic_id": "P1-EN-109",
+          "text_en": "Sentences: capital letters, full stops and question marks",
+          "text_zh": "句子：大写字母、句号与问号"
+        }
+      ]
+    },
+    {
+      "topic_id": "P1-EN-110",
+      "subject_id": "english",
+      "strand": "词汇",
+      "strand_zh": "词汇",
+      "syllabus_topic": "Vocabulary: word groups",
+      "name_en": "Vocabulary: word groups",
+      "name_zh": "词汇：词语分类",
+      "short": "词汇",
+      "group": "词汇",
+      "flower": "sunflower",
+      "status": "todo",
+      "stars": 0,
+      "strength": null,
+      "bank_subject": "English",
+      "learning_outcomes": [
+        {
+          "topic_id": "P1-EN-110",
+          "text_en": "Vocabulary: word groups",
+          "text_zh": "词汇：词语分类"
+        }
+      ]
+    },
+    {
+      "topic_id": "P1-EN-111",
+      "subject_id": "english",
+      "strand": "阅读",
+      "strand_zh": "阅读",
+      "syllabus_topic": "Reading comprehension (sentences and short texts)",
+      "name_en": "Reading comprehension (sentences and short texts)",
+      "name_zh": "阅读理解（短句与短文）",
+      "short": "阅读理解",
+      "group": "阅读",
+      "flower": "clover",
+      "status": "todo",
+      "stars": 0,
+      "strength": null,
+      "bank_subject": "English",
+      "learning_outcomes": [
+        {
+          "topic_id": "P1-EN-111",
+          "text_en": "Reading comprehension (sentences and short texts)",
+          "text_zh": "阅读理解（短句与短文）"
+        }
+      ]
+    },
+    {
+      "topic_id": "P1-EN-112",
+      "subject_id": "english",
+      "strand": "写作",
+      "strand_zh": "写作",
+      "syllabus_topic": "Writing sentences",
+      "name_en": "Writing sentences",
+      "name_zh": "写句子",
+      "short": "写作",
+      "group": "写作",
+      "flower": "tulip",
+      "status": "todo",
+      "stars": 0,
+      "strength": null,
+      "bank_subject": "English",
+      "learning_outcomes": [
+        {
+          "topic_id": "P1-EN-112",
+          "text_en": "Writing sentences",
+          "text_zh": "写句子"
+        }
+      ]
+    },
+    {
+      "topic_id": "P1-CL-101",
+      "subject_id": "chinese",
+      "strand": "课文与字词",
+      "strand_zh": "课文与字词",
+      "syllabus_topic": "Lesson 1: 我上学了",
+      "name_en": "Lesson 1: 我上学了",
+      "name_zh": "第一课 我上学了",
+      "short": "第1课",
+      "group": "课文与字词（欢乐伙伴2.0 1A）",
+      "flower": "sunflower",
+      "status": "todo",
+      "stars": 0,
+      "strength": null,
+      "bank_subject": "Chinese",
+      "learning_outcomes": [
+        {
+          "topic_id": "P1-CL-101",
+          "text_en": "Lesson 1: 我上学了",
+          "text_zh": "第一课 我上学了"
+        }
+      ]
+    },
+    {
+      "topic_id": "P1-CL-102",
+      "subject_id": "chinese",
+      "strand": "课文与字词",
+      "strand_zh": "课文与字词",
+      "syllabus_topic": "Lesson 2: 你家有几个人",
+      "name_en": "Lesson 2: 你家有几个人",
+      "name_zh": "第二课 你家有几个人",
+      "short": "第2课",
+      "group": "课文与字词（欢乐伙伴2.0 1A）",
+      "flower": "clover",
+      "status": "todo",
+      "stars": 0,
+      "strength": null,
+      "bank_subject": "Chinese",
+      "learning_outcomes": [
+        {
+          "topic_id": "P1-CL-102",
+          "text_en": "Lesson 2: 你家有几个人",
+          "text_zh": "第二课 你家有几个人"
+        }
+      ]
+    },
+    {
+      "topic_id": "P1-CL-103",
+      "subject_id": "chinese",
+      "strand": "课文与字词",
+      "strand_zh": "课文与字词",
+      "syllabus_topic": "Lesson 3: 今天是我的生日",
+      "name_en": "Lesson 3: 今天是我的生日",
+      "name_zh": "第三课 今天是我的生日",
+      "short": "第3课",
+      "group": "课文与字词（欢乐伙伴2.0 1A）",
+      "flower": "tulip",
+      "status": "todo",
+      "stars": 0,
+      "strength": null,
+      "bank_subject": "Chinese",
+      "learning_outcomes": [
+        {
+          "topic_id": "P1-CL-103",
+          "text_en": "Lesson 3: 今天是我的生日",
+          "text_zh": "第三课 今天是我的生日"
+        }
+      ]
+    },
+    {
+      "topic_id": "P1-CL-104",
+      "subject_id": "chinese",
+      "strand": "课文与字词",
+      "strand_zh": "课文与字词",
+      "syllabus_topic": "Lesson 4: 我喜欢打篮球",
+      "name_en": "Lesson 4: 我喜欢打篮球",
+      "name_zh": "第四课 我喜欢打篮球",
+      "short": "第4课",
+      "group": "课文与字词（欢乐伙伴2.0 1A）",
+      "flower": "rose",
+      "status": "todo",
+      "stars": 0,
+      "strength": null,
+      "bank_subject": "Chinese",
+      "learning_outcomes": [
+        {
+          "topic_id": "P1-CL-104",
+          "text_en": "Lesson 4: 我喜欢打篮球",
+          "text_zh": "第四课 我喜欢打篮球"
+        }
+      ]
+    },
+    {
+      "topic_id": "P1-CL-105",
+      "subject_id": "chinese",
+      "strand": "课文与字词",
+      "strand_zh": "课文与字词",
+      "syllabus_topic": "Lesson 5: 现在几点",
+      "name_en": "Lesson 5: 现在几点",
+      "name_zh": "第五课 现在几点",
+      "short": "第5课",
+      "group": "课文与字词（欢乐伙伴2.0 1A）",
+      "flower": "daisy",
+      "status": "todo",
+      "stars": 0,
+      "strength": null,
+      "bank_subject": "Chinese",
+      "learning_outcomes": [
+        {
+          "topic_id": "P1-CL-105",
+          "text_en": "Lesson 5: 现在几点",
+          "text_zh": "第五课 现在几点"
+        }
+      ]
+    },
+    {
+      "topic_id": "P1-CL-106",
+      "subject_id": "chinese",
+      "strand": "课文与字词",
+      "strand_zh": "课文与字词",
+      "syllabus_topic": "Lesson 6: 这是我的学校",
+      "name_en": "Lesson 6: 这是我的学校",
+      "name_zh": "第六课 这是我的学校",
+      "short": "第6课",
+      "group": "课文与字词（欢乐伙伴2.0 1A）",
+      "flower": "fern",
+      "status": "todo",
+      "stars": 0,
+      "strength": null,
+      "bank_subject": "Chinese",
+      "learning_outcomes": [
+        {
+          "topic_id": "P1-CL-106",
+          "text_en": "Lesson 6: 这是我的学校",
+          "text_zh": "第六课 这是我的学校"
+        }
+      ]
+    },
+    {
+      "topic_id": "P1-CL-107",
+      "subject_id": "chinese",
+      "strand": "课文与字词",
+      "strand_zh": "课文与字词",
+      "syllabus_topic": "Lesson 7: 我的东西不见了",
+      "name_en": "Lesson 7: 我的东西不见了",
+      "name_zh": "第七课 我的东西不见了",
+      "short": "第7课",
+      "group": "课文与字词（欢乐伙伴2.0 1A）",
+      "flower": "lily",
+      "status": "todo",
+      "stars": 0,
+      "strength": null,
+      "bank_subject": "Chinese",
+      "learning_outcomes": [
+        {
+          "topic_id": "P1-CL-107",
+          "text_en": "Lesson 7: 我的东西不见了",
+          "text_zh": "第七课 我的东西不见了"
+        }
+      ]
+    },
+    {
+      "topic_id": "P1-CL-108",
+      "subject_id": "chinese",
+      "strand": "课文与字词",
+      "strand_zh": "课文与字词",
+      "syllabus_topic": "Lesson 8: 我感冒了",
+      "name_en": "Lesson 8: 我感冒了",
+      "name_zh": "第八课 我感冒了",
+      "short": "第8课",
+      "group": "课文与字词（欢乐伙伴2.0 1A）",
+      "flower": "lavender",
+      "status": "todo",
+      "stars": 0,
+      "strength": null,
+      "bank_subject": "Chinese",
+      "learning_outcomes": [
+        {
+          "topic_id": "P1-CL-108",
+          "text_en": "Lesson 8: 我感冒了",
+          "text_zh": "第八课 我感冒了"
+        }
+      ]
+    },
+    {
+      "topic_id": "P1-CL-109",
+      "subject_id": "chinese",
+      "strand": "课文与字词",
+      "strand_zh": "课文与字词",
+      "syllabus_topic": "Lesson 9: 今天有体育课吗",
+      "name_en": "Lesson 9: 今天有体育课吗",
+      "name_zh": "第九课 今天有体育课吗",
+      "short": "第9课",
+      "group": "课文与字词（欢乐伙伴2.0 1A）",
+      "flower": "marigold",
+      "status": "todo",
+      "stars": 0,
+      "strength": null,
+      "bank_subject": "Chinese",
+      "learning_outcomes": [
+        {
+          "topic_id": "P1-CL-109",
+          "text_en": "Lesson 9: 今天有体育课吗",
+          "text_zh": "第九课 今天有体育课吗"
+        }
+      ]
+    },
+    {
+      "topic_id": "P1-CL-110",
+      "subject_id": "chinese",
+      "strand": "课文与字词",
+      "strand_zh": "课文与字词",
+      "syllabus_topic": "Lesson 10: 课室里有什么",
+      "name_en": "Lesson 10: 课室里有什么",
+      "name_zh": "第十课 课室里有什么",
+      "short": "第10课",
+      "group": "课文与字词（欢乐伙伴2.0 1A）",
+      "flower": "sunflower",
+      "status": "todo",
+      "stars": 0,
+      "strength": null,
+      "bank_subject": "Chinese",
+      "learning_outcomes": [
+        {
+          "topic_id": "P1-CL-110",
+          "text_en": "Lesson 10: 课室里有什么",
+          "text_zh": "第十课 课室里有什么"
+        }
+      ]
+    },
+    {
+      "topic_id": "P1-CL-111",
+      "subject_id": "chinese",
+      "strand": "课文与字词",
+      "strand_zh": "课文与字词",
+      "syllabus_topic": "Lesson 11: 我的同学",
+      "name_en": "Lesson 11: 我的同学",
+      "name_zh": "第十一课 我的同学",
+      "short": "第11课",
+      "group": "课文与字词（欢乐伙伴2.0 1B）",
+      "flower": "clover",
+      "status": "todo",
+      "stars": 0,
+      "strength": null,
+      "bank_subject": "Chinese",
+      "learning_outcomes": [
+        {
+          "topic_id": "P1-CL-111",
+          "text_en": "Lesson 11: 我的同学",
+          "text_zh": "第十一课 我的同学"
+        }
+      ]
+    },
+    {
+      "topic_id": "P1-CL-112",
+      "subject_id": "chinese",
+      "strand": "课文与字词",
+      "strand_zh": "课文与字词",
+      "syllabus_topic": "Lesson 12: 你想吃什么",
+      "name_en": "Lesson 12: 你想吃什么",
+      "name_zh": "第十二课 你想吃什么",
+      "short": "第12课",
+      "group": "课文与字词（欢乐伙伴2.0 1B）",
+      "flower": "tulip",
+      "status": "todo",
+      "stars": 0,
+      "strength": null,
+      "bank_subject": "Chinese",
+      "learning_outcomes": [
+        {
+          "topic_id": "P1-CL-112",
+          "text_en": "Lesson 12: 你想吃什么",
+          "text_zh": "第十二课 你想吃什么"
+        }
+      ]
+    },
+    {
+      "topic_id": "P1-CL-113",
+      "subject_id": "chinese",
+      "strand": "课文与字词",
+      "strand_zh": "课文与字词",
+      "syllabus_topic": "Lesson 13: 我爱干净",
+      "name_en": "Lesson 13: 我爱干净",
+      "name_zh": "第十三课 我爱干净",
+      "short": "第13课",
+      "group": "课文与字词（欢乐伙伴2.0 1B）",
+      "flower": "rose",
+      "status": "todo",
+      "stars": 0,
+      "strength": null,
+      "bank_subject": "Chinese",
+      "learning_outcomes": [
+        {
+          "topic_id": "P1-CL-113",
+          "text_en": "Lesson 13: 我爱干净",
+          "text_zh": "第十三课 我爱干净"
+        }
+      ]
+    },
+    {
+      "topic_id": "P1-CL-114",
+      "subject_id": "chinese",
+      "strand": "课文与字词",
+      "strand_zh": "课文与字词",
+      "syllabus_topic": "Lesson 14: 你看见我的袜子了吗",
+      "name_en": "Lesson 14: 你看见我的袜子了吗",
+      "name_zh": "第十四课 你看见我的袜子了吗",
+      "short": "第14课",
+      "group": "课文与字词（欢乐伙伴2.0 1B）",
+      "flower": "daisy",
+      "status": "todo",
+      "stars": 0,
+      "strength": null,
+      "bank_subject": "Chinese",
+      "learning_outcomes": [
+        {
+          "topic_id": "P1-CL-114",
+          "text_en": "Lesson 14: 你看见我的袜子了吗",
+          "text_zh": "第十四课 你看见我的袜子了吗"
+        }
+      ]
+    },
+    {
+      "topic_id": "P1-CL-115",
+      "subject_id": "chinese",
+      "strand": "课文与字词",
+      "strand_zh": "课文与字词",
+      "syllabus_topic": "Lesson 15: 我最喜欢吃西瓜",
+      "name_en": "Lesson 15: 我最喜欢吃西瓜",
+      "name_zh": "第十五课 我最喜欢吃西瓜",
+      "short": "第15课",
+      "group": "课文与字词（欢乐伙伴2.0 1B）",
+      "flower": "fern",
+      "status": "todo",
+      "stars": 0,
+      "strength": null,
+      "bank_subject": "Chinese",
+      "learning_outcomes": [
+        {
+          "topic_id": "P1-CL-115",
+          "text_en": "Lesson 15: 我最喜欢吃西瓜",
+          "text_zh": "第十五课 我最喜欢吃西瓜"
+        }
+      ]
+    },
+    {
+      "topic_id": "P1-CL-116",
+      "subject_id": "chinese",
+      "strand": "课文与字词",
+      "strand_zh": "课文与字词",
+      "syllabus_topic": "Lesson 16: 好帮手",
+      "name_en": "Lesson 16: 好帮手",
+      "name_zh": "第十六课 好帮手",
+      "short": "第16课",
+      "group": "课文与字词（欢乐伙伴2.0 1B）",
+      "flower": "lily",
+      "status": "todo",
+      "stars": 0,
+      "strength": null,
+      "bank_subject": "Chinese",
+      "learning_outcomes": [
+        {
+          "topic_id": "P1-CL-116",
+          "text_en": "Lesson 16: 好帮手",
+          "text_zh": "第十六课 好帮手"
+        }
+      ]
+    },
+    {
+      "topic_id": "P1-CL-117",
+      "subject_id": "chinese",
+      "strand": "课文与字词",
+      "strand_zh": "课文与字词",
+      "syllabus_topic": "Lesson 17: 我们一起来庆祝",
+      "name_en": "Lesson 17: 我们一起来庆祝",
+      "name_zh": "第十七课 我们一起来庆祝",
+      "short": "第17课",
+      "group": "课文与字词（欢乐伙伴2.0 1B）",
+      "flower": "lavender",
+      "status": "todo",
+      "stars": 0,
+      "strength": null,
+      "bank_subject": "Chinese",
+      "learning_outcomes": [
+        {
+          "topic_id": "P1-CL-117",
+          "text_en": "Lesson 17: 我们一起来庆祝",
+          "text_zh": "第十七课 我们一起来庆祝"
+        }
+      ]
+    },
+    {
+      "topic_id": "P1-CL-118",
+      "subject_id": "chinese",
+      "strand": "课文与字词",
+      "strand_zh": "课文与字词",
+      "syllabus_topic": "Lesson 18: 到动物园去",
+      "name_en": "Lesson 18: 到动物园去",
+      "name_zh": "第十八课 到动物园去",
+      "short": "第18课",
+      "group": "课文与字词（欢乐伙伴2.0 1B）",
+      "flower": "marigold",
+      "status": "todo",
+      "stars": 0,
+      "strength": null,
+      "bank_subject": "Chinese",
+      "learning_outcomes": [
+        {
+          "topic_id": "P1-CL-118",
+          "text_en": "Lesson 18: 到动物园去",
+          "text_zh": "第十八课 到动物园去"
+        }
+      ]
+    },
+    {
+      "topic_id": "P1-CL-119",
+      "subject_id": "chinese",
+      "strand": "课文与字词",
+      "strand_zh": "课文与字词",
+      "syllabus_topic": "Lesson 19: 我家附近有公园",
+      "name_en": "Lesson 19: 我家附近有公园",
+      "name_zh": "第十九课 我家附近有公园",
+      "short": "第19课",
+      "group": "课文与字词（欢乐伙伴2.0 1B）",
+      "flower": "sunflower",
+      "status": "todo",
+      "stars": 0,
+      "strength": null,
+      "bank_subject": "Chinese",
+      "learning_outcomes": [
+        {
+          "topic_id": "P1-CL-119",
+          "text_en": "Lesson 19: 我家附近有公园",
+          "text_zh": "第十九课 我家附近有公园"
+        }
+      ]
+    },
+    {
+      "topic_id": "P1-CL-120",
+      "subject_id": "chinese",
+      "strand": "语文知识与应用",
+      "strand_zh": "语文知识与应用",
+      "syllabus_topic": "汉语拼音",
+      "name_en": "汉语拼音",
+      "name_zh": "汉语拼音",
+      "short": "拼音",
+      "group": "语文知识与应用",
+      "flower": "clover",
+      "status": "todo",
+      "stars": 0,
+      "strength": null,
+      "bank_subject": "Chinese",
+      "learning_outcomes": [
+        {
+          "topic_id": "P1-CL-120",
+          "text_en": "汉语拼音",
+          "text_zh": "汉语拼音"
+        }
+      ]
+    },
+    {
+      "topic_id": "P1-CL-121",
+      "subject_id": "chinese",
+      "strand": "语文知识与应用",
+      "strand_zh": "语文知识与应用",
+      "syllabus_topic": "认字与辨字",
+      "name_en": "认字与辨字",
+      "name_zh": "认字与辨字",
+      "short": "辨字",
+      "group": "语文知识与应用",
+      "flower": "tulip",
+      "status": "todo",
+      "stars": 0,
+      "strength": null,
+      "bank_subject": "Chinese",
+      "learning_outcomes": [
+        {
+          "topic_id": "P1-CL-121",
+          "text_en": "认字与辨字",
+          "text_zh": "认字与辨字"
+        }
+      ]
+    },
+    {
+      "topic_id": "P1-CL-122",
+      "subject_id": "chinese",
+      "strand": "语文知识与应用",
+      "strand_zh": "语文知识与应用",
+      "syllabus_topic": "量词与词语选择",
+      "name_en": "量词与词语选择",
+      "name_zh": "量词与词语选择",
+      "short": "词语选择",
+      "group": "语文知识与应用",
+      "flower": "rose",
+      "status": "todo",
+      "stars": 0,
+      "strength": null,
+      "bank_subject": "Chinese",
+      "learning_outcomes": [
+        {
+          "topic_id": "P1-CL-122",
+          "text_en": "量词与词语选择",
+          "text_zh": "量词与词语选择"
+        }
+      ]
+    },
+    {
+      "topic_id": "P1-CL-123",
+      "subject_id": "chinese",
+      "strand": "语文知识与应用",
+      "strand_zh": "语文知识与应用",
+      "syllabus_topic": "反义词",
+      "name_en": "反义词",
+      "name_zh": "反义词",
+      "short": "反义词",
+      "group": "语文知识与应用",
+      "flower": "daisy",
+      "status": "todo",
+      "stars": 0,
+      "strength": null,
+      "bank_subject": "Chinese",
+      "learning_outcomes": [
+        {
+          "topic_id": "P1-CL-123",
+          "text_en": "反义词",
+          "text_zh": "反义词"
+        }
+      ]
+    },
+    {
+      "topic_id": "P1-CL-124",
+      "subject_id": "chinese",
+      "strand": "语文知识与应用",
+      "strand_zh": "语文知识与应用",
+      "syllabus_topic": "组词成句与标点",
+      "name_en": "组词成句与标点",
+      "name_zh": "组词成句与标点",
+      "short": "排句子",
+      "group": "语文知识与应用",
+      "flower": "fern",
+      "status": "todo",
+      "stars": 0,
+      "strength": null,
+      "bank_subject": "Chinese",
+      "learning_outcomes": [
+        {
+          "topic_id": "P1-CL-124",
+          "text_en": "组词成句与标点",
+          "text_zh": "组词成句与标点"
+        }
+      ]
+    },
+    {
+      "topic_id": "P1-CL-125",
+      "subject_id": "chinese",
+      "strand": "阅读理解",
+      "strand_zh": "阅读理解",
+      "syllabus_topic": "阅读理解",
+      "name_en": "阅读理解",
+      "name_zh": "阅读理解",
+      "short": "阅读",
+      "group": "阅读理解",
+      "flower": "lily",
+      "status": "todo",
+      "stars": 0,
+      "strength": null,
+      "bank_subject": "Chinese",
+      "learning_outcomes": [
+        {
+          "topic_id": "P1-CL-125",
+          "text_en": "阅读理解",
+          "text_zh": "阅读理解"
+        }
+      ]
+    },
+    {
+      "topic_id": "P1-CL-126",
+      "subject_id": "chinese",
+      "strand": "书面表达",
+      "strand_zh": "书面表达",
+      "syllabus_topic": "说话写话",
+      "name_en": "说话写话",
+      "name_zh": "说话写话",
+      "short": "写话",
+      "group": "书面表达",
+      "flower": "lavender",
+      "status": "todo",
+      "stars": 0,
+      "strength": null,
+      "bank_subject": "Chinese",
+      "learning_outcomes": [
+        {
+          "topic_id": "P1-CL-126",
+          "text_en": "说话写话",
+          "text_zh": "说话写话"
+        }
+      ]
+    },
+    {
+      "topic_id": "P1-HCL-101",
+      "subject_id": "higher_chinese",
+      "strand": "识字与写字",
+      "strand_zh": "识字与写字",
+      "syllabus_topic": "高华识写字（欢乐伙伴2.0 1A/1B）",
+      "name_en": "高华识写字（欢乐伙伴2.0 1A/1B）",
+      "name_zh": "高华识写字（欢乐伙伴2.0 1A/1B）",
+      "short": "高华生字",
+      "group": "识字与写字",
+      "flower": "sunflower",
+      "status": "todo",
+      "stars": 0,
+      "strength": null,
+      "bank_subject": "Higher Chinese",
+      "learning_outcomes": [
+        {
+          "topic_id": "P1-HCL-101",
+          "text_en": "高华识写字（欢乐伙伴2.0 1A/1B）",
+          "text_zh": "高华识写字（欢乐伙伴2.0 1A/1B）"
+        }
+      ]
+    },
+    {
+      "topic_id": "P1-HCL-102",
+      "subject_id": "higher_chinese",
+      "strand": "语文应用",
+      "strand_zh": "语文应用",
+      "syllabus_topic": "高华词语：叠词与词语搭配",
+      "name_en": "高华词语：叠词与词语搭配",
+      "name_zh": "高华词语：叠词与词语搭配",
+      "short": "高华词语",
+      "group": "语文应用",
+      "flower": "clover",
+      "status": "todo",
+      "stars": 0,
+      "strength": null,
+      "bank_subject": "Higher Chinese",
+      "learning_outcomes": [
+        {
+          "topic_id": "P1-HCL-102",
+          "text_en": "高华词语：叠词与词语搭配",
+          "text_zh": "高华词语：叠词与词语搭配"
+        }
+      ]
+    },
+    {
+      "topic_id": "P1-HCL-103",
+      "subject_id": "higher_chinese",
+      "strand": "语文应用",
+      "strand_zh": "语文应用",
+      "syllabus_topic": "句子：扩写与仿写",
+      "name_en": "句子：扩写与仿写",
+      "name_zh": "句子：扩写与仿写",
+      "short": "高华句子",
+      "group": "语文应用",
+      "flower": "tulip",
+      "status": "todo",
+      "stars": 0,
+      "strength": null,
+      "bank_subject": "Higher Chinese",
+      "learning_outcomes": [
+        {
+          "topic_id": "P1-HCL-103",
+          "text_en": "句子：扩写与仿写",
+          "text_zh": "句子：扩写与仿写"
+        }
+      ]
+    },
+    {
+      "topic_id": "P1-HCL-104",
+      "subject_id": "higher_chinese",
+      "strand": "阅读理解",
+      "strand_zh": "阅读理解",
+      "syllabus_topic": "高华阅读理解",
+      "name_en": "高华阅读理解",
+      "name_zh": "高华阅读理解",
+      "short": "高华阅读",
+      "group": "阅读理解",
+      "flower": "rose",
+      "status": "todo",
+      "stars": 0,
+      "strength": null,
+      "bank_subject": "Higher Chinese",
+      "learning_outcomes": [
+        {
+          "topic_id": "P1-HCL-104",
+          "text_en": "高华阅读理解",
+          "text_zh": "高华阅读理解"
+        }
+      ]
+    },
+    {
+      "topic_id": "P1-HCL-105",
+      "subject_id": "higher_chinese",
+      "strand": "写作",
+      "strand_zh": "写作",
+      "syllabus_topic": "看图说话写话",
+      "name_en": "看图说话写话",
+      "name_zh": "看图说话写话",
+      "short": "高华写话",
+      "group": "写作",
+      "flower": "daisy",
+      "status": "todo",
+      "stars": 0,
+      "strength": null,
+      "bank_subject": "Higher Chinese",
+      "learning_outcomes": [
+        {
+          "topic_id": "P1-HCL-105",
+          "text_en": "看图说话写话",
+          "text_zh": "看图说话写话"
+        }
+      ]
+    }
+  ],
+  "mastery_events": [],
+  "plan_items": []
+};
+</script>
+<script>
+/* UI text: T(key, vars) and term(kind, value) from assets/i18n.js (one zh/en dictionary). Chinese-subject pages are always Chinese. */
+const I18N = window.GardenI18n;
+function T(key, vars){ return I18N.T(key, vars); }
+function term(kind, value){ return I18N.term(kind, value); }
+function isEn(){ return I18N.ui() === "en"; }
+/* topic / subject names in the language on screen (zh mode keeps the English name as a small second line, except on Chinese-subject pages) */
+function tName(t){ return isEn() ? t.name_en : t.name_zh; }
+function tSub(t){ return (isEn() || I18N.isCn(t.subject_id)) ? "" : t.name_en; }
+function sName(s){ return term("subject", s.subject_id); }
+function $(sel, root=document){ return root.querySelector(sel); }
+function starsHTML(n){
+  return [1,2,3].map(i => `<span class="star ${i<=n?"on":""}" aria-hidden="true">★</span>`).join("");
+}
+function flowerSVG(kind, status, pct){
+  const p = typeof pct === "number" ? pct : (status==="conquered" ? 100 : (status==="progress" ? 40 : 0));
+  const grown = p >= 100;
+  const seed = p <= 0;
+  const grey = status==="locked" ? 'style="filter:grayscale(.7);opacity:.7"' : "";
+  if(seed){
+    const seedColor = status==="locked" ? "#9a9084" : "#6b4223";
+    return `<svg viewBox="0 0 110 118" ${grey} aria-hidden="true">
+      <ellipse cx="55" cy="104" rx="18" ry="5" fill="rgba(0,0,0,.12)"/>
+      <ellipse cx="55" cy="90" rx="7" ry="10" fill="${seedColor}" transform="rotate(-25 55 90)"/>
+      ${status==="todo" ? '<path d="M55 82c0-10 8-16 8-16" stroke="#6aaa4a" stroke-width="2" fill="none"/>' : ""}
+    </svg>`;
+  }
+  const stemH = grown ? 70 : Math.round(38 + (p / 100) * 26);
+  const stem = `<path d="M55 104 C55 ${104-stemH*.3}, 55 ${104-stemH*.6}, 55 ${104-stemH}" stroke="#2f7a3c" stroke-width="4" fill="none" stroke-linecap="round"/>`;
+  const leafs = `<path d="M55 ${104-stemH*.45} C40 ${104-stemH*.55}, 32 ${104-stemH*.3}, 38 ${104-stemH*.2}" fill="#57a34a"/>
+                 <path d="M55 ${104-stemH*.6} C70 ${104-stemH*.7}, 78 ${104-stemH*.45}, 72 ${104-stemH*.35}" fill="#3f8f4b"/>`;
+  const heads = {
+    sunflower: grown
+      ? `<g transform="translate(55 ${104-stemH})">${Array.from({length:12},(_,i)=>`<ellipse cx="0" cy="-16" rx="5" ry="11" fill="#f0c43a" transform="rotate(${i*30})"/>`).join("")}<circle r="11" fill="#6b4223"/><circle r="7" fill="#3d2614"/></g>`
+      : `<g transform="translate(55 ${104-stemH})"><ellipse cx="0" cy="-8" rx="8" ry="11" fill="#8fcf5a"/><circle cy="-2" r="5" fill="#f0c43a"/></g>`,
+    clover: grown
+      ? `<g transform="translate(55 ${104-stemH})"><circle cx="-8" cy="-4" r="8" fill="#3f8f4b"/><circle cx="8" cy="-4" r="8" fill="#3f8f4b"/><circle cx="0" cy="-14" r="8" fill="#57a34a"/><circle cx="0" cy="-4" r="5" fill="#2f7a3c"/></g>`
+      : `<g transform="translate(55 ${104-stemH})"><circle cx="0" cy="-8" r="8" fill="#8fcf5a"/></g>`,
+    tulip: grown
+      ? `<g transform="translate(55 ${104-stemH})"><ellipse cx="-11" cy="-14" rx="11" ry="20" fill="#e8617a"/><ellipse cx="11" cy="-14" rx="11" ry="20" fill="#e8617a"/><ellipse cx="0" cy="-20" rx="12" ry="24" fill="#ff6b8a"/><circle cy="0" r="3.5" fill="#f0c43a"/></g>`
+      : `<g transform="translate(55 ${104-stemH})"><ellipse cx="0" cy="-10" rx="7" ry="11" fill="#8fcf5a"/><ellipse cx="0" cy="-14" rx="5" ry="7" fill="#ff8fa0"/></g>`,
+    rose: grown
+      ? `<g transform="translate(55 ${104-stemH})"><circle r="14" fill="#e8617a"/><circle r="9" fill="#ff8fa0"/><circle r="4" fill="#c43c5a"/></g>`
+      : `<g transform="translate(55 ${104-stemH})"><ellipse cx="0" cy="-6" rx="7" ry="9" fill="#8fcf5a"/><circle cy="-2" r="4" fill="#e8617a"/></g>`,
+    daisy: grown
+      ? `<g transform="translate(55 ${104-stemH})">${Array.from({length:8},(_,i)=>`<ellipse cx="0" cy="-13" rx="4" ry="9" fill="#fff" transform="rotate(${i*45})"/>`).join("")}<circle r="6" fill="#f0c43a"/></g>`
+      : `<g transform="translate(55 ${104-stemH})"><circle cy="-6" r="7" fill="#8fcf5a"/><circle cy="-4" r="3" fill="#f0c43a"/></g>`,
+    fern: grown
+      ? `<g transform="translate(55 ${104-stemH})"><path d="M0 0 C-2 -20 -14 -36 -8 -50" stroke="#2f7a3c" stroke-width="3" fill="none"/>${[-12,-22,-32,-42].map((y,i)=>`<ellipse cx="${-8-i}" cy="${y}" rx="10" ry="4" fill="#57a34a" transform="rotate(-30 ${-8} ${y})"/><ellipse cx="${8+i}" cy="${y+4}" rx="10" ry="4" fill="#3f8f4b" transform="rotate(30 ${8} ${y+4})"/>`).join("")}</g>`
+      : `<g transform="translate(55 ${104-stemH})"><path d="M0 0 C0 -16 6 -22 4 -28" stroke="#2f7a3c" stroke-width="3" fill="none"/><ellipse cx="-6" cy="-12" rx="7" ry="3" fill="#8fcf5a"/></g>`,
+    lily: grown
+      ? `<g transform="translate(55 ${104-stemH})"><path d="M0 4 C-18 -6 -8 -28 0 -30 C8 -28 18 -6 0 4Z" fill="#f4e9ff"/><path d="M-8 -8 C-16 -18 -4 -28 0 -18" fill="#e3c7f5"/><path d="M8 -8 C16 -18 4 -28 0 -18" fill="#e3c7f5"/><circle cy="-6" r="3" fill="#f0c43a"/></g>`
+      : `<g transform="translate(55 ${104-stemH})"><ellipse cy="-8" rx="6" ry="10" fill="#8fcf5a"/></g>`,
+    lavender: grown
+      ? `<g transform="translate(55 ${104-stemH})">${[-8,0,8].map(x=>`<g transform="translate(${x} 0)"><line x1="0" y1="0" x2="0" y2="-40" stroke="#2f7a3c" stroke-width="2"/>${[-18,-24,-30,-36].map(y=>`<circle cx="0" cy="${y}" r="3.5" fill="#8b6cc9"/>`).join("")}</g>`).join("")}</g>`
+      : `<g transform="translate(55 ${104-stemH})"><line x1="0" y1="0" x2="0" y2="-20" stroke="#2f7a3c" stroke-width="2"/><circle cy="-22" r="4" fill="#b9a4e0"/></g>`,
+    water: grown
+      ? `<g transform="translate(55 ${104-stemH})"><ellipse cx="0" cy="8" rx="28" ry="8" fill="#8ec6e8" opacity=".7"/><circle cx="-8" cy="-4" r="10" fill="#67b37a"/><circle cx="8" cy="-4" r="10" fill="#3f8f4b"/><circle cx="0" cy="-12" r="10" fill="#57a34a"/><circle cy="-4" r="4" fill="#f0c43a"/></g>`
+      : `<g transform="translate(55 ${104-stemH})"><ellipse cy="8" rx="20" ry="6" fill="#8ec6e8" opacity=".6"/><circle cy="-4" r="7" fill="#8fcf5a"/></g>`,
+    tree: grown
+      ? `<g transform="translate(55 ${104-stemH})"><rect x="-4" y="-10" width="8" height="22" rx="2" fill="#8a5a32"/><circle cx="-12" cy="-18" r="14" fill="#2f7a3c"/><circle cx="12" cy="-18" r="14" fill="#3f8f4b"/><circle cx="0" cy="-30" r="14" fill="#57a34a"/></g>`
+      : `<g transform="translate(55 ${104-stemH})"><rect x="-3" y="-4" width="6" height="14" rx="2" fill="#8a5a32"/><circle cy="-12" r="10" fill="#8fcf5a"/></g>`,
+    marigold: grown
+      ? `<g transform="translate(55 ${104-stemH})">${Array.from({length:10},(_,i)=>`<ellipse cx="0" cy="-13" rx="4" ry="10" fill="#f08a1a" transform="rotate(${i*36})"/>`).join("")}<circle r="6" fill="#f0c43a"/></g>`
+      : `<g transform="translate(55 ${104-stemH})"><ellipse cy="-7" rx="7" ry="9" fill="#8fcf5a"/><circle cy="-3" r="4" fill="#f08a1a"/></g>`
+  };
+  return `<svg viewBox="0 0 110 118" ${grey} aria-hidden="true">${stem}${leafs}${heads[kind]||heads.daisy}</svg>`;
+}
+function treeSVG(pct){
+  const grown = pct >= 30;
+  return `<svg viewBox="0 0 160 160" aria-hidden="true">
+    <ellipse cx="80" cy="148" rx="46" ry="8" fill="rgba(53,88,42,.18)"/>
+    <rect x="72" y="90" width="16" height="58" rx="4" fill="#8a5a32"/>
+    <circle cx="54" cy="90" r="${grown?28:18}" fill="#2f7a3c"/>
+    <circle cx="106" cy="90" r="${grown?28:18}" fill="#3f8f4b"/>
+    <circle cx="80" cy="64" r="${grown?32:20}" fill="#57a34a"/>
+    ${pct>=30?`<circle cx="64" cy="78" r="4" fill="#e8617a"/><circle cx="98" cy="70" r="4" fill="#f0c43a"/><circle cx="80" cy="54" r="4" fill="#e8617a"/>`:""}
+  </svg>`;
+}
+
+/* Progress: 5 different questions marked 做对了 bloom a topic (fewer if the bank is smaller).
+   我学会了 forces 100%. 做错了 on a question that was right lowers it again.
+   Overall 学会了 is the average of topic percents. 还没开花 counts topics under 100%. */
+const PROGRESS_KEY = "anna-garden.p1.progress.v1";   // 一年级 has its own practice record; other grades are never read or written here
+// Progress saved before the original question bank (any record without this tag) is copied once to OLD_PROGRESS_KEY and the garden starts from zero.
+const BANK_EPOCH = "p1-original-1";
+const OLD_PROGRESS_KEY = "anna-garden.p1.progress.v1.before-original";
+const MASTER_GOAL = 5;
+let DATA = null;
+let current = "math";
+let store = { version:1, savedAt:null, topics:{} };
+let toastTimer = null;
+let confirmResolver = null;
+
+function emptyStore(){ return { version:1, bank:BANK_EPOCH, savedAt:null, topics:{}, open:{} }; }
+function knownQ(qid){ const b = window.PRACTICE_BANK; return !!(b && b.idIndex && Object.prototype.hasOwnProperty.call(b.idIndex, qid)); }
+function knownTopic(id){
+  return !!(DATA && DATA.topics && DATA.topics.some(t => t.topic_id === id));
+}
+function sanitizeStore(obj){
+  if(!obj || typeof obj !== "object" || Array.isArray(obj)) throw new Error("bad");
+  if(obj.version !== 1) throw new Error("version");
+  if(obj.bank !== BANK_EPOCH) throw new Error("old-bank");
+  if(!obj.topics || typeof obj.topics !== "object" || Array.isArray(obj.topics)) throw new Error("topics");
+  const BAD = ["__proto__", "constructor", "prototype"];
+  const topics = {};
+  // Entries from the earlier question bank (unknown question ids or flowers) are kept untouched but ignored by every count.
+  Object.keys(obj.topics).forEach(id => {
+    if(BAD.includes(id)) return;
+    const rec = obj.topics[id];
+    if(!rec || typeof rec !== "object" || Array.isArray(rec)) return;
+    const marks = {};
+    const src = rec.marks && typeof rec.marks === "object" && !Array.isArray(rec.marks) ? rec.marks : {};
+    Object.keys(src).forEach(qid => {
+      if(BAD.includes(qid)) return;
+      if(src[qid] === "right" || src[qid] === "wrong" || src[qid] === "partial") marks[qid] = src[qid];
+    });
+    topics[id] = { marks, mastered: rec.mastered === true };
+  });
+  const open = {};
+  const so = obj.open && typeof obj.open === "object" && !Array.isArray(obj.open) ? obj.open : {};
+  Object.keys(so).forEach(qid => {
+    if(BAD.includes(qid) || !knownQ(qid)) return;
+    const r = so[qid];
+    if(!r || typeof r !== "object" || typeof r.text !== "string" || !knownTopic(r.topic)) return;
+    const st = ["pending", "right", "partial", "wrong"].includes(r.status) ? r.status : "pending";
+    open[qid] = { topic:r.topic, text:r.text.slice(0, 4000), status:st,
+      at: typeof r.at === "string" ? r.at : null, checkedAt: typeof r.checkedAt === "string" ? r.checkedAt : null };
+    if(r.parts && typeof r.parts === "object" && !Array.isArray(r.parts)){
+      const ps = {};
+      Object.keys(r.parts).forEach(k => {
+        const p = r.parts[k];
+        if(!/^\d+$/.test(k) || !p || typeof p !== "object") return;
+        ps[k] = { text: typeof p.text === "string" ? p.text.slice(0, 2000) : "", auto: p.auto === true,
+          status: ["pending", "right", "partial", "wrong"].includes(p.status) ? p.status : "pending" };
+      });
+      open[qid].parts = ps;
+    }
+    if(r.revealed === true) open[qid].revealed = true;
+  });
+  let savedAt = null;
+  if(typeof obj.savedAt === "string" && !Number.isNaN(Date.parse(obj.savedAt))){
+    savedAt = new Date(obj.savedAt).toISOString();
+  }
+  return { version:1, bank:BANK_EPOCH, savedAt, topics, open };
+}
+function readStore(){
+  let raw = null;
+  try{ raw = localStorage.getItem(PROGRESS_KEY); }catch(e){ return emptyStore(); }
+  if(!raw) return emptyStore();
+  let obj = null;
+  try{ obj = JSON.parse(raw); }catch(e){ obj = null; }
+  if(!obj || obj.bank !== BANK_EPOCH){
+    // earlier question bank: keep one copy aside, then start the new garden from zero (old 我学会了 flags included)
+    try{ if(!localStorage.getItem(OLD_PROGRESS_KEY)) localStorage.setItem(OLD_PROGRESS_KEY, raw); }catch(e){}
+    const fresh = emptyStore();
+    try{ localStorage.setItem(PROGRESS_KEY, JSON.stringify(fresh)); }catch(e){}
+    return fresh;
+  }
+  try{ return sanitizeStore(obj); }catch(e){ return emptyStore(); }
+}
+function stampParts(iso){
+  const parts = new Intl.DateTimeFormat("en-GB", {
+    timeZone:"Asia/Singapore", month:"numeric", day:"numeric",
+    hour:"2-digit", minute:"2-digit", hourCycle:"h23"
+  }).formatToParts(new Date(iso));
+  const get = (type) => (parts.find(p => p.type === type) || {}).value || "";
+  return { month:get("month"), day:get("day"), hour:get("hour"), minute:get("minute") };
+}
+function formatSaved(iso){
+  if(!iso) return T("save.never");
+  return I18N.dateText(stampParts(iso));
+}
+function formatClock(iso){
+  const p = stampParts(iso);
+  return p.hour + ":" + p.minute;
+}
+function updateSavedLabel(){
+  const el = $("#last-saved");
+  if(el) el.textContent = T("save.last", { when: formatSaved(store.savedAt) });
+}
+function toast(message){
+  const el = $("#toast");
+  if(!el) return;
+  el.textContent = message;
+  el.hidden = false;
+  if(toastTimer) clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => { el.hidden = true; }, 2600);
+}
+function writeStore(opts){
+  opts = opts || {};
+  store.version = 1;
+  store.bank = BANK_EPOCH;
+  if(!opts.keepSavedAt || !store.savedAt) store.savedAt = new Date().toISOString();
+  try{
+    localStorage.setItem(PROGRESS_KEY, JSON.stringify(store));
+  }catch(e){
+    updateSavedLabel();
+    toast(T("toast.storage"));
+    return false;
+  }
+  updateSavedLabel();
+  if(opts.toast) toast(T("toast.saved", { time: formatClock(store.savedAt) }));
+  return true;
+}
+function ensureRec(topicId){
+  if(!store.topics[topicId]) store.topics[topicId] = { marks:{}, mastered:false };
+  if(!store.topics[topicId].marks) store.topics[topicId].marks = {};
+  return store.topics[topicId];
+}
+function questionCountFor(topicId){
+  const t = DATA && DATA.topics ? DATA.topics.find(x => x.topic_id === topicId) : null;
+  const b = window.PRACTICE_BANK;
+  if(!t || !b || !b.questions) return 0;
+  const ids = [t.topic_id].concat((t.learning_outcomes || []).map(lo => lo.topic_id));
+  const seen = {};
+  let n = 0;
+  const subj = t.bank_subject || "";
+  ids.forEach(id => {
+    const idxs = (b.byTopic && b.byTopic[id]) || [];
+    idxs.forEach(i => {
+      if(seen[i]) return;
+      seen[i] = true;
+      const q = b.questions[i];
+      if(q && (!subj || !q.subject || q.subject === subj)) n += 1;
+    });
+  });
+  return n;
+}
+function goalFor(topicId){
+  const n = questionCountFor(topicId);
+  if(n <= 0) return 0;
+  return Math.min(MASTER_GOAL, n);
+}
+function rightCount(topicId){
+  const rec = store.topics[topicId];
+  if(!rec || !rec.marks) return 0;
+  // 对 = 1, 部分对 = 0.5, 不对 = 0
+  return Object.keys(rec.marks).reduce((n, id) => n + (!knownQ(id) ? 0 : rec.marks[id] === "right" ? 1 : rec.marks[id] === "partial" ? 0.5 : 0), 0);
+}
+function percentFor(topicId){
+  const rec = store.topics[topicId];
+  if(rec && rec.mastered) return 100;
+  const goal = goalFor(topicId);
+  if(goal <= 0) return 0;
+  const right = Math.min(goal, rightCount(topicId));
+  return Math.max(0, Math.min(100, Math.round(100 * right / goal)));
+}
+function isMastered(topicId){
+  return !!(store.topics[topicId] && store.topics[topicId].mastered);
+}
+function getMark(topicId, qid){
+  const rec = store.topics[topicId];
+  if(!rec || !rec.marks) return null;
+  return rec.marks[qid] || null;
+}
+function statusFor(pct){
+  if(pct >= 100) return "conquered";
+  if(pct > 0) return "progress";
+  return "todo";
+}
+function starsFor(pct){
+  if(pct >= 100) return 3;
+  if(pct >= 60) return 2;
+  if(pct >= 20) return 1;
+  return 0;
+}
+function statusText(t){
+  if(t.percent >= 100) return T("status.conquered");
+  if(t.percent > 0) return T("status.progress", { p: t.percent });
+  return T("status.todo");
+}
+function decorate(t){
+  const percent = percentFor(t.topic_id);
+  return Object.assign({}, t, { percent, status: statusFor(percent), stars: starsFor(percent) });
+}
+function markQuestion(topicId, qid, result){
+  if((result !== "right" && result !== "wrong") || !qid || !knownTopic(topicId)) return percentFor(topicId);
+  const bq = bankQ(String(qid));
+  if(bq && (bq.mode === "parent" || bq.mode === "multi")) return percentFor(topicId); // open-ended answers are only marked in 家长确认
+  const rec = ensureRec(topicId);
+  rec.marks[String(qid)] = result;
+  if(result === "wrong") rec.mastered = false;
+  writeStore();
+  render();
+  return percentFor(topicId);
+}
+function nowIso(){ return new Date().toISOString(); }
+function getOpen(qid){ return (store.open && store.open[qid]) || null; }
+function submitOpen(topicId, qid, text){
+  if(!knownTopic(topicId) || !knownQ(qid)) return;
+  if(!store.open) store.open = {};
+  store.open[qid] = { topic:topicId, text:String(text).slice(0, 4000), status:"pending", at:nowIso(), checkedAt:null };
+  const rec = ensureRec(topicId); delete rec.marks[qid];
+  writeStore(); render();
+}
+function withdrawOpen(qid){
+  const r = getOpen(qid); if(!r) return;
+  delete store.open[qid];
+  if(store.topics[r.topic] && store.topics[r.topic].marks) delete store.topics[r.topic].marks[qid];
+  writeStore(); render();
+}
+/* ---------- open answers, multi-part answers, parent marking ----------
+   Multi-part questions keep one record with a status per part. Auto parts (exact values) are right/wrong at once;
+   the other parts wait for 家长确认. The item rolls up: all parts right = 对, none = 不对, otherwise 部分对 (½ credit). */
+function rollupParts(r){
+  const ks = Object.keys(r.parts || {});
+  if(!ks.length || ks.some(k => r.parts[k].status === "pending")) return "pending";
+  const s = ks.reduce((n, k) => n + (r.parts[k].status === "right" ? 1 : r.parts[k].status === "partial" ? 0.5 : 0), 0);
+  return s === ks.length ? "right" : (s === 0 ? "wrong" : "partial");
+}
+function applyOpen(qid, r){
+  const rec = ensureRec(r.topic);
+  if(r.parts) r.status = rollupParts(r);
+  if(r.status === "pending"){ delete rec.marks[qid]; r.checkedAt = null; }
+  else { rec.marks[qid] = r.status; r.checkedAt = nowIso(); if(r.status === "wrong") rec.mastered = false; }
+}
+function confirmOpen(qid, result, part){
+  if(!isParentUnlocked()) return false;
+  const r = getOpen(qid); if(!r || r.revealed) return false;
+  if(result === "pending"){
+    if(r.parts) Object.keys(r.parts).forEach(k => { if(!r.parts[k].auto) r.parts[k].status = "pending"; });
+    else r.status = "pending";
+  } else if(result === "right" || result === "partial" || result === "wrong"){
+    if(r.parts){
+      const p = r.parts[String(part)];
+      if(!p || p.auto) return false;
+      p.status = result;
+    } else r.status = result;
+  } else return false;
+  applyOpen(qid, r);
+  writeStore(); render();
+  return true;
+}
+function submitMulti(topicId, qid, answers){
+  const q = bankQ(qid);
+  if(!q || q.mode !== "multi" || !knownTopic(topicId) || !Array.isArray(answers) || answers.length !== q.parts.length) return false;
+  const parts = {};
+  q.parts.forEach((p, i) => {
+    const a = answers[i] || {};
+    const auto = p.kind === "exact";
+    parts[i] = { text:String(a.text || "").slice(0, 2000), auto, status: auto ? (a.result === "right" ? "right" : "wrong") : "pending" };
+  });
+  if(!store.open) store.open = {};
+  const r = { topic:topicId, text:q.parts.map((p, i) => ((p.label || p.prompt || "") + " " + parts[i].text).trim()).join("\n").slice(0, 4000),
+    status:"pending", at:nowIso(), checkedAt:null, parts };
+  store.open[qid] = r;
+  applyOpen(qid, r);
+  writeStore(); render();
+  return true;
+}
+/* looking at the answer before answering counts as not correct */
+function revealUnanswered(topicId, qid){
+  const q = bankQ(qid); if(!q || !knownTopic(topicId)) return false;
+  if(q.mode === "parent" || q.mode === "multi"){
+    if(getOpen(qid)) return false;
+    if(!store.open) store.open = {};
+    store.open[qid] = { topic:topicId, text:"", status:"wrong", revealed:true, at:nowIso(), checkedAt:null };
+  }
+  const rec = ensureRec(topicId); rec.marks[qid] = "wrong"; rec.mastered = false;
+  writeStore(); render();
+  return true;
+}
+function openList(){
+  const o = store.open || {};
+  return Object.keys(o).map(qid => Object.assign({ qid }, o[qid]))
+    .sort((a, b) => String(b.checkedAt || b.at || "").localeCompare(String(a.checkedAt || a.at || "")));
+}
+function updateParentBadge(){
+  const el = document.getElementById("parent-badge"); if(!el) return;
+  const n = openList().filter(x => x.status === "pending").length;
+  el.textContent = String(n); el.hidden = n === 0;
+}
+function setMastered(topicId, yes){
+  if(!knownTopic(topicId)) return;
+  const rec = ensureRec(topicId);
+  rec.mastered = !!yes;
+  writeStore();
+  const practicing = !!document.querySelector(".modal-card.practice-mode");
+  render();
+  if(!practicing && !$("#modal").hidden) openModal(topicId);
+}
+function topicsOf(data, sid){
+  return data.topics.filter(t => t.subject_id === sid).map(decorate);
+}
+function statsOf(data, sid){
+  const ts = topicsOf(data, sid);
+  const total = ts.length;
+  const done = ts.filter(t => t.percent >= 100).length;
+  const sum = ts.reduce((a, t) => a + (t.percent || 0), 0);
+  const donePct = total ? Math.round(sum / total) : 0;
+  return {
+    done, total, donePct,
+    remainPct: total ? Math.max(0, 100 - donePct) : 0,
+    unfinished: ts.filter(t => t.percent < 100)
+  };
+}
+
+function openModal(id){
+  const raw = DATA.topics.find(x => x.topic_id === id);
+  if(!raw) return;
+  const t = decorate(raw);
+  const canPractice = t.status !== "locked";
+  const flagged = isMastered(t.topic_id);
+  const goal = goalFor(t.topic_id);
+  I18N.setPage(t.subject_id);
+  let help = T("topic.helpGoal", { n: goal });
+  if(flagged) help = T("topic.helpFlagged");
+  else if(t.percent >= 100) help = T("topic.helpDone");
+  else if(goal <= 0) help = T("topic.helpNone");
+  const masterBtn = flagged
+    ? `<button class="btn-master is-on" type="button" id="btn-master">${T("topic.more")}</button>`
+    : (t.percent >= 100 ? "" : `<button class="btn-master" type="button" id="btn-master">${T("topic.gotIt")}</button>`);
+  const sub = tSub(t);
+  const box = $("#modal");
+  box.innerHTML = `
+    <div class="modal-backdrop" data-close="1"></div>
+    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="md-title">
+      <button class="modal-x" type="button" data-close="1" aria-label="${T("aria.close")}">×</button>
+      <div class="modal-lang">${I18N.toggleHTML(t.subject_id)}</div>
+      <div class="modal-kicker">${term("strand", t.strand_zh)} · ${term("group", t.group)} · ${t.topic_id}</div>
+      <h2 id="md-title">${tName(t)}</h2>
+      ${sub ? `<p class="modal-en">${sub}</p>` : ""}
+      <div class="modal-status status-${t.status}">
+        <span class="pill">${statusText(t)}</span>
+        <span class="stars" aria-label="${T("aria.stars", { n: t.stars })}">${starsHTML(t.stars)}</span>
+      </div>
+      <p class="topic-meter">${T("topic.meter", { p: t.percent })}${help}</p>
+      <p class="modal-lead">${T("topic.lead")}</p>
+      <ul class="modal-los">${t.learning_outcomes.map(x=>`<li>${isEn() ? x.text_en : x.text_zh}</li>`).join("")}</ul>
+      <button class="btn-practice" type="button" id="btn-practice" ${canPractice?"":"disabled"}>
+        ${canPractice? T("topic.practice"): T("topic.lockedFirst")}
+      </button>
+      <p class="practice-note" hidden>${T("topic.bankSoon")}</p>
+      ${masterBtn}
+    </div>`;
+  box.hidden = false;
+  document.body.classList.add("modal-open");
+  const prac = $("#btn-practice");
+  if(prac && canPractice){
+    prac.addEventListener("click", () => { box.querySelector(".practice-note").hidden = false; });
+  }
+  const master = $("#btn-master");
+  if(master){
+    master.addEventListener("click", () => setMastered(t.topic_id, !isMastered(t.topic_id)));
+  }
+  box.onclick = (e) => { if(e.target.dataset.close) closeModal(); };
+  window.__modalRerender = () => openModal(id);
+}
+function closeModal(){
+  const box = $("#modal");
+  box.hidden = true; box.innerHTML = "";
+  document.body.classList.remove("modal-open");
+  window.__modalRerender = null;
+  I18N.setPage(current);
+}
+document.addEventListener("keydown", (e) => {
+  if(e.key !== "Escape") return;
+  const confirmBox = $("#confirm");
+  if(confirmBox && !confirmBox.hidden){
+    confirmBox.hidden = true;
+    if(confirmResolver){ const done = confirmResolver; confirmResolver = null; done(false); }
+    return;
+  }
+  closeModal();
+});
+
+function renderTabs(){
+  const tabs = $("#tabs");
+  tabs.innerHTML = DATA.subjects.map(s => {
+    const soon = s.coming_soon ? "is-soon" : "";
+    const sel = current===s.subject_id ? "true" : "false";
+    const extra = s.coming_soon ? `<small>${T("tabs.soon")}</small>` : "";
+    return `<button type="button" class="${soon}" aria-selected="${sel}" data-id="${s.subject_id}">${sName(s)}${extra}</button>`;
+  }).join("");
+  tabs.onclick = (e) => {
+    const b = e.target.closest("button");
+    if(!b) return;
+    current = b.dataset.id;
+    const tt = $("#toast"); if(tt) tt.hidden = true;  // a message from the previous page is not carried over (it may be in the other language)
+    render();
+  };
+}
+
+function renderVitals(s){
+  if(s.coming_soon){ $("#vitals").style.display="none"; $("#vitals").innerHTML=""; return; }
+  $("#vitals").style.display="";
+  const st = statsOf(DATA, s.subject_id);
+  const inProg = st.unfinished.find(t => t.status==="progress");
+  const hint = inProg ? T("vitals.water", { name: tName(inProg) }) : (st.unfinished[0] ? T("vitals.next", { name: tName(st.unfinished[0]) }) : T("vitals.all"));
+  $("#vitals").innerHTML = `
+    <div class="tree-wrap">${treeSVG(st.donePct)}</div>
+    <div class="stats-col">
+      <div class="stat done" data-stat="done"><div class="k">${T("vitals.learned")}</div><div class="v">${st.donePct}%</div><div class="unit">${T("vitals.bloomed", { a: st.done, b: st.total })}</div></div>
+      <div class="stat remain" data-stat="remain"><div class="k">${T("vitals.left")}</div><div class="v">${st.remainPct}%</div></div>
+      <div class="stat todo" data-stat="todo"><div class="k">${T("vitals.notYet")}</div><div class="v">${st.unfinished.length}</div><div class="unit">${T("vitals.plants", { n: st.unfinished.length })}</div></div>
+      <div class="bar-wrap" aria-hidden="true"><span style="--p:${st.donePct}%"></span></div>
+      <p class="hint">${hint}</p>
+    </div>`;
+}
+
+function renderGarden(sid){
+  const topics = topicsOf(DATA, sid);
+  const showBf = statsOf(DATA, sid).donePct >= 30;
+  const plots = topics.map(t => {
+    const kind = t.flower || "daisy";
+    const sub = tSub(t);
+    return `<button class="plot ${t.status}" type="button" data-id="${t.topic_id}" data-percent="${t.percent}" data-status="${t.status}" aria-label="${T("aria.plot", { name: tName(t), status: statusText(t) })}">
+      <div class="plant">${flowerSVG(kind, t.status, t.percent)}</div>
+      <div class="pot"><span class="soil"></span></div>
+      <div class="label-zh">${tName(t)}</div>
+      ${sub ? `<div class="label-en">${sub}</div>` : ""}
+      <span class="tag">${statusText(t)}</span>
+    </button>`;
+  }).join("");
+  const s = DATA.subjects.find(x => x.subject_id === sid);
+  const noteText = s ? term("note", s.subject_id) : "";
+  const note = noteText ? `<p class="subject-note">${noteText}</p>` : "";
+  $("#garden").innerHTML = `
+    ${note}
+    <div class="butterflies" aria-hidden="true">${showBf?`<span class="bf b1">🦋</span><span class="bf b2">🦋</span><span class="bf b3">🦋</span>`:""}</div>
+    <div class="plots">${plots}</div>`;
+  $("#garden").onclick = (e) => { const b=e.target.closest("[data-id]"); if(b) openModal(b.dataset.id); };
+}
+
+function renderSide(sid){
+  const s = DATA.subjects.find(x => x.subject_id===sid);
+  const list = statsOf(DATA, sid).unfinished;
+  const ico = {progress:"🌿", todo:"🌱", locked:"🌰"};
+  $("#side").innerHTML = `
+    <h2>${T("side.title")}</h2>
+    <p class="sub">${T("side.sub", { subject: sName(s), n: list.length })}</p>
+    ${list.map(t => `
+      <button class="seed-item" type="button" data-id="${t.topic_id}">
+        <span class="ico">${ico[t.status]}</span>
+        <span><span class="zh">${tName(t)}</span>${tSub(t) ? `<span class="en">${tSub(t)}</span>` : ""}</span>
+        <span class="st">${statusText(t)}</span>
+      </button>`).join("")}
+    <div class="legend">
+      <span>${T("legend.conquered")}</span>
+      <span>${T("legend.progress")}</span>
+      <span>${T("legend.todo")}</span>
+    </div>`;
+  $("#side").onclick = (e) => { const b=e.target.closest("[data-id]"); if(b) openModal(b.dataset.id); };
+}
+
+function render(){
+  I18N.setPage(current);  // every window opens from the subject tab on screen
+  I18N.applyStatic();
+  document.body.classList.toggle("ui-en", I18N.ui() === "en");
+  updateParentBadge();
+  updateSavedLabel();
+  $("#page-title").textContent = T("page.title");
+  document.title = T("page.title");
+  $("#grade-line").textContent = T("page.grade1");
+  renderTabs();
+  const s = DATA.subjects.find(x => x.subject_id===current);
+  if(s.coming_soon){
+    renderVitals(s);
+    $("#garden").style.display = "none";
+    $("#garden").innerHTML = "";
+    $("#side").innerHTML = `<div class="coming-soon-card"><div class="cs-badge">${T("tabs.soon")}</div><h3>${sName(s)}</h3><p>${T("soon.body")}</p></div>`;
+    return;
+  }
+  $("#garden").style.display = "";
+  renderVitals(s);
+  renderGarden(current);
+  renderSide(current);
+}
+
+function askReset(kind){
+  const box = $("#confirm");
+  kind = kind || "reset";
+  box.querySelector("h2").setAttribute("data-i18n", kind + ".title");
+  box.querySelector("p").setAttribute("data-i18n", kind + ".body");
+  box.querySelector('[data-confirm="no"]').setAttribute("data-i18n", kind + ".no");
+  box.querySelector('[data-confirm="yes"]').setAttribute("data-i18n", kind + ".yes");
+  if(window.GardenI18n.applyStatic) window.GardenI18n.applyStatic();
+  box.hidden = false;
+  return new Promise(resolve => {
+    confirmResolver = resolve;
+    box.onclick = (e) => {
+      const b = e.target.closest("[data-confirm]");
+      if(!b) return;
+      box.hidden = true;
+      const done = confirmResolver;
+      confirmResolver = null;
+      if(done) done(b.dataset.confirm === "yes");
+    };
+  });
+}
+function resetProgress(){
+  // last line of defence: only an authorised reset may touch the progress data
+  if(!canResetProgress()) return false;
+  revokeReset(); lockParent();
+  store = emptyStore();
+  writeStore({ toast:false });
+  closeModal();
+  render();
+  toast(T("toast.reset", { time: formatClock(store.savedAt) }));
+  return true;
+}
+/* Ask for the parent PIN before a destructive action (重置进度 / 导入进度). A fresh PIN entry is required every time. */
+function requireResetGate(label, then){
+  revokeReset(); lockParent();
+  if(!window.withParentPin) return;   // fail closed: no PIN screen, no reset
+  window.withParentPin(function(){ if(canResetProgress()) then(); }, label, { reset:true });
+}
+function exportProgress(){
+  writeStore({ toast:false });
+  const payload = {
+    version:1,
+    app:"anna-garden",
+    bank:BANK_EPOCH,
+    savedAt: store.savedAt,
+    topics: store.topics,
+    open: store.open || {}
+  };
+  const blob = new Blob([JSON.stringify(payload, null, 2)], { type:"application/json" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "anan-garden-p1-progress.json";
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 1500);
+  toast(T("toast.exported", { time: formatClock(store.savedAt) }));
+}
+function importProgress(file){
+  const reader = new FileReader();
+  reader.onload = async () => {
+    try{
+      const data = JSON.parse(String(reader.result || ""));
+      const incoming = sanitizeStore(data);      // checked first; the current progress is not touched yet
+      const yes = await askReset("import");      // final confirm, after the PIN
+      if(!yes || !canResetProgress()){ revokeReset(); return; }
+      revokeReset(); lockParent();
+      store = incoming;
+      if(!store.savedAt) store.savedAt = new Date().toISOString();
+      writeStore({ toast:false, keepSavedAt:true });
+      closeModal();
+      render();
+      toast(T("toast.imported", { time: formatClock(store.savedAt) }));
+    }catch(e){
+      toast(e && e.message === "old-bank" ? T("toast.importOld") : T("toast.importBad"));
+    }
+  };
+  reader.onerror = () => toast(T("toast.importBad"));
+  reader.readAsText(file);
+}
+function bindSaveBar(){
+  $("#btn-save").addEventListener("click", () => writeStore({ toast:true }));
+  $("#btn-parent").addEventListener("click", () => { if(window.openParentReview) window.openParentReview(); });
+  $("#btn-export").addEventListener("click", exportProgress);
+  // loading a file overwrites all progress, so it needs the parent PIN first (set one first if there is none)
+  $("#btn-import").addEventListener("click", () => {
+    requireResetGate("save.import", () => { markPickerOpen(); $("#import-file").click(); });
+  });
+  $("#import-file").addEventListener("change", (e) => {
+    const file = e.target.files && e.target.files[0];
+    e.target.value = "";
+    if(file) importProgress(file); else revokeReset();
+  });
+  $("#btn-reset").addEventListener("click", () => {
+    requireResetGate("save.reset", async () => {
+      const yes = await askReset("reset");
+      if(yes) resetProgress(); else revokeReset();
+    });
+  });
+}
+function bootGarden(){
+  try{
+    DATA = window.GARDEN_DATA;
+    if(!DATA || !DATA.topics) throw new Error(T("err.topics"));
+    store = readStore();
+    current = (DATA.subjects.find(s => !s.coming_soon) || DATA.subjects[0]).subject_id;
+    bindSaveBar();
+    updateSavedLabel();
+    render();
+    // 中文 / English switch: redraw the page and whatever window is open (progress is untouched)
+    document.addEventListener("garden:lang", () => {
+      render();
+      if(!$("#modal").hidden && typeof window.__modalRerender === "function") window.__modalRerender();
+    });
+  }catch(err){
+    const main = document.querySelector("main");
+    if(main) main.innerHTML = `<div class="load-error"><p>${T("err.data")}</p><p>${err.message}</p></div>`;
+  }
+}
+/* ---------- parent PIN (家长确认) ----------
+   The PIN is chosen by the parent on this device. Only a salted, repeated SHA-256 hash is kept in localStorage.
+   Marking open-ended answers (confirmOpen) only works while the parent view is unlocked. */
+const PARENT_KEY = "anna-garden.parent.v1";
+const PARENT_PHRASE = "我是家长";
+window.GARDEN_PARENT_PHRASE = PARENT_PHRASE;  // shown in the PIN screens (it is a Chinese phrase in both languages)
+const PIN_ROUNDS = 4000;
+let parentUnlocked = false;
+const LOCK_KEY = "anna-garden.pinlock.v1";   // wrong-PIN counter and lockout survive a page reload
+const PIN_MAX_FAILS = 5, PIN_LOCK_MS = 5 * 60 * 1000;
+function readLock(){
+  try{ const o = JSON.parse(localStorage.getItem(LOCK_KEY) || "null"); return { fails:Number(o && o.fails) || 0, until:Number(o && o.until) || 0 }; }
+  catch(e){ return { fails:0, until:0 }; }
+}
+function writeLock(fails, until){ try{ localStorage.setItem(LOCK_KEY, JSON.stringify({ fails, until })); }catch(e){} }
+/* ---- reset permission ----
+   FUTURE (not built yet): registration + login. Then canResetProgress() will check the signed-in account
+   (the account owner or a parent), and the PIN gate below goes away. Password change will then work by an email link sent
+   to the registered address, replacing the typed 我是家长 recovery. Nothing else needs to change: every reset/import path asks only this function. */
+let resetGrantUntil = 0, pickerUntil = 0;
+function canResetProgress(){
+  return hasPin() && Date.now() < resetGrantUntil;   // set only by a correct PIN (or by choosing the very first PIN), never by 我是家长
+}
+function grantReset(){ resetGrantUntil = Date.now() + 3 * 60 * 1000; }
+function revokeReset(){ resetGrantUntil = 0; pickerUntil = 0; }
+function markPickerOpen(){ pickerUntil = Date.now() + 3 * 60 * 1000; }  // the phone's file chooser may hide the page; keep the grant meanwhile
+function sha256hex(str){
+  const K = [0x428a2f98,0x71374491,0xb5c0fbcf,0xe9b5dba5,0x3956c25b,0x59f111f1,0x923f82a4,0xab1c5ed5,0xd807aa98,0x12835b01,0x243185be,0x550c7dc3,
+    0x72be5d74,0x80deb1fe,0x9bdc06a7,0xc19bf174,0xe49b69c1,0xefbe4786,0x0fc19dc6,0x240ca1cc,0x2de92c6f,0x4a7484aa,0x5cb0a9dc,0x76f988da,0x983e5152,
+    0xa831c66d,0xb00327c8,0xbf597fc7,0xc6e00bf3,0xd5a79147,0x06ca6351,0x14292967,0x27b70a85,0x2e1b2138,0x4d2c6dfc,0x53380d13,0x650a7354,0x766a0abb,
+    0x81c2c92e,0x92722c85,0xa2bfe8a1,0xa81a664b,0xc24b8b70,0xc76c51a3,0xd192e819,0xd6990624,0xf40e3585,0x106aa070,0x19a4c116,0x1e376c08,0x2748774c,
+    0x34b0bcb5,0x391c0cb3,0x4ed8aa4a,0x5b9cca4f,0x682e6ff3,0x748f82ee,0x78a5636f,0x84c87814,0x8cc70208,0x90befffa,0xa4506ceb,0xbef9a3f7,0xc67178f2];
+  const bytes = Array.from(new TextEncoder().encode(str));
+  const bitLen = bytes.length * 8;
+  bytes.push(0x80);
+  while(bytes.length % 64 !== 56) bytes.push(0);
+  for(let i = 7; i >= 0; i--) bytes.push(i >= 4 ? 0 : (bitLen >>> (i * 8)) & 255);
+  const H = [0x6a09e667,0xbb67ae85,0x3c6ef372,0xa54ff53a,0x510e527f,0x9b05688c,0x1f83d9ab,0x5be0cd19];
+  const W = new Array(64);
+  const rotr = (x, n) => (x >>> n) | (x << (32 - n));
+  for(let off = 0; off < bytes.length; off += 64){
+    for(let i = 0; i < 16; i++) W[i] = (bytes[off + 4*i] << 24) | (bytes[off + 4*i + 1] << 16) | (bytes[off + 4*i + 2] << 8) | bytes[off + 4*i + 3];
+    for(let i = 16; i < 64; i++){
+      const s0 = rotr(W[i-15], 7) ^ rotr(W[i-15], 18) ^ (W[i-15] >>> 3);
+      const s1 = rotr(W[i-2], 17) ^ rotr(W[i-2], 19) ^ (W[i-2] >>> 10);
+      W[i] = (W[i-16] + s0 + W[i-7] + s1) | 0;
+    }
+    let [a, b, c, d, e, f, g, h] = H;
+    for(let i = 0; i < 64; i++){
+      const t1 = (h + (rotr(e, 6) ^ rotr(e, 11) ^ rotr(e, 25)) + ((e & f) ^ (~e & g)) + K[i] + W[i]) | 0;
+      const t2 = ((rotr(a, 2) ^ rotr(a, 13) ^ rotr(a, 22)) + ((a & b) ^ (a & c) ^ (b & c))) | 0;
+      h = g; g = f; f = e; e = (d + t1) | 0; d = c; c = b; b = a; a = (t1 + t2) | 0;
+    }
+    H[0] = (H[0] + a) | 0; H[1] = (H[1] + b) | 0; H[2] = (H[2] + c) | 0; H[3] = (H[3] + d) | 0;
+    H[4] = (H[4] + e) | 0; H[5] = (H[5] + f) | 0; H[6] = (H[6] + g) | 0; H[7] = (H[7] + h) | 0;
+  }
+  return H.map(x => (x >>> 0).toString(16).padStart(8, "0")).join("");
+}
+function pinHash(pin, salt){
+  let h = salt + "|" + pin;
+  for(let i = 0; i < PIN_ROUNDS; i++) h = sha256hex(salt + h);
+  return h;
+}
+function readParent(){
+  try{
+    const o = JSON.parse(localStorage.getItem(PARENT_KEY) || "null");
+    return o && typeof o.salt === "string" && typeof o.hash === "string" ? o : null;
+  }catch(e){ return null; }
+}
+function validPin(pin){ return /^\d{4}$/.test(String(pin || "")); }
+function newSalt(){
+  const a = new Uint8Array(16);
+  if(window.crypto && window.crypto.getRandomValues) window.crypto.getRandomValues(a);
+  else for(let i = 0; i < 16; i++) a[i] = Math.floor(Math.random() * 256);
+  return Array.from(a, x => x.toString(16).padStart(2, "0")).join("");
+}
+function savePin(pin){
+  const salt = newSalt();
+  try{ localStorage.setItem(PARENT_KEY, JSON.stringify({ v:1, salt, hash:pinHash(pin, salt), setAt:nowIso() })); }
+  catch(e){ return false; }
+  parentUnlocked = true; writeLock(0, 0);
+  return true;
+}
+function hasPin(){ return !!readParent(); }
+function isParentUnlocked(){ return parentUnlocked && hasPin(); }
+function lockParent(){ parentUnlocked = false; }
+/* page hidden (tab switch, phone locked): close the parent view and the reset permission, except while the phone's file chooser is open */
+function onPageHidden(){ lockParent(); if(Date.now() >= pickerUntil) revokeReset(); }
+/* first PIN on this device (or a new PIN while unlocked) */
+function setPin(pin, again){
+  if(hasPin() && !parentUnlocked) return { ok:false, why:"locked" };
+  if(!validPin(pin)) return { ok:false, why:"format" };
+  if(String(pin) !== String(again)) return { ok:false, why:"mismatch" };
+  const first = !hasPin();
+  if(!savePin(String(pin))) return { ok:false, why:"storage" };
+  if(first) grantReset();   // no PIN existed, so nobody else's PIN is being bypassed
+  return { ok:true };
+}
+function pinWaitSeconds(){ return Math.max(0, Math.ceil((readLock().until - Date.now()) / 1000)); }
+function unlockParent(pin){
+  const rec = readParent();
+  if(!rec) return { ok:false, why:"nopin" };
+  if(pinWaitSeconds() > 0) return { ok:false, why:"wait", wait:pinWaitSeconds() };
+  if(validPin(pin) && pinHash(String(pin), rec.salt) === rec.hash){ parentUnlocked = true; writeLock(0, 0); grantReset(); return { ok:true }; }
+  const fails = readLock().fails + 1;
+  if(fails >= PIN_MAX_FAILS){ writeLock(0, Date.now() + PIN_LOCK_MS); return { ok:false, why:"wait", wait:PIN_LOCK_MS / 1000 }; }
+  writeLock(fails, 0);
+  return { ok:false, why:"wrong", left:PIN_MAX_FAILS - fails };
+}
+/* 忘记密码: type the parent phrase, then set a new PIN. Pending answers and earlier checks are kept. */
+function resetPin(phrase, pin, again){
+  if(String(phrase || "").replace(/\s+/g, "") !== PARENT_PHRASE) return { ok:false, why:"phrase" };
+  if(!validPin(pin)) return { ok:false, why:"format" };
+  if(String(pin) !== String(again)) return { ok:false, why:"mismatch" };
+  revokeReset();   // 我是家长 can only change the PIN: it never opens the reset gate and never touches progress
+  return savePin(String(pin)) ? { ok:true } : { ok:false, why:"storage" };
+}
+function bankQ(qid){
+  const b = window.PRACTICE_BANK;
+  if(!b || !b.idIndex || !Object.prototype.hasOwnProperty.call(b.idIndex, qid)) return null;
+  return b.questions[b.idIndex[qid]] || null;
+}
+window.AnnaProgress = { markQuestion, getMark, percentFor, setMastered, goalFor, getOpen, submitOpen, withdrawOpen, confirmOpen, openList, hasPin, setPin, unlockParent, lockParent, onPageHidden, isParentUnlocked, resetPin, pinWaitSeconds, canResetProgress, submitMulti, revealUnanswered };
+window.bootGarden = bootGarden;
+</script>
+<!-- garden-practice-js:start -->
+  <script>window.GARDEN_DIAG_KEY = "anna-garden.p1.diag.v1";</script>
+  <script src="assets/practice-bank-p1.js"></script>
+  <script src="assets/practice.js"></script>
+  <script src="assets/diagnostic.js"></script>
+  <script>window.GARDEN_VIDEO_BASES = ["videos/"]; window.GARDEN_VIDEO_MANIFEST = "manifest_p1.json"; window.GARDEN_WATCH_KEY = "anna-garden.p1.watched.v1";  // 一年级 explainer videos: videos/p1/ in this repo</script>
+  <script src="assets/lessons.js?v=20261127b"></script>
+  <script>bootGarden();</script>
+<!-- garden-practice-js:end -->
+</body>
+</html>
