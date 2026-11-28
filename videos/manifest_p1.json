@@ -1,8 +1,78 @@
 {
  "version": 1,
- "built": "2026-11-28 21:40",
+ "built": "2026-11-28 21:42",
  "base": "p1/",
  "videos": {
+  "P1-CL-120": {
+   "zh": {
+    "mp4": "P1-CL-120_zh.mp4",
+    "vtt": "P1-CL-120_zh.vtt",
+    "poster": "P1-CL-120_zh.jpg",
+    "seconds": 224.6,
+    "bytes": 3219943,
+    "sha256": "08bcef5207cb0017cfb7ee273c40cd2f173a9a52256f9093af82634c802a781d"
+   }
+  },
+  "P1-CL-121": {
+   "zh": {
+    "mp4": "P1-CL-121_zh.mp4",
+    "vtt": "P1-CL-121_zh.vtt",
+    "poster": "P1-CL-121_zh.jpg",
+    "seconds": 208.2,
+    "bytes": 2905335,
+    "sha256": "17f6978fc50dff52eb05d14090d8cf542a97957d24109ce5d96a85dc144c5b35"
+   }
+  },
+  "P1-CL-122": {
+   "zh": {
+    "mp4": "P1-CL-122_zh.mp4",
+    "vtt": "P1-CL-122_zh.vtt",
+    "poster": "P1-CL-122_zh.jpg",
+    "seconds": 195.3,
+    "bytes": 2736985,
+    "sha256": "af8107cd0aa14c68546834c6705e54ca2c00374e0518b7adcaedd0dbee710fb1"
+   }
+  },
+  "P1-CL-123": {
+   "zh": {
+    "mp4": "P1-CL-123_zh.mp4",
+    "vtt": "P1-CL-123_zh.vtt",
+    "poster": "P1-CL-123_zh.jpg",
+    "seconds": 186.0,
+    "bytes": 2563479,
+    "sha256": "ddad0b11f3e161299d8de11160baa8b12a762e585129c75eea91ff3dadf97118"
+   }
+  },
+  "P1-CL-124": {
+   "zh": {
+    "mp4": "P1-CL-124_zh.mp4",
+    "vtt": "P1-CL-124_zh.vtt",
+    "poster": "P1-CL-124_zh.jpg",
+    "seconds": 204.4,
+    "bytes": 2982057,
+    "sha256": "05460cb6b66ce2b1361e3d18220778c8897f59073e6960aa452541baa5389be6"
+   }
+  },
+  "P1-CL-125": {
+   "zh": {
+    "mp4": "P1-CL-125_zh.mp4",
+    "vtt": "P1-CL-125_zh.vtt",
+    "poster": "P1-CL-125_zh.jpg",
+    "seconds": 208.6,
+    "bytes": 3752012,
+    "sha256": "38ff71cb3ccb90f4b15c21ab45a062a98d48b514872ee0b64feaeefa399045c7"
+   }
+  },
+  "P1-CL-126": {
+   "zh": {
+    "mp4": "P1-CL-126_zh.mp4",
+    "vtt": "P1-CL-126_zh.vtt",
+    "poster": "P1-CL-126_zh.jpg",
+    "seconds": 203.2,
+    "bytes": 2898329,
+    "sha256": "b22ccab887a721b77257e7d4906f8fe2dd144577b238daf72f6ceb01c35e1308"
+   }
+  },
   "P1-EN-101": {
    "en": {
     "mp4": "P1-EN-101_en.mp4",
