@@ -1,8 +1,98 @@
 {
  "version": 1,
- "built": "2026-11-28 21:17",
+ "built": "2026-11-28 21:18",
  "base": "p2/",
  "videos": {
+  "P2-CL-120": {
+   "zh": {
+    "mp4": "P2-CL-120_zh.mp4",
+    "vtt": "P2-CL-120_zh.vtt",
+    "poster": "P2-CL-120_zh.jpg",
+    "seconds": 221.7,
+    "bytes": 3172882,
+    "sha256": "beb9ed111aec5415f176b740518ca399f4262810c19bca6718502ebb40c12619"
+   }
+  },
+  "P2-CL-121": {
+   "zh": {
+    "mp4": "P2-CL-121_zh.mp4",
+    "vtt": "P2-CL-121_zh.vtt",
+    "poster": "P2-CL-121_zh.jpg",
+    "seconds": 223.1,
+    "bytes": 3208387,
+    "sha256": "e93aaf71a2250b7452c4c7c29389df910225e58d9f9be9d22b96d42bcea9cc6b"
+   }
+  },
+  "P2-CL-122": {
+   "zh": {
+    "mp4": "P2-CL-122_zh.mp4",
+    "vtt": "P2-CL-122_zh.vtt",
+    "poster": "P2-CL-122_zh.jpg",
+    "seconds": 210.5,
+    "bytes": 3068187,
+    "sha256": "245a708d1b1ce93a057b8cd1fa4d15ee3889c2a090d9c666c7299b93c8d7f9b4"
+   }
+  },
+  "P2-CL-123": {
+   "zh": {
+    "mp4": "P2-CL-123_zh.mp4",
+    "vtt": "P2-CL-123_zh.vtt",
+    "poster": "P2-CL-123_zh.jpg",
+    "seconds": 202.5,
+    "bytes": 2886338,
+    "sha256": "45f21e0d40f5d4e928ae20249938cc5420d699981177539fd71d2cf8249b3158"
+   }
+  },
+  "P2-CL-124": {
+   "zh": {
+    "mp4": "P2-CL-124_zh.mp4",
+    "vtt": "P2-CL-124_zh.vtt",
+    "poster": "P2-CL-124_zh.jpg",
+    "seconds": 225.1,
+    "bytes": 3496024,
+    "sha256": "03d23ac03cef73ccd3322965a264b2c8d69b409a85c7a3b76493891e75e8f359"
+   }
+  },
+  "P2-CL-125": {
+   "zh": {
+    "mp4": "P2-CL-125_zh.mp4",
+    "vtt": "P2-CL-125_zh.vtt",
+    "poster": "P2-CL-125_zh.jpg",
+    "seconds": 222.2,
+    "bytes": 3300468,
+    "sha256": "703c9fefc2ac8f55bee17dccd09067fc397500b3c9f36f0d666b65fbf9c54929"
+   }
+  },
+  "P2-CL-126": {
+   "zh": {
+    "mp4": "P2-CL-126_zh.mp4",
+    "vtt": "P2-CL-126_zh.vtt",
+    "poster": "P2-CL-126_zh.jpg",
+    "seconds": 215.5,
+    "bytes": 3016144,
+    "sha256": "6ab059ce45dc66615c8675a40486cd038b2bdb511f64b7705a56bd203db45e31"
+   }
+  },
+  "P2-CL-127": {
+   "zh": {
+    "mp4": "P2-CL-127_zh.mp4",
+    "vtt": "P2-CL-127_zh.vtt",
+    "poster": "P2-CL-127_zh.jpg",
+    "seconds": 224.8,
+    "bytes": 4090598,
+    "sha256": "0a09c81abf2b41c3d57f690176bb0f8396267804c39b7843d7e7a2507d114bd6"
+   }
+  },
+  "P2-CL-128": {
+   "zh": {
+    "mp4": "P2-CL-128_zh.mp4",
+    "vtt": "P2-CL-128_zh.vtt",
+    "poster": "P2-CL-128_zh.jpg",
+    "seconds": 208.1,
+    "bytes": 2998826,
+    "sha256": "8747ce76f3b0d4381469cdee2fd3543cda585876c27f74702149dcdd39c65678"
+   }
+  },
   "P2-EN-101": {
    "en": {
     "mp4": "P2-EN-101_en.mp4",
