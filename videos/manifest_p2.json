@@ -1,6 +1,313 @@
 {
  "version": 1,
- "built": "2026-11-28 19:06",
+ "built": "2026-11-28 21:09",
  "base": "p2/",
- "videos": {}
+ "videos": {
+  "P2-MA-101": {
+   "en": {
+    "mp4": "P2-MA-101_en.mp4",
+    "vtt": "P2-MA-101_en.vtt",
+    "poster": "P2-MA-101_en.jpg",
+    "seconds": 201.8,
+    "bytes": 3009097,
+    "sha256": "4bc4407b88ed3a80c1ce105b1ed33a66839c5fe2568ce23424379a8a2ec72b0f"
+   },
+   "zh": {
+    "mp4": "P2-MA-101_zh.mp4",
+    "vtt": "P2-MA-101_zh.vtt",
+    "poster": "P2-MA-101_zh.jpg",
+    "seconds": 217.6,
+    "bytes": 3008882,
+    "sha256": "ccff14c24d7d6e4fd94311610d253c0438343ac7a33386b9750e9b4cad0eaf5f"
+   }
+  },
+  "P2-MA-102": {
+   "en": {
+    "mp4": "P2-MA-102_en.mp4",
+    "vtt": "P2-MA-102_en.vtt",
+    "poster": "P2-MA-102_en.jpg",
+    "seconds": 197.7,
+    "bytes": 2957479,
+    "sha256": "3ed00c4563a5d18b812a5ec438be01218dbd8249868d2dd69fe370d23ec9a7eb"
+   },
+   "zh": {
+    "mp4": "P2-MA-102_zh.mp4",
+    "vtt": "P2-MA-102_zh.vtt",
+    "poster": "P2-MA-102_zh.jpg",
+    "seconds": 203.8,
+    "bytes": 2921073,
+    "sha256": "0eb47b42e66de28d1eabd98df2598b70e7b80dae617208c95870e6120ab49061"
+   }
+  },
+  "P2-MA-103": {
+   "en": {
+    "mp4": "P2-MA-103_en.mp4",
+    "vtt": "P2-MA-103_en.vtt",
+    "poster": "P2-MA-103_en.jpg",
+    "seconds": 225.4,
+    "bytes": 3299374,
+    "sha256": "16db1e6aff65e9eb792b0e7684c202e6e5cfe9dc0017cca626306343faecdf2d"
+   },
+   "zh": {
+    "mp4": "P2-MA-103_zh.mp4",
+    "vtt": "P2-MA-103_zh.vtt",
+    "poster": "P2-MA-103_zh.jpg",
+    "seconds": 224.8,
+    "bytes": 3169494,
+    "sha256": "f0eba46f8c02fc013bd016ed30738cdeef15b4ebef5ec63be6f4ec068c318989"
+   }
+  },
+  "P2-MA-104": {
+   "en": {
+    "mp4": "P2-MA-104_en.mp4",
+    "vtt": "P2-MA-104_en.vtt",
+    "poster": "P2-MA-104_en.jpg",
+    "seconds": 194.4,
+    "bytes": 2861540,
+    "sha256": "1c1f7a92a86bf79e95a42ab2ce38e4143b849d6a14d94f134616fed2478c2ae5"
+   },
+   "zh": {
+    "mp4": "P2-MA-104_zh.mp4",
+    "vtt": "P2-MA-104_zh.vtt",
+    "poster": "P2-MA-104_zh.jpg",
+    "seconds": 204.1,
+    "bytes": 2880704,
+    "sha256": "d87711294862a98fabceba4265419ebba623ebff47eb8084ae9cf31bfd906cff"
+   }
+  },
+  "P2-MA-105": {
+   "en": {
+    "mp4": "P2-MA-105_en.mp4",
+    "vtt": "P2-MA-105_en.vtt",
+    "poster": "P2-MA-105_en.jpg",
+    "seconds": 194.9,
+    "bytes": 2900272,
+    "sha256": "fdf468343bb928ec118f2208a39d7416ac447b7d66da284cc6788f3c53c44aac"
+   },
+   "zh": {
+    "mp4": "P2-MA-105_zh.mp4",
+    "vtt": "P2-MA-105_zh.vtt",
+    "poster": "P2-MA-105_zh.jpg",
+    "seconds": 203.4,
+    "bytes": 2873721,
+    "sha256": "ef238577296562cf031fb81a5e621d29e51db96e8e211ed6790982d2685863e1"
+   }
+  },
+  "P2-MA-106": {
+   "en": {
+    "mp4": "P2-MA-106_en.mp4",
+    "vtt": "P2-MA-106_en.vtt",
+    "poster": "P2-MA-106_en.jpg",
+    "seconds": 188.8,
+    "bytes": 2822065,
+    "sha256": "bb6315e5ebda81784d5da79dcaa8b6fbfcc7c3c0f1ef46227e5f35a113d06b67"
+   },
+   "zh": {
+    "mp4": "P2-MA-106_zh.mp4",
+    "vtt": "P2-MA-106_zh.vtt",
+    "poster": "P2-MA-106_zh.jpg",
+    "seconds": 211.0,
+    "bytes": 3006440,
+    "sha256": "d780bf0dd44b83bcba1c7597380945744a38943da6be75514b08ad30eef9381b"
+   }
+  },
+  "P2-MA-107": {
+   "en": {
+    "mp4": "P2-MA-107_en.mp4",
+    "vtt": "P2-MA-107_en.vtt",
+    "poster": "P2-MA-107_en.jpg",
+    "seconds": 195.0,
+    "bytes": 2809760,
+    "sha256": "ef6dbf0073168c972ed968e4b3982a72dca5e6fd85b918f5114b3a8277dbd4f6"
+   },
+   "zh": {
+    "mp4": "P2-MA-107_zh.mp4",
+    "vtt": "P2-MA-107_zh.vtt",
+    "poster": "P2-MA-107_zh.jpg",
+    "seconds": 210.6,
+    "bytes": 2960030,
+    "sha256": "c7a1a00ebeebe56e1ae77b2f9649d243fc817741bf1aa2a301b61daa374013a6"
+   }
+  },
+  "P2-MA-108": {
+   "en": {
+    "mp4": "P2-MA-108_en.mp4",
+    "vtt": "P2-MA-108_en.vtt",
+    "poster": "P2-MA-108_en.jpg",
+    "seconds": 191.5,
+    "bytes": 2724912,
+    "sha256": "4cf442f40cc6a1acd7ace91e641da1ab7d1189c7c6ad76596ff13ade4fb333c8"
+   },
+   "zh": {
+    "mp4": "P2-MA-108_zh.mp4",
+    "vtt": "P2-MA-108_zh.vtt",
+    "poster": "P2-MA-108_zh.jpg",
+    "seconds": 210.4,
+    "bytes": 2938856,
+    "sha256": "2ff50cdefa079a99994748c0a3ef570bbdfcd2828f8f83f266d04554203d30cc"
+   }
+  },
+  "P2-MA-109": {
+   "en": {
+    "mp4": "P2-MA-109_en.mp4",
+    "vtt": "P2-MA-109_en.vtt",
+    "poster": "P2-MA-109_en.jpg",
+    "seconds": 192.9,
+    "bytes": 2846428,
+    "sha256": "e1fff021ffbc0d3bd4cbfa7a48faa95cd666dc287ad809d20e25d7b8b6d28dea"
+   },
+   "zh": {
+    "mp4": "P2-MA-109_zh.mp4",
+    "vtt": "P2-MA-109_zh.vtt",
+    "poster": "P2-MA-109_zh.jpg",
+    "seconds": 207.2,
+    "bytes": 2938252,
+    "sha256": "3cc2d7d2eab9e8ef868765f88199b301e845cc14c6ced0d99d045310f13d4548"
+   }
+  },
+  "P2-MA-110": {
+   "en": {
+    "mp4": "P2-MA-110_en.mp4",
+    "vtt": "P2-MA-110_en.vtt",
+    "poster": "P2-MA-110_en.jpg",
+    "seconds": 207.0,
+    "bytes": 3017790,
+    "sha256": "90475b0096af3c0b2fc96d94d30807970d8213290a8153fc26790441f71e73fc"
+   },
+   "zh": {
+    "mp4": "P2-MA-110_zh.mp4",
+    "vtt": "P2-MA-110_zh.vtt",
+    "poster": "P2-MA-110_zh.jpg",
+    "seconds": 205.5,
+    "bytes": 2852217,
+    "sha256": "9780e64d54d779d8d112a174ea54a6a2e2c02f7d0fec420d141c7a8524bc2ad2"
+   }
+  },
+  "P2-MA-111": {
+   "en": {
+    "mp4": "P2-MA-111_en.mp4",
+    "vtt": "P2-MA-111_en.vtt",
+    "poster": "P2-MA-111_en.jpg",
+    "seconds": 181.5,
+    "bytes": 2705467,
+    "sha256": "5bd40fcd7996752586e3688c479461a7e0b0c64725e94dcc7d2bbc871b00bb99"
+   },
+   "zh": {
+    "mp4": "P2-MA-111_zh.mp4",
+    "vtt": "P2-MA-111_zh.vtt",
+    "poster": "P2-MA-111_zh.jpg",
+    "seconds": 217.3,
+    "bytes": 3054328,
+    "sha256": "1aec6afc3fddd3165818cbf40b9f156e0f1303aee2102a4d1e431d3861b6c4ae"
+   }
+  },
+  "P2-MA-112": {
+   "en": {
+    "mp4": "P2-MA-112_en.mp4",
+    "vtt": "P2-MA-112_en.vtt",
+    "poster": "P2-MA-112_en.jpg",
+    "seconds": 189.8,
+    "bytes": 2832640,
+    "sha256": "a628fa898b4c7e7c0205338266d9da971746c17a64e71d36b4fba07793d32488"
+   },
+   "zh": {
+    "mp4": "P2-MA-112_zh.mp4",
+    "vtt": "P2-MA-112_zh.vtt",
+    "poster": "P2-MA-112_zh.jpg",
+    "seconds": 205.1,
+    "bytes": 2902185,
+    "sha256": "f73334e81ac5b707426823403e4456694efd6c60990dfc9df57d4cc502a83890"
+   }
+  },
+  "P2-MA-113": {
+   "en": {
+    "mp4": "P2-MA-113_en.mp4",
+    "vtt": "P2-MA-113_en.vtt",
+    "poster": "P2-MA-113_en.jpg",
+    "seconds": 194.5,
+    "bytes": 2929011,
+    "sha256": "750caf25f1051edf13b830d8055a1aa76d3387aca6f757cb36a3b3d4c7593d8b"
+   },
+   "zh": {
+    "mp4": "P2-MA-113_zh.mp4",
+    "vtt": "P2-MA-113_zh.vtt",
+    "poster": "P2-MA-113_zh.jpg",
+    "seconds": 211.4,
+    "bytes": 3015096,
+    "sha256": "8d4d39f22c1c66c6eee5ba4c854d83f9279986447b9949df26e72c77bc993f8b"
+   }
+  },
+  "P2-MA-114": {
+   "en": {
+    "mp4": "P2-MA-114_en.mp4",
+    "vtt": "P2-MA-114_en.vtt",
+    "poster": "P2-MA-114_en.jpg",
+    "seconds": 194.8,
+    "bytes": 2869009,
+    "sha256": "c198ef7b0238fdfd0728fa2e900f0d66c1625f0cb2feb79c611e0eaa45d473cf"
+   },
+   "zh": {
+    "mp4": "P2-MA-114_zh.mp4",
+    "vtt": "P2-MA-114_zh.vtt",
+    "poster": "P2-MA-114_zh.jpg",
+    "seconds": 213.0,
+    "bytes": 2989197,
+    "sha256": "fc15cb51781f52c2b56b2311a4bd3ce2a2f724dda3e4b9b656d4c5e5d33226d5"
+   }
+  },
+  "P2-MA-115": {
+   "en": {
+    "mp4": "P2-MA-115_en.mp4",
+    "vtt": "P2-MA-115_en.vtt",
+    "poster": "P2-MA-115_en.jpg",
+    "seconds": 187.3,
+    "bytes": 2827546,
+    "sha256": "238ad2c151fd4aa406bf0b9217858b092b2ca373fcb350b82fe7d1de26a36f38"
+   },
+   "zh": {
+    "mp4": "P2-MA-115_zh.mp4",
+    "vtt": "P2-MA-115_zh.vtt",
+    "poster": "P2-MA-115_zh.jpg",
+    "seconds": 201.2,
+    "bytes": 2834219,
+    "sha256": "a71d5d33cde1c92c30d41e5db2c0064423535c98de8c2368149cacd839fe31f6"
+   }
+  },
+  "P2-MA-116": {
+   "en": {
+    "mp4": "P2-MA-116_en.mp4",
+    "vtt": "P2-MA-116_en.vtt",
+    "poster": "P2-MA-116_en.jpg",
+    "seconds": 188.3,
+    "bytes": 2849870,
+    "sha256": "98a80238c8ba5a1bce0e6c8658e8092fed19f6890c2c6e3a58be46e56d21ad1e"
+   },
+   "zh": {
+    "mp4": "P2-MA-116_zh.mp4",
+    "vtt": "P2-MA-116_zh.vtt",
+    "poster": "P2-MA-116_zh.jpg",
+    "seconds": 194.3,
+    "bytes": 2752018,
+    "sha256": "d325e93177eab0ba4e6232798b288646caaf24444156f995e1202d1f072fbb0d"
+   }
+  },
+  "P2-MA-117": {
+   "en": {
+    "mp4": "P2-MA-117_en.mp4",
+    "vtt": "P2-MA-117_en.vtt",
+    "poster": "P2-MA-117_en.jpg",
+    "seconds": 190.2,
+    "bytes": 2866752,
+    "sha256": "823272d3b37d9e3918061477e24959358118a274c3a89ce26fa242c60def1b5f"
+   },
+   "zh": {
+    "mp4": "P2-MA-117_zh.mp4",
+    "vtt": "P2-MA-117_zh.vtt",
+    "poster": "P2-MA-117_zh.jpg",
+    "seconds": 207.2,
+    "bytes": 2932511,
+    "sha256": "fe599ef8045a81651e88e99d8f84593585236a3070ae781d2d8b836f28eb1c04"
+   }
+  }
+ }
 }
