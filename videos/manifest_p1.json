@@ -1,6 +1,6 @@
 {
  "version": 1,
- "built": "2026-11-28 21:42",
+ "built": "2026-11-28 21:43",
  "base": "p1/",
  "videos": {
   "P1-CL-120": {
@@ -287,6 +287,56 @@
     "seconds": 213.0,
     "bytes": 2995842,
     "sha256": "dc0e35b9cd8fcdbd1c1907618b783457eac721c1dadf12cf842f426c9ede4838"
+   }
+  },
+  "P1-HCL-101": {
+   "zh": {
+    "mp4": "P1-HCL-101_zh.mp4",
+    "vtt": "P1-HCL-101_zh.vtt",
+    "poster": "P1-HCL-101_zh.jpg",
+    "seconds": 198.6,
+    "bytes": 2844609,
+    "sha256": "09e9c3f53ea662c11743cdf9d2b02d9f1a18298a44702aec7a7832dbb475538b"
+   }
+  },
+  "P1-HCL-102": {
+   "zh": {
+    "mp4": "P1-HCL-102_zh.mp4",
+    "vtt": "P1-HCL-102_zh.vtt",
+    "poster": "P1-HCL-102_zh.jpg",
+    "seconds": 200.1,
+    "bytes": 2908824,
+    "sha256": "72181c3c3e2a57932929abc6959b3b077e9255c4c151f5cd906fe63b4c93163c"
+   }
+  },
+  "P1-HCL-103": {
+   "zh": {
+    "mp4": "P1-HCL-103_zh.mp4",
+    "vtt": "P1-HCL-103_zh.vtt",
+    "poster": "P1-HCL-103_zh.jpg",
+    "seconds": 213.3,
+    "bytes": 3227599,
+    "sha256": "17b9abb9ab4186a57fd2bae53501a146cdae955a5a9ada3f50566e8261329c90"
+   }
+  },
+  "P1-HCL-104": {
+   "zh": {
+    "mp4": "P1-HCL-104_zh.mp4",
+    "vtt": "P1-HCL-104_zh.vtt",
+    "poster": "P1-HCL-104_zh.jpg",
+    "seconds": 215.5,
+    "bytes": 4078278,
+    "sha256": "5b90f3a7d0eb0847940414d69fd49ed2775c04f22d8970ffab777453b7af1132"
+   }
+  },
+  "P1-HCL-105": {
+   "zh": {
+    "mp4": "P1-HCL-105_zh.mp4",
+    "vtt": "P1-HCL-105_zh.vtt",
+    "poster": "P1-HCL-105_zh.jpg",
+    "seconds": 209.9,
+    "bytes": 3089838,
+    "sha256": "40dfcd6663f8a13217fb5f0bd000b54555edb95bfda4c9ce3ec83a616f9a07cb"
    }
   },
   "P1-MA-101": {
