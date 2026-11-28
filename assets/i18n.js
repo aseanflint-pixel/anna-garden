@@ -12,7 +12,7 @@
     zh: {
       "lang.label": "界面语言", "lang.zh": "中文", "lang.en": "English", "lang.cnOnly": "华文页面只用中文",
       "student.name": "安安",
-      "page.title": "{name}的知识花园", "page.grade": "小学四年级 · P4", "page.grade5": "小学五年级 · P5", "grade.p4": "四年级", "grade.p5": "五年级", "aria.grade": "选年级",
+      "page.title": "{name}的知识花园", "page.grade": "小学四年级 · P4", "page.grade5": "小学五年级 · P5", "grade.p4": "四年级", "grade.p5": "五年级", "grade.p1": "一年级", "grade.p2": "二年级", "grade.p3": "三年级", "page.grade1": "小学一年级 · P1", "page.grade2": "小学二年级 · P2", "page.grade3": "小学三年级 · P3", "aria.grade": "选年级",
       "aria.tabs": "学科", "aria.garden": "知识花园", "aria.close": "关闭", "aria.stars": "{n} 颗星", "aria.plot": "{name}，{status}",
       "aria.importFile": "选择进度文件", "aria.lang": "界面语言",
       "save.save": "保存进度", "save.parent": "家长确认", "save.export": "导出进度", "save.import": "导入进度", "save.reset": "重置进度",
@@ -83,7 +83,7 @@
     en: {
       "lang.label": "Language", "lang.zh": "中文", "lang.en": "English", "lang.cnOnly": "华文页面只用中文",
       "student.name": "Anan",
-      "page.title": "{name}'s Knowledge Garden", "page.grade": "Primary 4 · P4", "page.grade5": "Primary 5 · P5", "grade.p4": "Primary 4", "grade.p5": "Primary 5", "aria.grade": "Choose the year",
+      "page.title": "{name}'s Knowledge Garden", "page.grade": "Primary 4 · P4", "page.grade5": "Primary 5 · P5", "grade.p4": "Primary 4", "grade.p5": "Primary 5", "grade.p1": "Primary 1", "grade.p2": "Primary 2", "grade.p3": "Primary 3", "page.grade1": "Primary 1 · P1", "page.grade2": "Primary 2 · P2", "page.grade3": "Primary 3 · P3", "aria.grade": "Choose the year",
       "aria.tabs": "Subjects", "aria.garden": "Knowledge garden", "aria.close": "Close", "aria.stars": "{n} stars", "aria.stars_one": "1 star", "aria.plot": "{name}, {status}",
       "aria.importFile": "Choose a progress file", "aria.lang": "Language",
       "save.save": "Save", "save.parent": "Parent check", "save.export": "Download progress", "save.import": "Load progress", "save.reset": "Start over",
@@ -168,7 +168,7 @@
       "改错": "Editing", "句子改写": "Rewriting sentences", "判断对错": "True or false", "选择": "Tick the answer", "排序": "Put in order", "问答题": "Answer the question", "写作": "Writing" },
     group: { "整数": "Whole numbers", "分数": "Fractions", "小数": "Decimals", "面积与体积": "Area and volume", "几何": "Geometry", "数据": "Data",
       "循环": "Cycles", "系统": "Systems", "能量": "Energy", "复习": "Review", "文法": "Grammar", "词汇": "Vocabulary", "填空与改错": "Cloze and editing",
-      "造句": "Sentence building", "阅读": "Reading", "语文应用": "Language use", "写作": "Writing", "百分比": "Percentage", "比率": "Rate", "课文字词（暂定）": "Lesson words (provisional)" },
+      "造句": "Sentence building", "阅读": "Reading", "语文应用": "Language use", "写作": "Writing", "百分比": "Percentage", "比率": "Rate", "课文字词（暂定）": "Lesson words (provisional)", "加法与减法": "Addition and subtraction", "乘法与除法": "Multiplication and division", "钱": "Money", "测量": "Measurement", "统计": "Statistics", "时间": "Time", "面积与周长": "Area and perimeter" },
     strand: { "数与代数": "Number and algebra", "测量与几何": "Measurement and geometry", "统计": "Statistics", "循环": "Cycles", "系统": "Systems", "能量": "Energy",
       "三年级复习": "P3 review", "文法": "Grammar", "词汇": "Vocabulary", "填空与改错": "Cloze and editing", "造句": "Synthesis and transformation", "阅读": "Reading comprehension",
       "语文应用": "Language use", "写作": "Writing", "百分比": "Percentage", "比率": "Rate", "课文字词（暂定）": "Lesson words (provisional)" }

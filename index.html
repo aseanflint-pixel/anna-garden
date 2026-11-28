@@ -191,20 +191,21 @@ body.modal-open{overflow:hidden}
   .confirm-card{margin:18vh auto 0}
 }
 .load-error{margin:40px auto;width:min(520px,90%);background:#fffef6;padding:24px;border-radius:20px;text-align:center}
-.grade-switch{display:inline-flex;gap:2px;margin-top:8px;padding:3px;border-radius:999px;background:rgba(61,38,20,.35)}
-.grade-switch a{display:inline-flex;align-items:center;min-height:40px;padding:6px 14px;border-radius:999px;font-weight:800;font-size:.9rem;color:#fff8e6;text-decoration:none}
+.grade-switch{display:inline-flex;flex-wrap:wrap;justify-content:center;gap:2px;margin-top:8px;padding:3px;border-radius:22px;background:rgba(61,38,20,.35)}
+.grade-switch a{display:inline-flex;align-items:center;min-height:40px;padding:6px 10px;border-radius:999px;font-weight:800;font-size:.9rem;color:#fff8e6;text-decoration:none}
 .grade-switch a[aria-current="page"]{background:#f0c43a;color:#3d2a04;box-shadow:0 2px 0 #c49216}
 .grade-switch a:focus-visible{outline:3px solid #fffef6;outline-offset:2px}
 </style>
 <script>/* 四年级 / 五年级: remember the last grade on this device (own key; progress keys untouched) */
 (function(){ var K = "anna-garden.grade.v1", here = "P4";
-  try{ if(here === "P4" && localStorage.getItem(K) === "P5" && !/[?&]grade=4/.test(location.search)){ location.replace("p5.html" + location.hash); return; } localStorage.setItem(K, here); }catch(e){}
+  try{ var P = {"P3": "p3.html", "P5": "p5.html"}, last = localStorage.getItem(K);
+    if(here === "P4" && P[last] && !/[?&]grade=4/.test(location.search)){ location.replace(P[last] + location.hash); return; } localStorage.setItem(K, here); }catch(e){}
   document.addEventListener("click", function(e){ var a = e.target.closest && e.target.closest(".grade-switch a"); if(a){ try{ localStorage.setItem(K, a.getAttribute("data-grade")); }catch(err){} } }, true);
 })();</script>
 <!-- garden-practice-css:start -->
   <link rel="stylesheet" href="assets/practice.css">
   <link rel="stylesheet" href="assets/lessons.css?v=20261128a">
-  <script src="assets/i18n.js"></script>
+  <script src="assets/i18n.js?v=00aef383"></script>
 <!-- garden-practice-css:end -->
 </head>
 <body>
@@ -224,7 +225,7 @@ body.modal-open{overflow:hidden}
       <div class="sign">
         <div class="eyebrow" id="grade-line"></div>
         <h1 id="page-title"></h1>
-        <nav class="grade-switch" data-i18n-aria="aria.grade"><a href="index.html" data-grade="P4" data-i18n="grade.p4" aria-current="page"></a><a href="p5.html" data-grade="P5" data-i18n="grade.p5"></a></nav>
+        <nav class="grade-switch" data-i18n-aria="aria.grade"><a href="p3.html" data-grade="P3" data-i18n="grade.p3"></a><a href="index.html" data-grade="P4" data-i18n="grade.p4" aria-current="page"></a><a href="p5.html" data-grade="P5" data-i18n="grade.p5"></a></nav>
       </div>
       <nav class="subject-tabs" id="tabs" data-i18n-aria="aria.tabs"></nav>
     </div>
