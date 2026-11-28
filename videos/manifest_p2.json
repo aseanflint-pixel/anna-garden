@@ -1,8 +1,260 @@
 {
  "version": 1,
- "built": "2026-11-28 21:09",
+ "built": "2026-11-28 21:17",
  "base": "p2/",
  "videos": {
+  "P2-EN-101": {
+   "en": {
+    "mp4": "P2-EN-101_en.mp4",
+    "vtt": "P2-EN-101_en.vtt",
+    "poster": "P2-EN-101_en.jpg",
+    "seconds": 190.5,
+    "bytes": 2864326,
+    "sha256": "f54e2fd7c009811117cb021a3f7c748add7977cc7684f79376dabb08c6e427ee"
+   },
+   "zh": {
+    "mp4": "P2-EN-101_zh.mp4",
+    "vtt": "P2-EN-101_zh.vtt",
+    "poster": "P2-EN-101_zh.jpg",
+    "seconds": 221.0,
+    "bytes": 3149786,
+    "sha256": "2d4b1d291f4710b3a90ae8b26ce40d0a6cfb304891476ce7c121855ea1931311"
+   }
+  },
+  "P2-EN-102": {
+   "en": {
+    "mp4": "P2-EN-102_en.mp4",
+    "vtt": "P2-EN-102_en.vtt",
+    "poster": "P2-EN-102_en.jpg",
+    "seconds": 193.2,
+    "bytes": 2866300,
+    "sha256": "e70b3b6047909669bf9ffb85777b8c9fc46c42c97605fd2e9eadc5878a8eb623"
+   },
+   "zh": {
+    "mp4": "P2-EN-102_zh.mp4",
+    "vtt": "P2-EN-102_zh.vtt",
+    "poster": "P2-EN-102_zh.jpg",
+    "seconds": 228.2,
+    "bytes": 3245742,
+    "sha256": "079b9489d4fed127a1e76fdd2a9ff1cddfe51aec92f1eacfd71ee6ba142f87a5"
+   }
+  },
+  "P2-EN-103": {
+   "en": {
+    "mp4": "P2-EN-103_en.mp4",
+    "vtt": "P2-EN-103_en.vtt",
+    "poster": "P2-EN-103_en.jpg",
+    "seconds": 180.1,
+    "bytes": 2636948,
+    "sha256": "919cb836b2f61755ab7782c2b578dfbd6303693897da3e7d65ffa48f6d53df18"
+   },
+   "zh": {
+    "mp4": "P2-EN-103_zh.mp4",
+    "vtt": "P2-EN-103_zh.vtt",
+    "poster": "P2-EN-103_zh.jpg",
+    "seconds": 208.8,
+    "bytes": 2924361,
+    "sha256": "8f7a5ff15684f7981ec24f3a27a49c3a20c1f88398528e94e68e607c61d7fe62"
+   }
+  },
+  "P2-EN-104": {
+   "en": {
+    "mp4": "P2-EN-104_en.mp4",
+    "vtt": "P2-EN-104_en.vtt",
+    "poster": "P2-EN-104_en.jpg",
+    "seconds": 188.6,
+    "bytes": 2791613,
+    "sha256": "96efadfb5fdeac9b4732afea8b0f6f7d6bca8c010782614f5dafb592f409441e"
+   },
+   "zh": {
+    "mp4": "P2-EN-104_zh.mp4",
+    "vtt": "P2-EN-104_zh.vtt",
+    "poster": "P2-EN-104_zh.jpg",
+    "seconds": 228.5,
+    "bytes": 3193308,
+    "sha256": "a627a00124d5858e28bb55fb38dcc670bfa956b06f4a2091a72629093f995f1c"
+   }
+  },
+  "P2-EN-105": {
+   "en": {
+    "mp4": "P2-EN-105_en.mp4",
+    "vtt": "P2-EN-105_en.vtt",
+    "poster": "P2-EN-105_en.jpg",
+    "seconds": 186.7,
+    "bytes": 2748144,
+    "sha256": "46c37d46e2e41b833f88fa6dfc61adc0cf205395420b7f6e8368c7dbb1db6e2f"
+   },
+   "zh": {
+    "mp4": "P2-EN-105_zh.mp4",
+    "vtt": "P2-EN-105_zh.vtt",
+    "poster": "P2-EN-105_zh.jpg",
+    "seconds": 215.5,
+    "bytes": 3083482,
+    "sha256": "e0bf61f145ca0d5ef4ad5b6dd11eae9c36643d83115f7e0bad7e3637003c629f"
+   }
+  },
+  "P2-EN-106": {
+   "en": {
+    "mp4": "P2-EN-106_en.mp4",
+    "vtt": "P2-EN-106_en.vtt",
+    "poster": "P2-EN-106_en.jpg",
+    "seconds": 192.9,
+    "bytes": 2861559,
+    "sha256": "f6f084be9eafa25a49b731044107571a1254626ee7d7c86c7544fe888270cc51"
+   },
+   "zh": {
+    "mp4": "P2-EN-106_zh.mp4",
+    "vtt": "P2-EN-106_zh.vtt",
+    "poster": "P2-EN-106_zh.jpg",
+    "seconds": 226.6,
+    "bytes": 3221299,
+    "sha256": "ba7c14d20413fa6ea960a3739c8d2cc80877d95e6405c48dcd82a195dfde25f0"
+   }
+  },
+  "P2-EN-107": {
+   "en": {
+    "mp4": "P2-EN-107_en.mp4",
+    "vtt": "P2-EN-107_en.vtt",
+    "poster": "P2-EN-107_en.jpg",
+    "seconds": 190.2,
+    "bytes": 2852359,
+    "sha256": "678d7f7af994552e0f59e0b5cc1f9edc250a541c9021ab05fc7d213c368b19d3"
+   },
+   "zh": {
+    "mp4": "P2-EN-107_zh.mp4",
+    "vtt": "P2-EN-107_zh.vtt",
+    "poster": "P2-EN-107_zh.jpg",
+    "seconds": 232.8,
+    "bytes": 3341327,
+    "sha256": "c375a2316cb7e88dc38e5ea34ab3ff62aeae4c40a4778ed177d25c639371fa4c"
+   }
+  },
+  "P2-EN-108": {
+   "en": {
+    "mp4": "P2-EN-108_en.mp4",
+    "vtt": "P2-EN-108_en.vtt",
+    "poster": "P2-EN-108_en.jpg",
+    "seconds": 184.8,
+    "bytes": 2719531,
+    "sha256": "ea99e23bedea27f7a0aac5bf023d275f3da52f30f99ceefad26abf879c707e72"
+   },
+   "zh": {
+    "mp4": "P2-EN-108_zh.mp4",
+    "vtt": "P2-EN-108_zh.vtt",
+    "poster": "P2-EN-108_zh.jpg",
+    "seconds": 219.5,
+    "bytes": 3105609,
+    "sha256": "f56d46507773a410a6116ce460f6910765c6729a108b6d067e44950cf6b263a0"
+   }
+  },
+  "P2-EN-109": {
+   "en": {
+    "mp4": "P2-EN-109_en.mp4",
+    "vtt": "P2-EN-109_en.vtt",
+    "poster": "P2-EN-109_en.jpg",
+    "seconds": 197.8,
+    "bytes": 2930968,
+    "sha256": "7230dcd1259e43d4d84a65c8b0e7a49708a9f4002ab32805c700ce10ec65e071"
+   },
+   "zh": {
+    "mp4": "P2-EN-109_zh.mp4",
+    "vtt": "P2-EN-109_zh.vtt",
+    "poster": "P2-EN-109_zh.jpg",
+    "seconds": 239.5,
+    "bytes": 3382934,
+    "sha256": "33b035c28b3d6f92dc186d9f0498ffe94979a50e858f1c848007c2fb2e5d72a7"
+   }
+  },
+  "P2-EN-110": {
+   "en": {
+    "mp4": "P2-EN-110_en.mp4",
+    "vtt": "P2-EN-110_en.vtt",
+    "poster": "P2-EN-110_en.jpg",
+    "seconds": 205.2,
+    "bytes": 3098480,
+    "sha256": "556167d29c2fc07027b4449e7b01eb09b6923ed8e4661e335f2f297b573ea846"
+   },
+   "zh": {
+    "mp4": "P2-EN-110_zh.mp4",
+    "vtt": "P2-EN-110_zh.vtt",
+    "poster": "P2-EN-110_zh.jpg",
+    "seconds": 237.5,
+    "bytes": 3412305,
+    "sha256": "737a7d246cb5e87dca4d53dc3a983e863d673844b4f1022d2956c1b8158bb2f7"
+   }
+  },
+  "P2-EN-111": {
+   "en": {
+    "mp4": "P2-EN-111_en.mp4",
+    "vtt": "P2-EN-111_en.vtt",
+    "poster": "P2-EN-111_en.jpg",
+    "seconds": 210.7,
+    "bytes": 3260411,
+    "sha256": "cca3936962aa32a599bdaf9682e92f66cf66bbdaa4e970ec59a3202ff45c4692"
+   },
+   "zh": {
+    "mp4": "P2-EN-111_zh.mp4",
+    "vtt": "P2-EN-111_zh.vtt",
+    "poster": "P2-EN-111_zh.jpg",
+    "seconds": 228.2,
+    "bytes": 3283408,
+    "sha256": "be8cab669c421f58ebc89b3b791e5eb52982458a09d83fb53e0bfa40a7b8e608"
+   }
+  },
+  "P2-EN-112": {
+   "en": {
+    "mp4": "P2-EN-112_en.mp4",
+    "vtt": "P2-EN-112_en.vtt",
+    "poster": "P2-EN-112_en.jpg",
+    "seconds": 195.5,
+    "bytes": 3089876,
+    "sha256": "0c8a3fa0ebc068835a764a8b4e65a4351c84bf70c422fd36cb0af6f66ff77dd6"
+   },
+   "zh": {
+    "mp4": "P2-EN-112_zh.mp4",
+    "vtt": "P2-EN-112_zh.vtt",
+    "poster": "P2-EN-112_zh.jpg",
+    "seconds": 226.1,
+    "bytes": 3337509,
+    "sha256": "5e72e66d32a46edb521d878e3963a34c3156b58130d9084ac5cffa3ee6b983d7"
+   }
+  },
+  "P2-EN-113": {
+   "en": {
+    "mp4": "P2-EN-113_en.mp4",
+    "vtt": "P2-EN-113_en.vtt",
+    "poster": "P2-EN-113_en.jpg",
+    "seconds": 189.1,
+    "bytes": 2997851,
+    "sha256": "ed9e15fdcffe2de09778b9a6729d8f0b37bb44bff0bf53094c67efd141893410"
+   },
+   "zh": {
+    "mp4": "P2-EN-113_zh.mp4",
+    "vtt": "P2-EN-113_zh.vtt",
+    "poster": "P2-EN-113_zh.jpg",
+    "seconds": 218.5,
+    "bytes": 3242733,
+    "sha256": "ecf87affb7bc2b6b859c0dec4ce5e386f04d96db99f517fc7001213bac704dc9"
+   }
+  },
+  "P2-EN-114": {
+   "en": {
+    "mp4": "P2-EN-114_en.mp4",
+    "vtt": "P2-EN-114_en.vtt",
+    "poster": "P2-EN-114_en.jpg",
+    "seconds": 199.3,
+    "bytes": 3123879,
+    "sha256": "da779561f2e552c29fb4dbad1c2953aae0b9d2c63fef994dc043d6baf20832c8"
+   },
+   "zh": {
+    "mp4": "P2-EN-114_zh.mp4",
+    "vtt": "P2-EN-114_zh.vtt",
+    "poster": "P2-EN-114_zh.jpg",
+    "seconds": 234.5,
+    "bytes": 3461399,
+    "sha256": "84b5d6b2036e096d7ad6609c7f8982c50cae5974d19bd27c08703509023fe6f4"
+   }
+  },
   "P2-MA-101": {
    "en": {
     "mp4": "P2-MA-101_en.mp4",
